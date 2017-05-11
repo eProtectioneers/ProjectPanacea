@@ -18,7 +18,7 @@ public class PanaceaExecutable
             //here you can put the selected theme class name in JTattoo
 			//com.jtattoo.plaf.graphite.GraphiteLookAndFeel
 			//"com.jtattoo.plaf.noire.NoireLookAndFeel"
-            UIManager.setLookAndFeel("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
+            UIManager.setLookAndFeel("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
             //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             
         } catch (ClassNotFoundException ex) {
