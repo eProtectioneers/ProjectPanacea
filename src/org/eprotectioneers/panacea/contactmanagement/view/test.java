@@ -33,6 +33,8 @@ import java.net.URL;
 
 public class test extends JFrame {
 
+	//DevelopmentLifeFeed Simsen3142
+	
 	private JPanel contentPane;
 	static test frame;
 	private org.eprotectioneers.panacea.contactmanagement.components.RoundTextField rndtxtfldTest;
