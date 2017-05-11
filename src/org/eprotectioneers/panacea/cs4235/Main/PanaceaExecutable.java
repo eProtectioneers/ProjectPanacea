@@ -10,7 +10,7 @@ import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
  */
 public class PanaceaExecutable 
 {
-
+	//DevelopmentLifeFeed -> Sojournercntl
 	
 	public static void main(String[] args) 
 	{
