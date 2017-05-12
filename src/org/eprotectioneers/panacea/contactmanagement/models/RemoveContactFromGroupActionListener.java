@@ -5,12 +5,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import org.eprotectioneers.panacea.contactmanagement.view.Item_Object;
+
 public class RemoveContactFromGroupActionListener implements ActionListener {
 
 	private Group _g;
 	private Contact _c;
 	private static boolean finished=true;
 	private boolean _notification=false;
+	private Item_Object _io=null;
 	
 	/**
 	 * @return if it is finished
@@ -27,6 +30,11 @@ public class RemoveContactFromGroupActionListener implements ActionListener {
 		this(c,g);
 		this._notification=notification;
 	}
+	public RemoveContactFromGroupActionListener(Contact c,Group g,boolean notification,Item_Object io){
+		this(c,g);
+		this._notification=notification;
+		this._io=io;
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		finished=false;
@@ -34,6 +42,7 @@ public class RemoveContactFromGroupActionListener implements ActionListener {
 		finished=true;
 		if(_notification)JOptionPane.showMessageDialog(null, "Contact '"+_c.getShownname()+"' removed from Group '"+_g.getName()+"'",
 				"Removed", JOptionPane.INFORMATION_MESSAGE, null);
+		if(_io!=null)_io.setPUOOGenerated(false);
 	}
 	
 }

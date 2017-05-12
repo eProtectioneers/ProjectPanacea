@@ -8,6 +8,7 @@ import org.eprotectioneers.panacea.contactmanagement.models.ChooseFile;
 import org.eprotectioneers.panacea.contactmanagement.models.Contact;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseC;
 import org.eprotectioneers.panacea.contactmanagement.models.EmailValidator;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 import net.miginfocom.swing.MigLayout;
 import java.awt.*;
@@ -33,6 +34,7 @@ public class Page_Contact extends JPanel {
 	private static ImageIcon ic_delete;
 	private static ImageIcon ic_delete_pressed;
 	private static ImageIcon ic_delete_rollover;
+	private PPCA_PanaceaWindow pncaw;
 	
 	/**
 	 * @return the Contact
@@ -46,6 +48,7 @@ public class Page_Contact extends JPanel {
 	 */
 	public Page_Contact(Contact contact) {
 		this._c=contact;
+		this.getParent();
 		
 		this.setBackground(Color.WHITE);
 		setLayout(new MigLayout("", "[5%][100px:25%:300px][40][30%,grow,fill][40.00][30%,grow,fill][5%]", "[15.00][25px:11%:75px][25px:11%:75px][25px:11%:75px][25px:11%:75px][25px:11%:75px][5.50%][11%,grow][11%][15]"));
@@ -82,13 +85,13 @@ public class Page_Contact extends JPanel {
 			pi.getBtnSave().addActionListener(scal);
 		}
 		
-		ic_delete=new ImageIcon(Page_Contact.class.getResource("/view/PPNCA_Images/icon_delete.png"));
+		ic_delete=new ImageIcon(Page_Contact.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_delete.png"));
 		ic_delete.setImage(ic_delete.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_delete_pressed=new ImageIcon(Page_Contact.class.getResource("/view/PPNCA_Images/icon_delete_pressed.png"));
+		ic_delete_pressed=new ImageIcon(Page_Contact.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_delete_pressed.png"));
 		ic_delete_pressed.setImage(ic_delete_pressed.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_delete_rollover=new ImageIcon(Page_Contact.class.getResource("/view/PPNCA_Images/icon_delete_rollover.png"));
+		ic_delete_rollover=new ImageIcon(Page_Contact.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_delete_rollover.png"));
 		ic_delete_rollover.setImage(ic_delete_rollover.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
 		btnDeleteContact = new JButton();
@@ -252,6 +255,7 @@ public class Page_Contact extends JPanel {
 				DatabaseC.removeContact(_c);
 				JOptionPane.showMessageDialog(null, "Contact Deleted", "", JOptionPane.INFORMATION_MESSAGE, null);
 				//EXIT PAGE
+				PPCA_PanaceaWindow.setCenterPanel(PPCA_PanaceaWindow.getMainPanel());
 			default:
 				break;
 			}

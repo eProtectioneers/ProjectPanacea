@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.eprotectioneers.panacea.contactmanagement.view.*;
+
 /**
  * This class represents the UI for PGPClient application.
  * @author eProtectioneers
@@ -19,21 +21,24 @@ public class PPCA_PanaceaWindow
 	
 	/* Swing Components */
 	private JFrame frame;
-	private Container container;
+	private static Container container;
 	private PPCA_ToolbarPanel toolbarPanel;
 	private PPCA_NavigationPanel navigationPanel;
 	
-	private PPCA_MainPanel mainPanel;
+	private static JPanel centerPanel;
+	private static PPCA_MainPanel mainPanel;
 	private JPanel xpanel;
+	private Contactbar cbar;
 	
-	private PPCA_SidePanelRight sidePanel;
+	//private PPCA_SidePanelRight sidePanel;
+	private static JPanel rightPanel;
 	
 	/**
 	 * Default constructor. Create a 1200 x 1000 window
 	 */
 	public PPCA_PanaceaWindow ()
 	{
-		this (1200, 800);
+		this (800, 450);
 		
 	}
 	
@@ -67,39 +72,53 @@ public class PPCA_PanaceaWindow
 		/* Add components to the window */
 		
 		navigationPanel = new PPCA_NavigationPanel(frame, this);
-		
+				
 		//Initialising the main Panel
 		mainPanel = new PPCA_MainPanel(frame, this);
+		mainPanel.setToolTipText("Test");
+		centerPanel=mainPanel;
+
 		toolbarPanel = new PPCA_ToolbarPanel(frame, this);
-		sidePanel = new PPCA_SidePanelRight(this);
+		
+		//sidePanel = new PPCA_SidePanelRight(this);
+		cbar=new Contactbar();
+		rightPanel=cbar;
 		
 		container.add(navigationPanel, BorderLayout.WEST);
 		container.add(toolbarPanel, BorderLayout.NORTH);
-		container.add(mainPanel, BorderLayout.CENTER);
-		container.add(sidePanel, BorderLayout.EAST);
+		container.add(centerPanel, BorderLayout.CENTER);
+		container.add(rightPanel, BorderLayout.EAST);
 		
 		/* View window */
 		frame.setLocationRelativeTo(null);
 		frame.pack();
 		frame.setVisible(true);
 	}
-	
+
 	/**
 	 * Set the mainPanel of the ProjectPanacea window to MailDisplay
 	 */
-	public void setCenterPanel(JPanel jpanel){
-		this.container.add(jpanel,BorderLayout.CENTER);
+	public static void setCenterPanel(JPanel jpanel){
+		container.remove(centerPanel);
+		centerPanel=jpanel;
+		container.add(centerPanel, BorderLayout.CENTER);
+		centerPanel.setVisible(false);
+		centerPanel.setVisible(true);
 	}
 	
-	public void setLeftPanel(JPanel jpanel){
-		this.container.add(jpanel,BorderLayout.EAST);
+	public static void setRightPanel(JPanel jpanel){
+		container.remove(rightPanel);
+		rightPanel=jpanel;
+		container.add(rightPanel, BorderLayout.EAST);
+		rightPanel.setVisible(false);
+		rightPanel.setVisible(true);
 	}
 	
 	/**
 	 * Set the mainPanel with another panel
 	 */
 	public void setMailPanel(){
-		this.container.add(mainPanel,BorderLayout.CENTER);
+		container.add(mainPanel,BorderLayout.CENTER);
 	}
 	
 	
@@ -123,7 +142,7 @@ public class PPCA_PanaceaWindow
 	/**
 	 * @return the mainPanel
 	 */
-	public PPCA_MainPanel getMainPanel() 
+	public static PPCA_MainPanel getMainPanel() 
 	{
 		return mainPanel;
 	}
