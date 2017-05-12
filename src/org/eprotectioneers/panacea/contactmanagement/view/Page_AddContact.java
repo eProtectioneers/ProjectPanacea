@@ -41,6 +41,7 @@ public class Page_AddContact extends JFrame {
 	 * Create the panel.
 	 */
 	public Page_AddContact() {
+		super("New Contact");
 		inizialize();
 	}
 	public Page_AddContact(String emailaddress) {

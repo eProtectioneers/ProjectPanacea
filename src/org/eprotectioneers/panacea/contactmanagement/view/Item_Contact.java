@@ -162,7 +162,6 @@ public class Item_Contact extends Item_Object {
 			
 			for(Group g:groups){
 				if(!ids.contains(g.getId())){
-					System.out.println(g.getId());
 					JMenu mnGroup=new JMenu(g.getName());
 					
 					ImageIcon ic=new ImageIcon(g.getPicturepath());
