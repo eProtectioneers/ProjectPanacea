@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import org.eprotectioneers.panacea.contactmanagement.components.RoundTextField;
 import org.eprotectioneers.panacea.contactmanagement.design.DesignDatabase;
 import org.eprotectioneers.panacea.contactmanagement.design.ProjectPanaceaTemplates;
 
@@ -37,7 +38,7 @@ public class test extends JFrame {
 	
 	private JPanel contentPane;
 	static test frame;
-	private org.eprotectioneers.panacea.contactmanagement.components.RoundTextField rndtxtfldTest;
+	private RoundTextField rndtxtfldTest;
 	private Contactbar contactbar;
 	private Component item_group;
 	private Contactbar contactbar_1;

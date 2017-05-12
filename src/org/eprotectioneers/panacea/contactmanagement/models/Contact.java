@@ -9,7 +9,7 @@ import org.eprotectioneers.panacea.contactmanagement.view.Page_Contact;
 
 public class Contact implements Serializable {
 	
-	private static final String defaultpicpath=DatabaseC.getUrlPath(Page_Contact.class.getResource("/view/PPNCA_Images/EmptyProfile.png").getPath()).substring(1);
+	private static final String defaultpicpath=DatabaseC.getUrlPath(Page_Contact.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/EmptyProfile.png").getPath()).substring(1);
 	private final int id;
 	private String _shownname;
 	private String _firstname;

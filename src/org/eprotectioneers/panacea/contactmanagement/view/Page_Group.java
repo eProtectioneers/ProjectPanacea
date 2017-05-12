@@ -37,7 +37,6 @@ public class Page_Group extends JPanel{
 	private JPanel pnl_contactsUp;
 	private JLabel lbl_members;
 	private JButton btnEditMembers;
-	private JPopupMenu popupMenuContacts;
 	private static ImageIcon ic_editGroup;
 	private static ImageIcon ic_removeContact;
 	private static ImageIcon ic_removeContact_pressed;
