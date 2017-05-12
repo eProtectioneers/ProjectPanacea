@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.eprotectioneers.panacea.contactmanagement.view.*;
+
 /**
  * This class represents the UI for PGPClient application.
  * @author eProtectioneers
@@ -24,10 +26,11 @@ public class PPCA_PanaceaWindow
 	private PPCA_NavigationPanel navigationPanel;
 	
 	private static JPanel centerPanel;
-	private PPCA_MainPanel mainPanel;
+	private static PPCA_MainPanel mainPanel;
 	private JPanel xpanel;
+	private Contactbar cbar;
 	
-	private PPCA_SidePanelRight sidePanel;
+	//private PPCA_SidePanelRight sidePanel;
 	private static JPanel rightPanel;
 	
 	/**
@@ -35,7 +38,7 @@ public class PPCA_PanaceaWindow
 	 */
 	public PPCA_PanaceaWindow ()
 	{
-		this (1200, 800);
+		this (800, 450);
 		
 	}
 	
@@ -77,8 +80,9 @@ public class PPCA_PanaceaWindow
 
 		toolbarPanel = new PPCA_ToolbarPanel(frame, this);
 		
-		sidePanel = new PPCA_SidePanelRight(this);
-		rightPanel=sidePanel;
+		//sidePanel = new PPCA_SidePanelRight(this);
+		cbar=new Contactbar();
+		rightPanel=cbar;
 		
 		container.add(navigationPanel, BorderLayout.WEST);
 		container.add(toolbarPanel, BorderLayout.NORTH);
@@ -90,14 +94,13 @@ public class PPCA_PanaceaWindow
 		frame.pack();
 		frame.setVisible(true);
 	}
-	
+
 	/**
 	 * Set the mainPanel of the ProjectPanacea window to MailDisplay
 	 */
 	public static void setCenterPanel(JPanel jpanel){
 		container.remove(centerPanel);
 		centerPanel=jpanel;
-		System.out.println("test");
 		container.add(centerPanel, BorderLayout.CENTER);
 		centerPanel.setVisible(false);
 		centerPanel.setVisible(true);
@@ -115,7 +118,7 @@ public class PPCA_PanaceaWindow
 	 * Set the mainPanel with another panel
 	 */
 	public void setMailPanel(){
-		this.container.add(mainPanel,BorderLayout.CENTER);
+		container.add(mainPanel,BorderLayout.CENTER);
 	}
 	
 	
@@ -139,7 +142,7 @@ public class PPCA_PanaceaWindow
 	/**
 	 * @return the mainPanel
 	 */
-	public PPCA_MainPanel getMainPanel() 
+	public static PPCA_MainPanel getMainPanel() 
 	{
 		return mainPanel;
 	}

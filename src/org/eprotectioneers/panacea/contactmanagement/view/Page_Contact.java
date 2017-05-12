@@ -85,7 +85,7 @@ public class Page_Contact extends JPanel {
 			pi.getBtnSave().addActionListener(scal);
 		}
 		
-		ic_delete=new ImageIcon(Page_Contact.class.getResource("/org/eprotectioneers/panacea/contactmanagement"));
+		ic_delete=new ImageIcon(Page_Contact.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_delete.png"));
 		ic_delete.setImage(ic_delete.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
 		ic_delete_pressed=new ImageIcon(Page_Contact.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_delete_pressed.png"));
@@ -255,6 +255,7 @@ public class Page_Contact extends JPanel {
 				DatabaseC.removeContact(_c);
 				JOptionPane.showMessageDialog(null, "Contact Deleted", "", JOptionPane.INFORMATION_MESSAGE, null);
 				//EXIT PAGE
+				PPCA_PanaceaWindow.setCenterPanel(PPCA_PanaceaWindow.getMainPanel());
 			default:
 				break;
 			}

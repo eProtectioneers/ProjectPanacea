@@ -24,6 +24,7 @@ import org.eprotectioneers.panacea.contactmanagement.models.DatabaseG;
 import org.eprotectioneers.panacea.contactmanagement.models.Group;
 import org.eprotectioneers.panacea.contactmanagement.models.NotAddedContactItemsGenerator;
 import org.eprotectioneers.panacea.contactmanagement.models.RemoveContactFromGroupActionListener;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 public class Page_Group extends JPanel{
 	
@@ -453,6 +454,7 @@ public class Page_Group extends JPanel{
 				DatabaseG.removeGroup(_g);
 				JOptionPane.showMessageDialog(null, "Group Deleted", "", JOptionPane.INFORMATION_MESSAGE, null);
 				//EXIT PAGE
+				PPCA_PanaceaWindow.setCenterPanel(PPCA_PanaceaWindow.getMainPanel());
 			default:
 				break;
 			}
