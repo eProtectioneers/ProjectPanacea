@@ -2,6 +2,7 @@ package org.eprotectioneers.panacea.cs4235.Main;
 
 import javax.swing.UIManager;
 
+import org.eprotectioneers.panacea.contactmanagement.view.Contactbar;
 import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 /**
@@ -32,6 +33,8 @@ public class PanaceaExecutable
         }
 		
 		PPCA_PanaceaWindow window = new PPCA_PanaceaWindow();
+		PPCA_PanaceaWindow.setRightPanel(new Contactbar());
+		
 		window.run();
 		
 	}

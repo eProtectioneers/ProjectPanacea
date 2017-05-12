@@ -12,9 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import org.eprotectioneers.panacea.contactmanagement.components.RoundTextField;
-import org.eprotectioneers.panacea.contactmanagement.design.DesignDatabase;
-import org.eprotectioneers.panacea.contactmanagement.design.ProjectPanaceaTemplates;
+import org.eprotectioneers.panacea.contactmanagement.components.*;
+import org.eprotectioneers.panacea.contactmanagement.design.*;
+import org.eprotectioneers.panacea.contactmanagement.design.*;
+import org.eprotectioneers.panacea.contactmanagement.models.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -72,12 +73,6 @@ public class test extends JFrame {
 		
 	}
 
-	public static void setPanel(JPanel pnl){
-		frame.remove(panel);
-		panel=pnl;
-		frame.add(panel,BorderLayout.CENTER);
-		frame.setVisible(true);
-	}
 	/**
 	 * Create the frame.
 	 */

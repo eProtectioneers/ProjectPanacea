@@ -19,14 +19,16 @@ public class PPCA_PanaceaWindow
 	
 	/* Swing Components */
 	private JFrame frame;
-	private Container container;
+	private static Container container;
 	private PPCA_ToolbarPanel toolbarPanel;
 	private PPCA_NavigationPanel navigationPanel;
 	
+	private static JPanel centerPanel;
 	private PPCA_MainPanel mainPanel;
 	private JPanel xpanel;
 	
 	private PPCA_SidePanelRight sidePanel;
+	private static JPanel rightPanel;
 	
 	/**
 	 * Default constructor. Create a 1200 x 1000 window
@@ -67,16 +69,21 @@ public class PPCA_PanaceaWindow
 		/* Add components to the window */
 		
 		navigationPanel = new PPCA_NavigationPanel(frame, this);
-		
+				
 		//Initialising the main Panel
 		mainPanel = new PPCA_MainPanel(frame, this);
+		mainPanel.setToolTipText("Test");
+		centerPanel=mainPanel;
+
 		toolbarPanel = new PPCA_ToolbarPanel(frame, this);
+		
 		sidePanel = new PPCA_SidePanelRight(this);
+		rightPanel=sidePanel;
 		
 		container.add(navigationPanel, BorderLayout.WEST);
 		container.add(toolbarPanel, BorderLayout.NORTH);
-		container.add(mainPanel, BorderLayout.CENTER);
-		container.add(sidePanel, BorderLayout.EAST);
+		container.add(centerPanel, BorderLayout.CENTER);
+		container.add(rightPanel, BorderLayout.EAST);
 		
 		/* View window */
 		frame.setLocationRelativeTo(null);
@@ -87,12 +94,21 @@ public class PPCA_PanaceaWindow
 	/**
 	 * Set the mainPanel of the ProjectPanacea window to MailDisplay
 	 */
-	public void setCenterPanel(JPanel jpanel){
-		this.container.add(jpanel,BorderLayout.CENTER);
+	public static void setCenterPanel(JPanel jpanel){
+		container.remove(centerPanel);
+		centerPanel=jpanel;
+		System.out.println("test");
+		container.add(centerPanel, BorderLayout.CENTER);
+		centerPanel.setVisible(false);
+		centerPanel.setVisible(true);
 	}
 	
-	public void setLeftPanel(JPanel jpanel){
-		this.container.add(jpanel,BorderLayout.EAST);
+	public static void setRightPanel(JPanel jpanel){
+		container.remove(rightPanel);
+		rightPanel=jpanel;
+		container.add(rightPanel, BorderLayout.EAST);
+		rightPanel.setVisible(false);
+		rightPanel.setVisible(true);
 	}
 	
 	/**

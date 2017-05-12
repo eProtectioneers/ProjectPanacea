@@ -12,6 +12,7 @@ import org.eprotectioneers.panacea.contactmanagement.models.DatabaseCG;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseG;
 import org.eprotectioneers.panacea.contactmanagement.models.Group;
 import org.eprotectioneers.panacea.contactmanagement.models.RemoveContactFromGroupActionListener;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -241,13 +242,13 @@ public class Item_Contact extends Item_Object {
 	
 	@Override
 	protected void doubleClickServiceRoutine() {
-		test.setPanel(new Page_Contact(_c));
+		PPCA_PanaceaWindow.setCenterPanel(new Page_Contact(_c));
 	}
 	
 	private class OpenContactListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			test.setPanel(new Page_Contact(_c));
+			doubleClickServiceRoutine();
 		}
 	}
 	
@@ -302,7 +303,7 @@ public class Item_Contact extends Item_Object {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			test.setPanel(new Page_Group(_g));
+			PPCA_PanaceaWindow.setCenterPanel(new Page_Group(_g));
 		}
 	}
 	
