@@ -3,6 +3,8 @@ package org.eprotectioneers.panacea.userinterface;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -71,6 +73,9 @@ public class PPCA_PanaceaWindow
 		container.setLayout(new BorderLayout());
 		
 		/* Add components to the window */
+		frame.setLocationRelativeTo(null);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setUndecorated(true);
 		
 		navigationPanel = new PPCA_NavigationPanel(frame, this);
 				
@@ -91,9 +96,13 @@ public class PPCA_PanaceaWindow
 		container.add(rightPanel, BorderLayout.EAST);
 		
 		/* View window */
-		frame.setLocationRelativeTo(null);
+		
 		frame.pack();
 		frame.setVisible(true);
+		
+		this.setCenterPanel(this.getMainPanel());
+		this.getMainPanel().resetWorkspace();
+		
 	}
 
 	/**
@@ -119,7 +128,9 @@ public class PPCA_PanaceaWindow
 	 * Set the mainPanel with another panel
 	 */
 	public void setMailPanel(){
-		container.add(mainPanel,BorderLayout.CENTER);
+		container.remove(centerPanel);
+		centerPanel = mainPanel;
+		container.add(centerPanel,BorderLayout.CENTER);
 	}
 	
 	
