@@ -11,12 +11,13 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import org.eprotectioneers.panacea.contactmanagement.components.QuarterCirclePanel;
 import org.eprotectioneers.panacea.contactmanagement.components.QuarterCirclePanel.CircularSector;
 
 public class SidePnl_Description extends JPanel {
 	
-	private static org.eprotectioneers.panacea.contactmanagement.components.QuarterCirclePanel quarterCirclePanel;
-	private static org.eprotectioneers.panacea.contactmanagement.components.QuarterCirclePanel quarterCirclePanel_1;
+	private static QuarterCirclePanel quarterCirclePanel;
+	private static QuarterCirclePanel quarterCirclePanel_1;
 	private static JLabel lbl_text;
 	private String _text;
 	

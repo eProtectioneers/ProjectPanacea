@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * This class represents the UI for PGPClient application.
@@ -21,7 +22,9 @@ public class PPCA_PanaceaWindow
 	private Container container;
 	private PPCA_ToolbarPanel toolbarPanel;
 	private PPCA_NavigationPanel navigationPanel;
+	
 	private PPCA_MainPanel mainPanel;
+	private JPanel xpanel;
 	
 	private PPCA_SidePanelRight sidePanel;
 	
@@ -64,6 +67,8 @@ public class PPCA_PanaceaWindow
 		/* Add components to the window */
 		
 		navigationPanel = new PPCA_NavigationPanel(frame, this);
+		
+		//Initialising the main Panel
 		mainPanel = new PPCA_MainPanel(frame, this);
 		toolbarPanel = new PPCA_ToolbarPanel(frame, this);
 		sidePanel = new PPCA_SidePanelRight(this);
@@ -78,6 +83,26 @@ public class PPCA_PanaceaWindow
 		frame.pack();
 		frame.setVisible(true);
 	}
+	
+	/**
+	 * Set the mainPanel of the ProjectPanacea window to MailDisplay
+	 */
+	public void setCenterPanel(JPanel jpanel){
+		this.container.add(jpanel,BorderLayout.CENTER);
+	}
+	
+	public void setLeftPanel(JPanel jpanel){
+		this.container.add(jpanel,BorderLayout.EAST);
+	}
+	
+	/**
+	 * Set the mainPanel with another panel
+	 */
+	public void setMailPanel(){
+		this.container.add(mainPanel,BorderLayout.CENTER);
+	}
+	
+	
 	
 	/**
 	 * @return the toolbarPanel

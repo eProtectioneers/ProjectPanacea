@@ -14,7 +14,7 @@ import java.io.ObjectOutputStream;
  *
  */
 public class DesignDatabase {
-	private static File tmpltfile=new File(org.eprotectioneers.panacea.contactmanagement.models.DatabaseC.getUrlPath(DesignDatabase.class.getResource("/design/").getPath())+"templates/template");
+	private static File tmpltfile=new File(org.eprotectioneers.panacea.contactmanagement.models.DatabaseC.getUrlPath(DesignDatabase.class.getResource("/org/eprotectioneers/panacea/contactmanagement/design/").getPath())+"templates/template");
 	
 	public static void saveDesign(){
 		try {

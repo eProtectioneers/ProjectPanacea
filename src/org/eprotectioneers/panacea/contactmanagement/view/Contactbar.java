@@ -85,13 +85,13 @@ public class Contactbar extends JPanel {
 		setBackground(new Color(9,29,62));
 		setLayout(new MigLayout("", "[25:25:25][90%,grow][25:25:25]", "[37:37.00:37][grow]"));
 		
-		ic_add=new ImageIcon(Contactbar.class.getResource("/view/PPNCA_Images/icon_plus_white.png"));
+		ic_add=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_plus_white.png"));
 		ic_add.setImage(ic_add.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_add_pressed=new ImageIcon(Contactbar.class.getResource("/view/PPNCA_Images/icon_plus_black.png"));
+		ic_add_pressed=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_plus_black.png"));
 		ic_add_pressed.setImage(ic_add_pressed.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_add_rollover=new ImageIcon(Contactbar.class.getResource("/view/PPNCA_Images/icon_plus_green.png"));
+		ic_add_rollover=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_plus_green.png"));
 		ic_add_rollover.setImage(ic_add_rollover.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
 		btn_add = new JButton();
@@ -114,13 +114,13 @@ public class Contactbar extends JPanel {
 		searchField = new SearchField(this);
 		add(searchField, "cell 1 0,grow");
 		
-		ic_refresh=new ImageIcon(Contactbar.class.getResource("/view/PPNCA_Images/icon_refresh.png"));
+		ic_refresh=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_refresh.png"));
 		ic_refresh.setImage(ic_refresh.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_refresh_pressed=new ImageIcon(Contactbar.class.getResource("/view/PPNCA_Images/icon_refresh_pressed.png"));
+		ic_refresh_pressed=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_refresh_pressed.png"));
 		ic_refresh_pressed.setImage(ic_refresh_pressed.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_refresh_rollover=new ImageIcon(Contactbar.class.getResource("/view/PPNCA_Images/icon_refresh_rollover.png"));
+		ic_refresh_rollover=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_refresh_rollover.png"));
 		ic_refresh_rollover.setImage(ic_refresh_rollover.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
 		btnRefresh = new JButton();
