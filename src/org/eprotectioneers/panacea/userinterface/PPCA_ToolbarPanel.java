@@ -124,6 +124,7 @@ public class PPCA_ToolbarPanel extends JPanel
 		btnContacts.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				window.setCenterPanel(window.getMainPanel());
+				window.getMainPanel().resetWorkspace();
 			}
 		});
 		btnContacts.setIcon(new ImageIcon("images/workspace.png"));

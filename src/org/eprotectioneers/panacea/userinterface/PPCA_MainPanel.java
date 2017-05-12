@@ -88,6 +88,12 @@ public class PPCA_MainPanel extends JPanel
 		
 	}
 	
+	public void resetWorkspace(){
+		//Could create problems
+		this.email = null;
+		runFirstFX();
+	}
+	
 	/**
 	 * Display email content.
 	 * @param email the email
@@ -159,10 +165,10 @@ public class PPCA_MainPanel extends JPanel
 			public void run() {
 				// TODO Auto-generated method stub
 				BorderPane borderPane = new BorderPane();
-				//webComponent = new WebView();
-				//webComponent.getEngine().load("http://eprotectioneers.netai.net/");
+				webComponent = new WebView();
+				webComponent.getEngine().load("file:///C:/eProtectioneers/Github/ProjectPanacea/content/PPCA_Workspace/index.html");
 				borderPane.setCenter(webComponent);
-				Scene scene = new Scene(borderPane,width-3,height-3);
+				Scene scene = new Scene(borderPane,width-15,height-15);
 				jfxPanel.setScene(scene);
 				jfxPanel.setBackground(new Color(191, 168, 140));
 			}
