@@ -86,6 +86,8 @@ public class Item_Group extends Item_Object {
 		contactsof_g.sort(new Contact.ContactComparator());
 		ArrayList<Integer> ids=DatabaseCG.getContacts(_g);
 		
+		mnOObject.removeAll();
+		
 		String s=mnOObject.getToolTipText();
 		int amount=contacts.size();
 		int progress=0;
@@ -110,7 +112,7 @@ public class Item_Group extends Item_Object {
 				JMenuItem mntmExitGroup=new JMenuItem("Remove Contact from Group");
 				mntmExitGroup.setForeground(fg);
 				mntmExitGroup.setBackground(bg);
-				mntmExitGroup.addActionListener(new RemoveContactFromGroupActionListener(cont,_g,true));
+				mntmExitGroup.addActionListener(new RemoveContactFromGroupActionListener(cont,_g,true,this));
 				mnContact.add(mntmExitGroup);
 			}
 			
@@ -139,7 +141,7 @@ public class Item_Group extends Item_Object {
 						JMenuItem mntmAddToGroup=new JMenuItem("Add Contact to Group");
 						mntmAddToGroup.setForeground(fg);
 						mntmAddToGroup.setBackground(bg);					
-						mntmAddToGroup.addActionListener(new AddContactToGroupActionListener(cont,_g,true));
+						mntmAddToGroup.addActionListener(new AddContactToGroupActionListener(cont,_g,true,this));
 						mnContact.add(mntmAddToGroup);
 					
 					mnOObject.add(mnContact);

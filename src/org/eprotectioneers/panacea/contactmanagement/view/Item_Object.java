@@ -23,7 +23,11 @@ public abstract class Item_Object extends RoundRectangleButton {
 	private Container _c;
 	private static SelectionListener sl=new SelectionListener();
 	private static Thread t1;
+	private boolean puoogenerated;
 	
+	public void setPUOOGenerated(boolean b){
+		puoogenerated=b;
+	}
 	/**
 	 * @return the bg_selected
 	 */
@@ -148,7 +152,6 @@ public abstract class Item_Object extends RoundRectangleButton {
 
 	protected class GenerateOObjectMenuListener implements MenuListener,Runnable{
 
-		private boolean generated;
 		private Color _bg,_fg;
 		private boolean _borderpainted;
 		private JComponent _mnOObject;
@@ -157,7 +160,7 @@ public abstract class Item_Object extends RoundRectangleButton {
 			this._fg=fg;
 			this._borderpainted=borderpainted;
 			this._mnOObject=mnOObject;
-			generated=false;
+			puoogenerated=false;
 		}
 		@Override
 		public void run() {
@@ -175,12 +178,11 @@ public abstract class Item_Object extends RoundRectangleButton {
 
 		@Override
 		public void menuSelected(MenuEvent arg0) {
-			System.out.println(generated);
-			if(!generated){
+			if(!puoogenerated){
 				if(t1!=null&&t1.isAlive())t1.stop();
 				t1=new Thread(this);
 				t1.start();
-				generated=true;
+				puoogenerated=true;
 			}
 		}
 		
