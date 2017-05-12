@@ -194,6 +194,7 @@ public class PPCA_NavigationPanel extends JPanel
 				int row = tblEmail.getSelectedRow();
 				PPCA_PGPMail email = es.getEmail(row);
 
+				window.setCenterPanel(window.getMainPanel());
 				PPCA_MainPanel mp = window.getMainPanel();
 				mp.show(email);
 			}

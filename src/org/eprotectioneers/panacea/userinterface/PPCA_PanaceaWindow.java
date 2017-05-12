@@ -28,6 +28,7 @@ public class PPCA_PanaceaWindow
 	private static JPanel centerPanel;
 	private static PPCA_MainPanel mainPanel;
 	private JPanel xpanel;
+	
 	private Contactbar cbar;
 	
 	//private PPCA_SidePanelRight sidePanel;
