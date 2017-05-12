@@ -45,14 +45,12 @@ public class PPCA_MainPanel extends JPanel
 	 */
 	public PPCA_MainPanel(JFrame frame, PPCA_PanaceaWindow window)
 	{
-		this.setPreferredSize(new Dimension (900, 750));
+		this.setPreferredSize(this.getSize());
 		this.setBackground (Color.WHITE);
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 		initializeComponent();
 		
 		this.window = window;
-		
-		runFirstFX();
 	}
 	
 	/**
@@ -86,6 +84,15 @@ public class PPCA_MainPanel extends JPanel
 		paneMail.setContentType("text/html");
 		paneMail.setText("<h1>NO MAILS TO DISPLAY (Please select one)</h1>");
 		
+
+	}
+	
+	public void resetWorkspace(){
+		this.height = this.getHeight();
+		this.width = this.getWidth();
+		//Could create problems
+		this.jfxPanel.setPreferredSize(this.getSize());
+		runWorkspace();
 	}
 	
 	/**
@@ -153,16 +160,19 @@ public class PPCA_MainPanel extends JPanel
 		}
 	}
 	
-	private void runFirstFX(){
+	private void runWorkspace(){
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				BorderPane borderPane = new BorderPane();
-				//webComponent = new WebView();
-				//webComponent.getEngine().load("http://eprotectioneers.netai.net/");
+				borderPane.setPrefSize(width-20, height-20);
+				webComponent = new WebView();
+				webComponent.getEngine().load("file:///C:/eProtectioneers/Github/ProjectPanacea/content/PPCA_Workspace/index.html");
+				webComponent.setPrefSize(width-20, height-20);
 				borderPane.setCenter(webComponent);
-				Scene scene = new Scene(borderPane,width-3,height-3);
+				Scene scene = new Scene(borderPane,width-20,height-20);
+				
 				jfxPanel.setScene(scene);
 				jfxPanel.setBackground(new Color(191, 168, 140));
 			}

@@ -120,8 +120,14 @@ public class PPCA_ToolbarPanel extends JPanel
 		panel = new JPanel();
 		add(panel,BorderLayout.EAST);
 		
-		btnContacts = new JButton("Contacts");
-		btnContacts.setIcon(new ImageIcon("C:\\eProtectioneers\\Panacea_Base\\PGPClient-master\\images\\lock.png"));
+		btnContacts = new JButton("Workspace");
+		btnContacts.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				window.setCenterPanel(window.getMainPanel());
+				window.getMainPanel().resetWorkspace();
+			}
+		});
+		btnContacts.setIcon(new ImageIcon("images/workspace.png"));
 		panel.add(btnContacts);
 		btnSetting = new JButton (imgSetting);
 		btnSetting.setText("Settings");
