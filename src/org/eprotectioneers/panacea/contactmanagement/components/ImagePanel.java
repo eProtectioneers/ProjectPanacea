@@ -78,13 +78,13 @@ public class ImagePanel extends JPanel{
 		mntmRemovePicture = new JMenuItem("Remove picture");
 		popupMenu.add(mntmRemovePicture);
 		
-		ic_add=new ImageIcon(Contact.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_plus_white.png"));
+		ic_add=new ImageIcon("images/icon_plus_white.png");
 		ic_add.setImage(ic_add.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 		
-		ic_add_pressed=new ImageIcon(Contact.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_plus_black.png"));
+		ic_add_pressed=new ImageIcon("images/icon_plus_black.png");
 		ic_add_pressed.setImage(ic_add_pressed.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 		
-		ic_add_rollover=new ImageIcon(Contact.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_plus_gray.png"));
+		ic_add_rollover=new ImageIcon("images/icon_plus_gray.png");
 		ic_add_rollover.setImage(ic_add_rollover.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 		
 		btn_changepicture = new RoundRectangleButton("",20);

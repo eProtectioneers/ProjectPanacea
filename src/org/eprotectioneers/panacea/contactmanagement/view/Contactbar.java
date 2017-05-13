@@ -85,13 +85,13 @@ public class Contactbar extends JPanel {
 		setBackground(new Color(9,29,62));
 		setLayout(new MigLayout("", "[25:25:25][90%,grow][25:25:25]", "[37:37.00:37][grow]"));
 		
-		ic_add=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_plus_white.png"));
+		ic_add=new ImageIcon("images/icon_plus_white.png");
 		ic_add.setImage(ic_add.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_add_pressed=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_plus_black.png"));
+		ic_add_pressed=new ImageIcon("images/icon_plus_black.png");
 		ic_add_pressed.setImage(ic_add_pressed.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_add_rollover=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_plus_green.png"));
+		ic_add_rollover=new ImageIcon("images/icon_plus_green.png");
 		ic_add_rollover.setImage(ic_add_rollover.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
 		btn_add = new JButton();
@@ -114,13 +114,13 @@ public class Contactbar extends JPanel {
 		searchField = new SearchField(this);
 		add(searchField, "cell 1 0,grow");
 		
-		ic_refresh=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_refresh.png"));
+		ic_refresh=new ImageIcon("images/icon_refresh.png");
 		ic_refresh.setImage(ic_refresh.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_refresh_pressed=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_refresh_pressed.png"));
+		ic_refresh_pressed=new ImageIcon("images/icon_refresh_pressed.png");
 		ic_refresh_pressed.setImage(ic_refresh_pressed.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_refresh_rollover=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_refresh_rollover.png"));
+		ic_refresh_rollover=new ImageIcon("images/icon_refresh_rollover.png");
 		ic_refresh_rollover.setImage(ic_refresh_rollover.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
 		btnRefresh = new JButton();
@@ -206,7 +206,7 @@ public class Contactbar extends JPanel {
 	private void generatePopupAdd(){
 		MntmAddActionListener mntmaal=new MntmAddActionListener();
 
-		ppmn_add=new JPopupMenu();		
+		ppmn_add=new JPopupMenu();	
 		
 		ImageIcon ic_contact=new ImageIcon(Contact.getDefaultpicpath());
 		ic_contact.setImage(ic_contact.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
@@ -609,6 +609,7 @@ public class Contactbar extends JPanel {
 			switch(JOptionPane.showOptionDialog(null, "Do you really want to Add the selected Contacts to '"+_g.getName()+"'?", "Add to Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Contact ic:getSelectedICs()){
+						ic.setPUOOGenerated(false);
 						new AddContactToGroupActionListener(ic.getContact(), _g).actionPerformed(e);
 					}
 					JOptionPane.showMessageDialog(null, "Contacts Added", "", JOptionPane.INFORMATION_MESSAGE, null);
@@ -628,6 +629,7 @@ public class Contactbar extends JPanel {
 			switch(JOptionPane.showOptionDialog(null, "Do you really want to Remove the selected Contacts from '"+_g.getName()+"'?", "Remove from Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Contact ic:getSelectedICs()){
+						ic.setPUOOGenerated(false);
 						new RemoveContactFromGroupActionListener(ic.getContact(), _g).actionPerformed(e);
 					}
 					JOptionPane.showMessageDialog(null, "Contacts Removed", "", JOptionPane.INFORMATION_MESSAGE, null);
@@ -693,6 +695,7 @@ public class Contactbar extends JPanel {
 			switch(JOptionPane.showOptionDialog(null, "Do you really want to Add '"+_c.getShownname()+"' to the selected Groups?", "Add Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Group ig:getSelectedIGs()){
+						ig.setPUOOGenerated(false);
 						new AddContactToGroupActionListener(_c, ig.getGroup()).actionPerformed(e);
 					}
 					JOptionPane.showMessageDialog(null, "Contact Added", "", JOptionPane.INFORMATION_MESSAGE, null);
@@ -712,6 +715,7 @@ public class Contactbar extends JPanel {
 			switch(JOptionPane.showOptionDialog(null, "Do you really want to Remove '"+_c.getShownname()+"' from the selected Groups?", "Remove Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 			case JOptionPane.YES_OPTION:
 				for(Item_Group ig:getSelectedIGs()){
+					ig.setPUOOGenerated(false);
 					new RemoveContactFromGroupActionListener(_c, ig.getGroup()).actionPerformed(e);
 				}
 				JOptionPane.showMessageDialog(null, "Contact Removed", "", JOptionPane.INFORMATION_MESSAGE, null);

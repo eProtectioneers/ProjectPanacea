@@ -1,22 +1,12 @@
 package org.eprotectioneers.panacea.contactmanagement.models;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.sql.*;
 import java.util.*;
 
 public class DatabaseC {
-	private static final String dbUrl=getUrlPath("jdbc:sqlite:"+DatabaseC.class.getResource("/org/eprotectioneers/panacea/contactmanagement/models/").getPath()+"Database/contact.db");
-	
-	public static String getUrlPath(String s){
-		s=s.replaceAll("[+]", "PlUs9q5w1");
-		try {
-			s=URLDecoder.decode(s, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return s.replaceAll("PlUs9q5w1", "+");
-	}
 	
 	public static String getDbUrl() {
 		return getUrlPath(dbUrl);

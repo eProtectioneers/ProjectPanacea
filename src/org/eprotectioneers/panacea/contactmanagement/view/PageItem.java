@@ -22,9 +22,9 @@ public class PageItem extends JPanel {
 	private static Color colorfocused=SystemColor.controlShadow;
 	private static Color fontcolor1=Color.WHITE;
 	private static Color fontcolor2=new Color(230,230,230);
-	private ImageIcon ic_edit=new ImageIcon(PageItem.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_edit.png"));
-	private ImageIcon ic_save=new ImageIcon(PageItem.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_accept.png"));
-	private ImageIcon ic_reject=new ImageIcon(PageItem.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_deny.png"));
+	private ImageIcon ic_edit=new ImageIcon("images/icon_edit.png");
+	private ImageIcon ic_save=new ImageIcon("images/icon_accept.png");
+	private ImageIcon ic_reject=new ImageIcon("images/icon_deny.png");
 	private JLabel lbl_itemdescription;
 	
 	/**
