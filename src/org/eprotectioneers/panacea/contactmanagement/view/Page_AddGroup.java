@@ -54,7 +54,6 @@ public class Page_AddGroup extends JFrame{
 	private void initialize() {
 		contentPane = new JPanel();
 
-		setAlwaysOnTop(true);
 		setContentPane(contentPane);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		

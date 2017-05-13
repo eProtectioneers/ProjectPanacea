@@ -74,7 +74,6 @@ public class Page_AddContact extends JFrame {
 	public void inizialize(){
 		contentPane = new JPanel();
 
-		setAlwaysOnTop(true);
 		setContentPane(contentPane);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
