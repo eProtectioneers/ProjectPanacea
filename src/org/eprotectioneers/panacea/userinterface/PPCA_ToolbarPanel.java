@@ -128,6 +128,7 @@ public class PPCA_ToolbarPanel extends JPanel
 		add(panel,BorderLayout.EAST);
 		
 		btnWorkspace = new JButton("Workspace");
+		btnWorkspace.setToolTipText("Workspace");
 		btnWorkspace.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				window.setCenterPanel(window.getMainPanel());
@@ -208,11 +209,11 @@ public class PPCA_ToolbarPanel extends JPanel
 				PPCA_PGPMail[] emails  = ec.getMessages();
 				if (emails == null)
 				{
-					JOptionPane.showMessageDialog(PPCA_ToolbarPanel.this, "Error: Unable to retrieve emails!", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "Error: Unable to retrieve emails!", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				else if (emails.length == 0)
 				{
-					JOptionPane.showMessageDialog(PPCA_ToolbarPanel.this, "No new messages in your inbox.");
+					JOptionPane.showMessageDialog(frame, "No new messages in your inbox.");
 				}
 				else
 				{
@@ -231,7 +232,7 @@ public class PPCA_ToolbarPanel extends JPanel
 
 				if (email == null)
 				{
-					JOptionPane.showMessageDialog(PPCA_ToolbarPanel.this, "Select an email to reply first.");
+					JOptionPane.showMessageDialog(null, "Select an email to reply first.");
 				}
 				else
 				{
@@ -246,7 +247,7 @@ public class PPCA_ToolbarPanel extends JPanel
 
 				if (email == null)
 				{
-					JOptionPane.showMessageDialog(PPCA_ToolbarPanel.this, "Select an email to forward first.");
+					JOptionPane.showMessageDialog(null, "Select an email to forward first.");
 				}
 				else
 				{

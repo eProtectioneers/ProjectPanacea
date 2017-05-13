@@ -49,7 +49,7 @@ public class PPCA_MainPanel extends JPanel
 	public PPCA_MainPanel(JFrame frame, PPCA_PanaceaWindow window)
 	{
 		this.setBackground (Color.WHITE);
-		this.setLayout(new FlowLayout(FlowLayout.LEFT));
+		this.setLayout(new BorderLayout());
 		initializeComponent();
 		
 		this.window = window;
@@ -70,6 +70,7 @@ public class PPCA_MainPanel extends JPanel
 		txtEmail.setEditable(false);
 		txtEmail.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		//JScrollPane scrollEmail = new JScrollPane(txtEmail);
+		this.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		JScrollPane scrollEmail = new JScrollPane(jfxPanel);
 		/* Register event handlers */
 		
@@ -78,8 +79,6 @@ public class PPCA_MainPanel extends JPanel
 		
 		/* Add components */
 		this.add(jfxPanel, BorderLayout.CENTER);
-		
-		
 		
 		scrollEmail.setColumnHeaderView(paneMail);
 		
