@@ -27,6 +27,7 @@ public class Page_AddContact extends JFrame {
 	private PageItem_new pi_emailaddress;
 	private PageItem_new pi_phonenumber;
 	private PageItem_new pi_address;
+	private Page_AddContact pac=this;
 
 	/**
 	 * A list, which contains every pageitem 
@@ -180,19 +181,19 @@ public class Page_AddContact extends JFrame {
 				pi_lastname.getText(), pi_emailaddress.getText(), pi_phonenumber.getText(), pi_address.getText(), 
 				pnl_image.getPicturePath(), false);
 		DatabaseC.addContact(c);
-		JOptionPane.showMessageDialog(null, "Contact added", "", JOptionPane.INFORMATION_MESSAGE, null);
+		JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contact added", "", JOptionPane.INFORMATION_MESSAGE, null);
 	}
 	
 	private class BtnSaveActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(!new EmailValidator().validate(pi_emailaddress.getText())){
-				JOptionPane.showMessageDialog(null, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(pac, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);
 				pi_emailaddress.requestFocus();
 			}
 			else{
 				Object options[]={"yes","no"};
-				switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+				switch(JOptionPane.showOptionDialog(pac, "Do you really want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 					case JOptionPane.YES_OPTION:
 						save();
 						dispose();
@@ -209,22 +210,17 @@ public class Page_AddContact extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			Object options[]={"yes","no","cancel"};
 			if(lookForChanges()){
-				switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+				switch(JOptionPane.showOptionDialog(pac, "Do you want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 					case JOptionPane.YES_OPTION:
 						if(!new EmailValidator().validate(pi_emailaddress.getText())){
-							JOptionPane.showMessageDialog(null, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(pac, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);
 							pi_emailaddress.requestFocus();
 							break;
 						}
 						save();
-					  case JOptionPane.NO_OPTION:
-						  dispose();
-						  break;
+					case JOptionPane.NO_OPTION:
+						dispose();
 					default:
-						if(!new EmailValidator().validate(pi_emailaddress.getText())){
-							JOptionPane.showMessageDialog(null, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);
-							pi_emailaddress.requestFocus();
-						}
 						break;
 				}
 			}else dispose();
