@@ -13,8 +13,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import org.eprotectioneers.panacea.cs4235.PGPClient.email.PPCA_MailClient;
 import org.eprotectioneers.panacea.cs4235.PGPClient.email.PPCA_PGPMail;
@@ -33,7 +35,7 @@ public class PPCA_ComposeWindow extends JFrame
 	private JTextField txtSubject;
 	private JTextField txtFrom;
 	private JTextArea txtBody;
-
+	
 	private JButton sendButton;
 	private JButton cancelButton;
 
@@ -47,7 +49,6 @@ public class PPCA_ComposeWindow extends JFrame
 	public PPCA_ComposeWindow(JFrame frame) 
 	{
 		/* Set Properties */
-		setResizable(false);
 		setAlwaysOnTop(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Project Panacea - Compose / [ACCOUNT]");
@@ -61,44 +62,48 @@ public class PPCA_ComposeWindow extends JFrame
 		{
 			JPanel panelHeader = new JPanel();
 			getContentPane().add(panelHeader, BorderLayout.NORTH);
-			panelHeader.setLayout(new MigLayout("", "[80px][850px]", "[30px][30px]"));
+			panelHeader.setLayout(new MigLayout("", "[10%][][grow][10%]", "[30px][30px][]"));
 			{
 				JLabel lblTo = new JLabel("To:");
-				panelHeader.add(lblTo, "cell 0 0,alignx right,growy");
+				panelHeader.add(lblTo, "cell 1 0,alignx right,growy");
 			}
 			{
 				txtTo = new JTextField();
-				panelHeader.add(txtTo, "cell 1 0,grow");
+				txtTo.setMaximumSize(new Dimension(2147483647, 25));
+				panelHeader.add(txtTo, "cell 2 0,grow");
 				txtTo.setColumns(10);
 			}
 			{
 				JLabel lblSubject = new JLabel("Subject:");
-				panelHeader.add(lblSubject, "cell 0 1,alignx right,growy");
+				panelHeader.add(lblSubject, "cell 1 1,alignx right,growy");
 			}
 			{
 				txtSubject = new JTextField();
-				panelHeader.add(txtSubject, "cell 1 1,grow");
+				txtSubject.setMaximumSize(new Dimension(2147483647, 25));
+				panelHeader.add(txtSubject, "cell 2 1,grow");
 				txtSubject.setColumns(10);
 			}
 			{
 				JLabel lblFrom = new JLabel("From:");
-				panelHeader.add(lblFrom, "cell 0 2,alignx right,growy");
+				panelHeader.add(lblFrom, "cell 1 2,alignx right,growy");
 			}
 			{
 				txtFrom = new JTextField();
+				txtFrom.setMaximumSize(new Dimension(2147483647, 25));
 				txtFrom.setEditable(false);
-				panelHeader.add(txtFrom, "cell 1 2,grow");
+				panelHeader.add(txtFrom, "cell 2 2,grow");
 				txtFrom.setColumns(10);
 			}
 		}
 		{
 			JPanel panelCompose = new JPanel();
+			panelCompose.setBorder(null);
 			getContentPane().add(panelCompose, BorderLayout.CENTER);
+			panelCompose.setLayout(new MigLayout("", "[7.5%][grow][7.5%]", "[grow]"));
 			{
 				txtBody = new JTextArea();
-				txtBody.setRows(30);
-				txtBody.setColumns(80);
-				panelCompose.add(txtBody);
+				JScrollPane spnBody=new JScrollPane(txtBody);
+				panelCompose.add(spnBody, "cell 1 0,grow");
 			}
 		}
 		{
