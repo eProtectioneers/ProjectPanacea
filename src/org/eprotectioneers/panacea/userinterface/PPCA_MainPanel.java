@@ -134,6 +134,7 @@ public class PPCA_MainPanel extends JPanel
 	}
 	
 	private void loadJavaFXScene(){
+		Platform.setImplicitExit(false);
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
@@ -163,6 +164,7 @@ public class PPCA_MainPanel extends JPanel
 	}
 	
 	private void runWorkspace(){
+		Platform.setImplicitExit(false);
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
