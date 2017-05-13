@@ -97,6 +97,22 @@ public class PPCA_MainPanel extends JPanel
 		runWorkspace();
 	}
 	
+	public void resetHelp(){
+		this.height = this.getHeight();
+		this.width = this.getWidth();
+		//Could create problems
+		this.jfxPanel.setPreferredSize(this.getSize());
+		runHelp();
+	}
+	
+	public void resetShare(){
+		this.height = this.getHeight();
+		this.width = this.getWidth();
+		//Could create problems
+		this.jfxPanel.setPreferredSize(this.getSize());
+		runShare();
+	}
+	
 	/**
 	 * Display email content.
 	 * @param email the email
@@ -181,6 +197,45 @@ public class PPCA_MainPanel extends JPanel
 			}
 		});
 	}
+	
+	private void runHelp(){
+		Platform.setImplicitExit(false);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				BorderPane borderPane = new BorderPane();
+				borderPane.setPrefSize(width-20, height-20);
+				webComponent = new WebView();
+				webComponent.getEngine().load("file:///"+new File("content/PPCA_Workspace/index.html").getAbsolutePath());
+				webComponent.setPrefSize(width-20, height-20);
+				borderPane.setCenter(webComponent);
+				Scene scene = new Scene(borderPane,width-20,height-20);
+				jfxPanel.setScene(scene);
+				jfxPanel.setBackground(new Color(191, 168, 140));
+			}
+		});
+	}
+	
+	private void runShare(){
+		Platform.setImplicitExit(false);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				BorderPane borderPane = new BorderPane();
+				borderPane.setPrefSize(width-20, height-20);
+				webComponent = new WebView();
+				webComponent.getEngine().load("file:///"+new File("content/PPCA_Workspace/share.html").getAbsolutePath());
+				webComponent.setPrefSize(width-20, height-20);
+				borderPane.setCenter(webComponent);
+				Scene scene = new Scene(borderPane,width-20,height-20);
+				jfxPanel.setScene(scene);
+				jfxPanel.setBackground(new Color(191, 168, 140));
+			}
+		});
+	}
+	
 	
 	@Override
 	public void paintComponent(Graphics g){

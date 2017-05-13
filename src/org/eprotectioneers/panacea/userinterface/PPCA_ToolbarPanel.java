@@ -18,6 +18,7 @@ import org.eprotectioneers.panacea.cs4235.PGPClient.email.PPCA_PGPMail;
 import java.awt.Component;
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
+import javax.swing.Icon;
 
 /**
  * This class represents a toolbar panel.
@@ -41,6 +42,8 @@ public class PPCA_ToolbarPanel extends JPanel
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JButton btnWorkspace;
+	private JButton btnHelp;
+	private JButton btnShare;
 
 	/**
 	 * Constructor
@@ -67,7 +70,7 @@ public class PPCA_ToolbarPanel extends JPanel
 
 		ImageIcon imgSetting = new ImageIcon ("images/setting.png");
 
-		ImageIcon imgCryptoConfig = new ImageIcon ("images/key.png");
+		ImageIcon imgCryptoConfig = new ImageIcon ("images/lock.png");
 
 		ImageIcon imgEmailSync = new ImageIcon ("images/email_download.png");
 
@@ -79,6 +82,10 @@ public class PPCA_ToolbarPanel extends JPanel
 
 		ImageIcon imgEmailDelete = new ImageIcon ("images/email_delete.png");
 
+		ImageIcon imgHelp = new ImageIcon ("images/help.png");
+		
+		ImageIcon imgShare = new ImageIcon("images/share.png");
+		
 		/* Register event handlers */
 
 		/* Add components */
@@ -138,8 +145,36 @@ public class PPCA_ToolbarPanel extends JPanel
 		btnCryptoConfig.setText("Security");
 		panel.add(btnCryptoConfig);
 		btnCryptoConfig.setToolTipText("Crypto Config");
+		
+		btnHelp = new JButton(imgHelp);
+		btnHelp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				//Set the help PanelToTheMiddle
+				window.setCenterPanel(window.getMainPanel());
+				window.getMainPanel().resetHelp();
+				window.getNavigationPanel().populateTable();
+				
+			}
+		});
+		btnHelp.setToolTipText("Help Page");
+		panel.add(btnHelp);
 		btnCryptoConfig.addActionListener(bl);
 		btnSetting.addActionListener(bl);
+		
+		btnShare = new JButton(imgShare);
+		btnShare.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				window.setCenterPanel(window.getMainPanel());
+				window.getMainPanel().resetShare();
+				window.getNavigationPanel().populateTable();
+			}
+		});
+		btnShare.setToolTipText("Social");
+		panel.add(btnShare);
 		
 		
 		
