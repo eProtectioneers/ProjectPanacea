@@ -40,8 +40,14 @@ public class Page_AddContact extends JFrame {
 	/**
 	 * Create the panel.
 	 */
-	public Page_AddContact() {
+	public Page_AddContact(Component component) {
 		super("New Contact");
+		Point componentLocation = component.getLocation();
+		Dimension componentDimension=component.getSize();
+		this.setSize((int) (componentDimension.width-componentDimension.width/3),
+				(int) (componentDimension.height-componentDimension.height/3));
+		this.setLocation((int) (componentLocation.x + component.getWidth()/2-this.getWidth()/2),
+				(int)(componentLocation.y + component.getHeight()/2-this.getHeight()/2));
 		inizialize();
 	}
 	public Page_AddContact(String emailaddress) {
@@ -67,10 +73,9 @@ public class Page_AddContact extends JFrame {
 	public void inizialize(){
 		contentPane = new JPanel();
 
+		setAlwaysOnTop(true);
 		setContentPane(contentPane);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(0, 0, 800, 450);
-		setLocationRelativeTo(null);
 		
 		contentPane.setLayout(new MigLayout("", "[5%][100px:25%:300px][40][30%,grow,fill][40.00][30%,grow,fill][5%]", "[15.00][25px:11%:75px][25px:11%:75px][25px:11%:75px][25px:11%:75px][25px:11%:75px][5.50%][11%][11%][15]"));
 		

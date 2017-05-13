@@ -27,7 +27,7 @@ import net.miginfocom.swing.MigLayout;
  * This class represent a dialog menu for Compose Email
  * @author eProtectioneers
  */
-public class PPCA_ComposeWindow extends JDialog 
+public class PPCA_ComposeWindow extends JFrame 
 {
 	private JTextField txtTo;
 	private JTextField txtSubject;

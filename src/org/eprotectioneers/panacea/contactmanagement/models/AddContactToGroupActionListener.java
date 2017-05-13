@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import org.eprotectioneers.panacea.contactmanagement.view.Item_Object;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 public class AddContactToGroupActionListener implements ActionListener {
 	
@@ -40,7 +41,7 @@ public class AddContactToGroupActionListener implements ActionListener {
 		finished=false;
 		DatabaseCG.AddContactToGroup(_c, _g);
 		finished=true;
-		if(_notification)JOptionPane.showMessageDialog(null, "Contact '"+_c.getShownname()+"' added to Group '"+_g.getName()+"'",
+		if(_notification)JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contact '"+_c.getShownname()+"' added to Group '"+_g.getName()+"'",
 				"Added", JOptionPane.INFORMATION_MESSAGE, null);
 		if(_io!=null)_io.setPUOOGenerated(false);
 	}

@@ -5,6 +5,7 @@ import java.util.Comparator;
 import javax.swing.JOptionPane;
 
 import org.eprotectioneers.panacea.contactmanagement.view.Page_Contact;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 
 public class Contact implements Serializable {
@@ -144,14 +145,14 @@ public class Contact implements Serializable {
 				switch(JOptionPane.showOptionDialog(null, "Do you really want to add '"+this.getShownname()+"' to Spam?", "Add to Spam", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					this._spam=true;
-					JOptionPane.showMessageDialog(null, "'"+getShownname()+"' added to Spam", "Spam Update", JOptionPane.INFORMATION_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "'"+getShownname()+"' added to Spam", "Spam Update", JOptionPane.INFORMATION_MESSAGE, null);
 					break;
 				default:
 					this._spam=false;
 					break;
 				}	
 			}else {
-				JOptionPane.showMessageDialog(null, "'"+getShownname()+"' removed from Spam", "Spam Update", JOptionPane.INFORMATION_MESSAGE, null);
+				JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "'"+getShownname()+"' removed from Spam", "Spam Update", JOptionPane.INFORMATION_MESSAGE, null);
 				this._spam = false;
 			}
 		}else this._spam = spam;

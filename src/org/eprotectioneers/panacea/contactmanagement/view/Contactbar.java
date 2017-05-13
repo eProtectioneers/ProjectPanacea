@@ -15,6 +15,7 @@ import org.eprotectioneers.panacea.contactmanagement.models.DatabaseC;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseG;
 import org.eprotectioneers.panacea.contactmanagement.models.Group;
 import org.eprotectioneers.panacea.contactmanagement.view.Item_Contact.ShownText;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 import java.awt.event.*;
 import java.util.*;
@@ -612,7 +613,7 @@ public class Contactbar extends JPanel {
 						ic.setPUOOGenerated(false);
 						new AddContactToGroupActionListener(ic.getContact(), _g).actionPerformed(e);
 					}
-					JOptionPane.showMessageDialog(null, "Contacts Added", "", JOptionPane.INFORMATION_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contacts Added", "", JOptionPane.INFORMATION_MESSAGE, null);
 				default:
 					break;
 			}
@@ -632,7 +633,7 @@ public class Contactbar extends JPanel {
 						ic.setPUOOGenerated(false);
 						new RemoveContactFromGroupActionListener(ic.getContact(), _g).actionPerformed(e);
 					}
-					JOptionPane.showMessageDialog(null, "Contacts Removed", "", JOptionPane.INFORMATION_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contacts Removed", "", JOptionPane.INFORMATION_MESSAGE, null);
 				default:
 					break;
 			}
@@ -647,7 +648,7 @@ public class Contactbar extends JPanel {
 						ic.getContact().setSpam(true, false);
 						ic.setToolTipText(ic.getContact().toString());
 					}
-					JOptionPane.showMessageDialog(null, "Contacts Added to Spam", "", JOptionPane.WARNING_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contacts Added to Spam", "", JOptionPane.WARNING_MESSAGE, null);
 				default:
 					break;
 			}
@@ -662,7 +663,7 @@ public class Contactbar extends JPanel {
 						ic.getContact().setSpam(false, false);
 						ic.setToolTipText(ic.getContact().toString());
 					}
-					JOptionPane.showMessageDialog(null, "Contacts Removed from Spam", "", JOptionPane.INFORMATION_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contacts Removed from Spam", "", JOptionPane.INFORMATION_MESSAGE, null);
 				default:
 					break;
 			}
@@ -676,7 +677,7 @@ public class Contactbar extends JPanel {
 					for(Item_Contact ic:getSelectedICs()){
 						DatabaseC.removeContact(ic.getContact());
 					}
-					JOptionPane.showMessageDialog(null, "Contacts Deleted", "", JOptionPane.INFORMATION_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contacts Deleted", "", JOptionPane.INFORMATION_MESSAGE, null);
 					new BtnRefreshActionListener().actionPerformed(e);
 				default:
 					break;
@@ -698,7 +699,7 @@ public class Contactbar extends JPanel {
 						ig.setPUOOGenerated(false);
 						new AddContactToGroupActionListener(_c, ig.getGroup()).actionPerformed(e);
 					}
-					JOptionPane.showMessageDialog(null, "Contact Added", "", JOptionPane.INFORMATION_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contact Added", "", JOptionPane.INFORMATION_MESSAGE, null);
 				default:
 					break;
 			}
@@ -718,7 +719,7 @@ public class Contactbar extends JPanel {
 					ig.setPUOOGenerated(false);
 					new RemoveContactFromGroupActionListener(_c, ig.getGroup()).actionPerformed(e);
 				}
-				JOptionPane.showMessageDialog(null, "Contact Removed", "", JOptionPane.INFORMATION_MESSAGE, null);
+				JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contact Removed", "", JOptionPane.INFORMATION_MESSAGE, null);
 			default:
 				break;
 			}
@@ -732,7 +733,7 @@ public class Contactbar extends JPanel {
 					for(Item_Group ig:getSelectedIGs()){
 						DatabaseG.removeGroup(ig.getGroup());
 					}
-					JOptionPane.showMessageDialog(null, "Group Deleted", "", JOptionPane.INFORMATION_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Group Deleted", "", JOptionPane.INFORMATION_MESSAGE, null);
 					new BtnRefreshActionListener().actionPerformed(e);
 				default:
 					break;
@@ -766,9 +767,9 @@ public class Contactbar extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource().equals(mntm_addContact)){
-				new Page_AddContact().setVisible(true);
+				new Page_AddContact(PPCA_PanaceaWindow.getFrame()).setVisible(true);
 			}else if(e.getSource().equals(mntm_addGroup)){
-				new Page_AddGroup().setVisible(true);
+				new Page_AddGroup(PPCA_PanaceaWindow.getFrame()).setVisible(true);
 			}
 		}
 	}
