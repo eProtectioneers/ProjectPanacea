@@ -102,6 +102,7 @@ public class PPCA_ComposeWindow extends JFrame
 			panelCompose.setLayout(new MigLayout("", "[7.5%][grow][7.5%]", "[grow]"));
 			{
 				txtBody = new JTextArea();
+				txtBody.setBorder(new EmptyBorder(7, 7, 7, 7));
 				JScrollPane spnBody=new JScrollPane(txtBody);
 				panelCompose.add(spnBody, "cell 1 0,grow");
 			}
