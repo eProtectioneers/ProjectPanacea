@@ -13,6 +13,7 @@ import org.eprotectioneers.panacea.contactmanagement.models.ChooseFile;
 import org.eprotectioneers.panacea.contactmanagement.models.Contact;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseC;
 import org.eprotectioneers.panacea.contactmanagement.models.EmailValidator;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -40,8 +41,14 @@ public class Page_AddContact extends JFrame {
 	/**
 	 * Create the panel.
 	 */
-	public Page_AddContact() {
+	public Page_AddContact(Component component) {
 		super("New Contact");
+		Point componentLocation = component.getLocation();
+		Dimension componentDimension=component.getSize();
+		this.setSize((int) (componentDimension.width-componentDimension.width/3),
+				(int) (componentDimension.height-componentDimension.height/3));
+		this.setLocation((int) (componentLocation.x + component.getWidth()/2-this.getWidth()/2),
+				(int)(componentLocation.y + component.getHeight()/2-this.getHeight()/2));
 		inizialize();
 	}
 	public Page_AddContact(String emailaddress) {
@@ -49,7 +56,7 @@ public class Page_AddContact extends JFrame {
 		int i=0;
 		for(Contact c:DatabaseC.getContacts()){
 			if(c.getEmailaddress().equals(emailaddress)){
-				i=JOptionPane.showOptionDialog(null, "There's already a Contact with this Email-Address. Do you want to continue?", "Contact already exists",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[1]);
+				i=JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "There's already a Contact with this Email-Address. Do you want to continue?", "Contact already exists",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[1]);
 				break;
 			}
 		}
@@ -69,8 +76,6 @@ public class Page_AddContact extends JFrame {
 
 		setContentPane(contentPane);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(0, 0, 800, 450);
-		setLocationRelativeTo(null);
 		
 		contentPane.setLayout(new MigLayout("", "[5%][100px:25%:300px][40][30%,grow,fill][40.00][30%,grow,fill][5%]", "[15.00][25px:11%:75px][25px:11%:75px][25px:11%:75px][25px:11%:75px][25px:11%:75px][5.50%][11%][11%][15]"));
 		
@@ -187,7 +192,7 @@ public class Page_AddContact extends JFrame {
 			}
 			else{
 				Object options[]={"yes","no"};
-				switch(JOptionPane.showOptionDialog(null, "Do you really want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+				switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 					case JOptionPane.YES_OPTION:
 						save();
 						dispose();
@@ -204,7 +209,7 @@ public class Page_AddContact extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			Object options[]={"yes","no","cancel"};
 			if(lookForChanges()){
-				switch(JOptionPane.showOptionDialog(null, "Do you want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+				switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 					case JOptionPane.YES_OPTION:
 						if(!new EmailValidator().validate(pi_emailaddress.getText())){
 							JOptionPane.showMessageDialog(null, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);

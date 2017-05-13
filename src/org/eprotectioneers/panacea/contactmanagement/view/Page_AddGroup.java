@@ -19,6 +19,7 @@ import org.eprotectioneers.panacea.contactmanagement.models.Contact;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseC;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseG;
 import org.eprotectioneers.panacea.contactmanagement.models.Group;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 public class Page_AddGroup extends JFrame{
 	
@@ -38,8 +39,15 @@ public class Page_AddGroup extends JFrame{
 	/**
 	 * Create the panel.
 	 */
-	public Page_AddGroup() {
+	public Page_AddGroup(Component component) {
 		super("New Group");
+		Point componentLocation = component.getLocation();
+		Dimension componentDimension=component.getSize();
+		this.setSize((int) (componentDimension.width-componentDimension.width/3),
+				(int) (componentDimension.height-componentDimension.height/3));
+		this.setLocation((int) (componentLocation.x + component.getWidth()/2-this.getWidth()/2),
+				(int)(componentLocation.y + component.getHeight()/2-this.getHeight()/2));
+
 		initialize();
 	}
 	
@@ -48,8 +56,6 @@ public class Page_AddGroup extends JFrame{
 
 		setContentPane(contentPane);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(0, 0, 800, 450);
-		setLocationRelativeTo(null);
 		
 		contentPane.setLayout(new MigLayout("", "[5%][100px:25%:300px,grow][40][30%,grow,fill][40.00][10%,grow,fill][20%,grow,fill][5%]", "[15.00][25px:11%:75px][25px:11%:75px][25px:11%:75px][13px:5.5%:38px,grow][12px:5.5%:37px,grow][27%,grow][12%][15]"));
 		
@@ -238,7 +244,7 @@ public class Page_AddGroup extends JFrame{
 	private class BtnSaveActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			Object options[]={"yes","no"};
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to save this Group?", "Save new Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to save this Group?", "Save new Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 				case JOptionPane.YES_OPTION:
 					save();
 					dispose();
@@ -252,7 +258,7 @@ public class Page_AddGroup extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			if(lookForChanges()){
 				Object options[]={"yes","no","cancel"};
-				switch(JOptionPane.showOptionDialog(null, "Do you want to save this Group?", "Save new Group", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+				switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you want to save this Group?", "Save new Group", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 					case JOptionPane.YES_OPTION:
 							save();
 					  case JOptionPane.NO_OPTION:

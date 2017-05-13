@@ -9,7 +9,7 @@ import org.eprotectioneers.panacea.contactmanagement.view.Page_Group;
 
 public class Group implements Serializable{
 	
-	private static final String defaultpicpath=DatabaseC.getUrlPath(Page_Group.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/EmptyGroup.png").getPath()).substring(1);
+	private static final String defaultpicpath=new File("images/EmptyGroup.png").getAbsolutePath();
 	private final int id;
 	private String _name;
 	private String _description;

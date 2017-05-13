@@ -15,6 +15,7 @@ import org.eprotectioneers.panacea.contactmanagement.models.DatabaseC;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseG;
 import org.eprotectioneers.panacea.contactmanagement.models.Group;
 import org.eprotectioneers.panacea.contactmanagement.view.Item_Contact.ShownText;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 import java.awt.event.*;
 import java.util.*;
@@ -85,13 +86,13 @@ public class Contactbar extends JPanel {
 		setBackground(new Color(9,29,62));
 		setLayout(new MigLayout("", "[25:25:25][90%,grow][25:25:25]", "[37:37.00:37][grow]"));
 		
-		ic_add=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_plus_white.png"));
+		ic_add=new ImageIcon("images/icon_plus_white.png");
 		ic_add.setImage(ic_add.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_add_pressed=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_plus_black.png"));
+		ic_add_pressed=new ImageIcon("images/icon_plus_black.png");
 		ic_add_pressed.setImage(ic_add_pressed.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_add_rollover=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_plus_green.png"));
+		ic_add_rollover=new ImageIcon("images/icon_plus_green.png");
 		ic_add_rollover.setImage(ic_add_rollover.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
 		btn_add = new JButton();
@@ -114,13 +115,13 @@ public class Contactbar extends JPanel {
 		searchField = new SearchField(this);
 		add(searchField, "cell 1 0,grow");
 		
-		ic_refresh=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_refresh.png"));
+		ic_refresh=new ImageIcon("images/icon_refresh.png");
 		ic_refresh.setImage(ic_refresh.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_refresh_pressed=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_refresh_pressed.png"));
+		ic_refresh_pressed=new ImageIcon("images/icon_refresh_pressed.png");
 		ic_refresh_pressed.setImage(ic_refresh_pressed.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_refresh_rollover=new ImageIcon(Contactbar.class.getResource("/org/eprotectioneers/panacea/contactmanagement/view/PPNCA_Images/icon_refresh_rollover.png"));
+		ic_refresh_rollover=new ImageIcon("images/icon_refresh_rollover.png");
 		ic_refresh_rollover.setImage(ic_refresh_rollover.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
 		btnRefresh = new JButton();
@@ -206,7 +207,7 @@ public class Contactbar extends JPanel {
 	private void generatePopupAdd(){
 		MntmAddActionListener mntmaal=new MntmAddActionListener();
 
-		ppmn_add=new JPopupMenu();		
+		ppmn_add=new JPopupMenu();	
 		
 		ImageIcon ic_contact=new ImageIcon(Contact.getDefaultpicpath());
 		ic_contact.setImage(ic_contact.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
@@ -606,12 +607,13 @@ public class Contactbar extends JPanel {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to Add the selected Contacts to '"+_g.getName()+"'?", "Add to Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Add the selected Contacts to '"+_g.getName()+"'?", "Add to Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Contact ic:getSelectedICs()){
+						ic.setPUOOGenerated(false);
 						new AddContactToGroupActionListener(ic.getContact(), _g).actionPerformed(e);
 					}
-					JOptionPane.showMessageDialog(null, "Contacts Added", "", JOptionPane.INFORMATION_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contacts Added", "", JOptionPane.INFORMATION_MESSAGE, null);
 				default:
 					break;
 			}
@@ -625,12 +627,13 @@ public class Contactbar extends JPanel {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to Remove the selected Contacts from '"+_g.getName()+"'?", "Remove from Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Remove the selected Contacts from '"+_g.getName()+"'?", "Remove from Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Contact ic:getSelectedICs()){
+						ic.setPUOOGenerated(false);
 						new RemoveContactFromGroupActionListener(ic.getContact(), _g).actionPerformed(e);
 					}
-					JOptionPane.showMessageDialog(null, "Contacts Removed", "", JOptionPane.INFORMATION_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contacts Removed", "", JOptionPane.INFORMATION_MESSAGE, null);
 				default:
 					break;
 			}
@@ -639,13 +642,13 @@ public class Contactbar extends JPanel {
 	private class AddSelectedContactsToSpamActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to Add the selected Contacts to Spam?", "Add to Spam", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Add the selected Contacts to Spam?", "Add to Spam", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Contact ic:getSelectedICs()){
 						ic.getContact().setSpam(true, false);
 						ic.setToolTipText(ic.getContact().toString());
 					}
-					JOptionPane.showMessageDialog(null, "Contacts Added to Spam", "", JOptionPane.WARNING_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contacts Added to Spam", "", JOptionPane.WARNING_MESSAGE, null);
 				default:
 					break;
 			}
@@ -654,13 +657,13 @@ public class Contactbar extends JPanel {
 	private class RemoveSelectedContactsFromSpamActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to Remove the selected Contacts from Spam?", "Remove from Spam", JOptionPane.WARNING_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Remove the selected Contacts from Spam?", "Remove from Spam", JOptionPane.WARNING_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Contact ic:getSelectedICs()){
 						ic.getContact().setSpam(false, false);
 						ic.setToolTipText(ic.getContact().toString());
 					}
-					JOptionPane.showMessageDialog(null, "Contacts Removed from Spam", "", JOptionPane.INFORMATION_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contacts Removed from Spam", "", JOptionPane.INFORMATION_MESSAGE, null);
 				default:
 					break;
 			}
@@ -669,12 +672,12 @@ public class Contactbar extends JPanel {
 	private class DeleteSelectedContactsActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to DELETE the selected Contacts?", "DELETE Contacts", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to DELETE the selected Contacts?", "DELETE Contacts", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Contact ic:getSelectedICs()){
 						DatabaseC.removeContact(ic.getContact());
 					}
-					JOptionPane.showMessageDialog(null, "Contacts Deleted", "", JOptionPane.INFORMATION_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contacts Deleted", "", JOptionPane.INFORMATION_MESSAGE, null);
 					new BtnRefreshActionListener().actionPerformed(e);
 				default:
 					break;
@@ -690,12 +693,13 @@ public class Contactbar extends JPanel {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to Add '"+_c.getShownname()+"' to the selected Groups?", "Add Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Add '"+_c.getShownname()+"' to the selected Groups?", "Add Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Group ig:getSelectedIGs()){
+						ig.setPUOOGenerated(false);
 						new AddContactToGroupActionListener(_c, ig.getGroup()).actionPerformed(e);
 					}
-					JOptionPane.showMessageDialog(null, "Contact Added", "", JOptionPane.INFORMATION_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contact Added", "", JOptionPane.INFORMATION_MESSAGE, null);
 				default:
 					break;
 			}
@@ -709,12 +713,13 @@ public class Contactbar extends JPanel {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to Remove '"+_c.getShownname()+"' from the selected Groups?", "Remove Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Remove '"+_c.getShownname()+"' from the selected Groups?", "Remove Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 			case JOptionPane.YES_OPTION:
 				for(Item_Group ig:getSelectedIGs()){
+					ig.setPUOOGenerated(false);
 					new RemoveContactFromGroupActionListener(_c, ig.getGroup()).actionPerformed(e);
 				}
-				JOptionPane.showMessageDialog(null, "Contact Removed", "", JOptionPane.INFORMATION_MESSAGE, null);
+				JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contact Removed", "", JOptionPane.INFORMATION_MESSAGE, null);
 			default:
 				break;
 			}
@@ -723,12 +728,12 @@ public class Contactbar extends JPanel {
 	private class DeleteSelectedGroupsActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to DELETE the selected Groups?", "DELETE Groups", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to DELETE the selected Groups?", "DELETE Groups", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Group ig:getSelectedIGs()){
 						DatabaseG.removeGroup(ig.getGroup());
 					}
-					JOptionPane.showMessageDialog(null, "Group Deleted", "", JOptionPane.INFORMATION_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Group Deleted", "", JOptionPane.INFORMATION_MESSAGE, null);
 					new BtnRefreshActionListener().actionPerformed(e);
 				default:
 					break;
@@ -762,9 +767,9 @@ public class Contactbar extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource().equals(mntm_addContact)){
-				new Page_AddContact().setVisible(true);
+				new Page_AddContact(PPCA_PanaceaWindow.getFrame()).setVisible(true);
 			}else if(e.getSource().equals(mntm_addGroup)){
-				new Page_AddGroup().setVisible(true);
+				new Page_AddGroup(PPCA_PanaceaWindow.getFrame()).setVisible(true);
 			}
 		}
 	}

@@ -60,8 +60,9 @@ public class PPCA_SettingDialog extends JDialog
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Project Panacea - Settings | [ACCOUNT]");
 		Point frameLocation = frame.getLocation();
-		this.setLocation(frameLocation.x + frame.getWidth() / 8, frameLocation.y + frame.getHeight() / 8);
 		this.setPreferredSize(new Dimension(800, 600));
+		this.setLocation((int) (frameLocation.x + frame.getWidth()/2-this.getPreferredSize().getWidth()/2),
+				(int)(frameLocation.y + frame.getHeight()/2-this.getPreferredSize().getHeight()/2));
 
 		/* Set Components */
 		getContentPane().setLayout(new BorderLayout());

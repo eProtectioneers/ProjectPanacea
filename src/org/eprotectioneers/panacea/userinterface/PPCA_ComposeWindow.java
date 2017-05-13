@@ -27,7 +27,7 @@ import net.miginfocom.swing.MigLayout;
  * This class represent a dialog menu for Compose Email
  * @author eProtectioneers
  */
-public class PPCA_ComposeWindow extends JDialog 
+public class PPCA_ComposeWindow extends JFrame 
 {
 	private JTextField txtTo;
 	private JTextField txtSubject;
@@ -52,8 +52,9 @@ public class PPCA_ComposeWindow extends JDialog
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Project Panacea - Compose / [ACCOUNT]");
 		Point frameLocation = frame.getLocation();
-		this.setLocation(frameLocation.x + frame.getWidth() / 8, frameLocation.y + frame.getHeight() / 8);
 		this.setPreferredSize(new Dimension(1000, 700));
+		this.setLocation((int) (frameLocation.x + frame.getWidth()/2-this.getPreferredSize().getWidth()/2),
+				(int)(frameLocation.y + frame.getHeight()/2-this.getPreferredSize().getHeight()/2));
 
 		/* Set Components */
 		getContentPane().setLayout(new BorderLayout());
