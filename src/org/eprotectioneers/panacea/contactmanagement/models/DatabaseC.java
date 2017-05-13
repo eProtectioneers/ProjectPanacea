@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.*;
 
 public class DatabaseC {
-	private static final String dbUrl=getUrlPath("jdbc:sqlite:"+DatabaseC.class.getResource("/models/").getPath()+"Database/contact.db");
+	private static final String dbUrl=getUrlPath("jdbc:sqlite:"+DatabaseC.class.getResource("/org/eprotectioneers/panacea/contactmanagement/models/").getPath()+"Database/contact.db");
 	
 	public static String getUrlPath(String s){
 		s=s.replaceAll("[+]", "PlUs9q5w1");
@@ -19,7 +19,7 @@ public class DatabaseC {
 	}
 	
 	public static String getDbUrl() {
-		return getUrlPath("jdbc:sqlite:"+DatabaseC.class.getResource("/models/Database/contact.db").getPath());
+		return getUrlPath(dbUrl);
 	}
 
 	public static boolean addContact(Contact contact){

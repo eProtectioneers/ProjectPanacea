@@ -12,6 +12,7 @@ import org.eprotectioneers.panacea.contactmanagement.models.DatabaseCG;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseG;
 import org.eprotectioneers.panacea.contactmanagement.models.Group;
 import org.eprotectioneers.panacea.contactmanagement.models.RemoveContactFromGroupActionListener;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -119,6 +120,8 @@ public class Item_Contact extends Item_Object {
 		groupsof_c.sort(new Group.GroupComparator());
 		ArrayList<Integer> ids=DatabaseCG.getGroups(_c);
 
+		mnOObject.removeAll();
+
 		String s=mnOObject.getToolTipText();
 		int amount=groups.size();
 		int progress=0;
@@ -146,7 +149,7 @@ public class Item_Contact extends Item_Object {
 				JMenuItem mntmExitGroup=new JMenuItem("Remove Contact from Group");
 				mntmExitGroup.setForeground(fg);
 				mntmExitGroup.setBackground(bg);
-				mntmExitGroup.addActionListener(new RemoveContactFromGroupActionListener(_c,g,true));
+				mntmExitGroup.addActionListener(new RemoveContactFromGroupActionListener(_c,g,true,this));
 				mnGroup.add(mntmExitGroup);
 			}	
 			
@@ -161,7 +164,6 @@ public class Item_Contact extends Item_Object {
 			
 			for(Group g:groups){
 				if(!ids.contains(g.getId())){
-					System.out.println(g.getId());
 					JMenu mnGroup=new JMenu(g.getName());
 					
 					ImageIcon ic=new ImageIcon(g.getPicturepath());
@@ -178,7 +180,7 @@ public class Item_Contact extends Item_Object {
 						JMenuItem mntmAddToGroup=new JMenuItem("Add Contact to Group");
 						mntmAddToGroup.setForeground(fg);
 						mntmAddToGroup.setBackground(bg);					
-						mntmAddToGroup.addActionListener(new AddContactToGroupActionListener(_c,g,true));
+						mntmAddToGroup.addActionListener(new AddContactToGroupActionListener(_c,g,true,this));
 						mnGroup.add(mntmAddToGroup);
 					
 					mnOObject.add(mnGroup);
@@ -241,13 +243,13 @@ public class Item_Contact extends Item_Object {
 	
 	@Override
 	protected void doubleClickServiceRoutine() {
-		test.setPanel(new Page_Contact(_c));
+		PPCA_PanaceaWindow.setCenterPanel(new Page_Contact(_c));
 	}
 	
 	private class OpenContactListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			test.setPanel(new Page_Contact(_c));
+			doubleClickServiceRoutine();
 		}
 	}
 	
@@ -302,7 +304,7 @@ public class Item_Contact extends Item_Object {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			test.setPanel(new Page_Group(_g));
+			PPCA_PanaceaWindow.setCenterPanel(new Page_Group(_g));
 		}
 	}
 	

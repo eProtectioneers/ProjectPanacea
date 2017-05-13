@@ -39,6 +39,7 @@ public class Page_AddGroup extends JFrame{
 	 * Create the panel.
 	 */
 	public Page_AddGroup() {
+		super("New Group");
 		initialize();
 	}
 	
