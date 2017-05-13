@@ -7,9 +7,10 @@ import java.sql.*;
 import java.util.*;
 
 public class DatabaseC {
+	private static final String dbUrl="jdbc:sqlite:"+new File("lib/contact.db");
 	
 	public static String getDbUrl() {
-		return getUrlPath(dbUrl);
+		return dbUrl;
 	}
 
 	public static boolean addContact(Contact contact){
