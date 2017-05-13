@@ -40,7 +40,7 @@ public class PPCA_ToolbarPanel extends JPanel
 	private JPanel panel;
 	private JPanel panel_1;
 	private JPanel panel_2;
-	private JButton btnContacts;
+	private JButton btnWorkspace;
 
 	/**
 	 * Constructor
@@ -120,15 +120,16 @@ public class PPCA_ToolbarPanel extends JPanel
 		panel = new JPanel();
 		add(panel,BorderLayout.EAST);
 		
-		btnContacts = new JButton("Workspace");
-		btnContacts.addActionListener(new ActionListener() {
+		btnWorkspace = new JButton("Workspace");
+		btnWorkspace.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				window.setCenterPanel(window.getMainPanel());
 				window.getMainPanel().resetWorkspace();
+				window.getMainPanel().setToolTipText("Test1");
 			}
 		});
-		btnContacts.setIcon(new ImageIcon("images/workspace.png"));
-		panel.add(btnContacts);
+		btnWorkspace.setIcon(new ImageIcon("images/workspace.png"));
+		panel.add(btnWorkspace);
 		btnSetting = new JButton (imgSetting);
 		btnSetting.setText("Settings");
 		panel.add(btnSetting);

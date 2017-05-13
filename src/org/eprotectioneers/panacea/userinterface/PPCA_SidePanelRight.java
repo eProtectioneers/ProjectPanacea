@@ -56,11 +56,11 @@ public class PPCA_SidePanelRight extends JPanel {
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 		
 		JLabel label_1 = new JLabel("");
-		label_1.setIcon(new ImageIcon("C:\\eProtectioneers\\Panacea_Base\\PGPClient-master\\images\\twitter_tweet_eProt.png"));
+		label_1.setIcon(new ImageIcon("images/twitter_tweet_eProt.png"));
 		panel_1.add(label_1);
 		
 		JLabel label_2 = new JLabel("");
-		label_2.setIcon(new ImageIcon("C:\\eProtectioneers\\Panacea_Base\\PGPClient-master\\images\\twitter_tweet_eProt2.png"));
+		label_2.setIcon(new ImageIcon("images/twitter_tweet_eProt2.png"));
 		panel_1.add(label_2);
 		
 		JLabel lblPartnerNews = new JLabel("Partner news:");
@@ -68,7 +68,7 @@ public class PPCA_SidePanelRight extends JPanel {
 		panel_1.add(lblPartnerNews);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("C:\\eProtectioneers\\Panacea_Base\\PGPClient-master\\images\\twitter_scntl_tweet.png"));
+		label.setIcon(new ImageIcon("images/twitter_scntl_tweet.png"));
 		label.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		panel_1.add(label);
 		
@@ -77,7 +77,7 @@ public class PPCA_SidePanelRight extends JPanel {
 		panel_1.add(lblAdvertisement);
 		
 		JLabel label_3 = new JLabel("");
-		label_3.setIcon(new ImageIcon("C:\\eProtectioneers\\Panacea_Base\\PGPClient-master\\images\\advertisement_pex.png"));
+		label_3.setIcon(new ImageIcon("images/advertisement_pex.png"));
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		panel_1.add(label_3);
 		
