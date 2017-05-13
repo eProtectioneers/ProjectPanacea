@@ -449,7 +449,7 @@ public class Page_Group extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object options[]={"yes", "no"};
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to DELETE this Group?", "DELETE Group", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to DELETE this Group?", "DELETE Group", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
 			case JOptionPane.YES_OPTION:
 				DatabaseG.removeGroup(_g);
 				JOptionPane.showMessageDialog(null, "Group Deleted", "", JOptionPane.INFORMATION_MESSAGE, null);

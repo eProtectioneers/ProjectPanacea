@@ -142,7 +142,7 @@ public class Contact implements Serializable {
 		if(text){
 			if(spam){
 				Object options[]={"yes", "no"};
-				switch(JOptionPane.showOptionDialog(null, "Do you really want to add '"+this.getShownname()+"' to Spam?", "Add to Spam", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
+				switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to add '"+this.getShownname()+"' to Spam?", "Add to Spam", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					this._spam=true;
 					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "'"+getShownname()+"' added to Spam", "Spam Update", JOptionPane.INFORMATION_MESSAGE, null);

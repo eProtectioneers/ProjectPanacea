@@ -19,6 +19,7 @@ import org.eprotectioneers.panacea.contactmanagement.models.Contact;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseC;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseG;
 import org.eprotectioneers.panacea.contactmanagement.models.Group;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 public class Page_AddGroup extends JFrame{
 	
@@ -244,7 +245,7 @@ public class Page_AddGroup extends JFrame{
 	private class BtnSaveActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			Object options[]={"yes","no"};
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to save this Group?", "Save new Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to save this Group?", "Save new Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 				case JOptionPane.YES_OPTION:
 					save();
 					dispose();
@@ -258,7 +259,7 @@ public class Page_AddGroup extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			if(lookForChanges()){
 				Object options[]={"yes","no","cancel"};
-				switch(JOptionPane.showOptionDialog(null, "Do you want to save this Group?", "Save new Group", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+				switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you want to save this Group?", "Save new Group", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 					case JOptionPane.YES_OPTION:
 							save();
 					  case JOptionPane.NO_OPTION:

@@ -607,7 +607,7 @@ public class Contactbar extends JPanel {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to Add the selected Contacts to '"+_g.getName()+"'?", "Add to Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Add the selected Contacts to '"+_g.getName()+"'?", "Add to Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Contact ic:getSelectedICs()){
 						ic.setPUOOGenerated(false);
@@ -627,7 +627,7 @@ public class Contactbar extends JPanel {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to Remove the selected Contacts from '"+_g.getName()+"'?", "Remove from Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Remove the selected Contacts from '"+_g.getName()+"'?", "Remove from Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Contact ic:getSelectedICs()){
 						ic.setPUOOGenerated(false);
@@ -642,7 +642,7 @@ public class Contactbar extends JPanel {
 	private class AddSelectedContactsToSpamActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to Add the selected Contacts to Spam?", "Add to Spam", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Add the selected Contacts to Spam?", "Add to Spam", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Contact ic:getSelectedICs()){
 						ic.getContact().setSpam(true, false);
@@ -657,7 +657,7 @@ public class Contactbar extends JPanel {
 	private class RemoveSelectedContactsFromSpamActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to Remove the selected Contacts from Spam?", "Remove from Spam", JOptionPane.WARNING_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Remove the selected Contacts from Spam?", "Remove from Spam", JOptionPane.WARNING_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Contact ic:getSelectedICs()){
 						ic.getContact().setSpam(false, false);
@@ -672,7 +672,7 @@ public class Contactbar extends JPanel {
 	private class DeleteSelectedContactsActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to DELETE the selected Contacts?", "DELETE Contacts", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to DELETE the selected Contacts?", "DELETE Contacts", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Contact ic:getSelectedICs()){
 						DatabaseC.removeContact(ic.getContact());
@@ -693,7 +693,7 @@ public class Contactbar extends JPanel {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to Add '"+_c.getShownname()+"' to the selected Groups?", "Add Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Add '"+_c.getShownname()+"' to the selected Groups?", "Add Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Group ig:getSelectedIGs()){
 						ig.setPUOOGenerated(false);
@@ -713,7 +713,7 @@ public class Contactbar extends JPanel {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to Remove '"+_c.getShownname()+"' from the selected Groups?", "Remove Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Remove '"+_c.getShownname()+"' from the selected Groups?", "Remove Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1])){
 			case JOptionPane.YES_OPTION:
 				for(Item_Group ig:getSelectedIGs()){
 					ig.setPUOOGenerated(false);
@@ -728,7 +728,7 @@ public class Contactbar extends JPanel {
 	private class DeleteSelectedGroupsActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to DELETE the selected Groups?", "DELETE Groups", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to DELETE the selected Groups?", "DELETE Groups", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Group ig:getSelectedIGs()){
 						DatabaseG.removeGroup(ig.getGroup());
