@@ -81,7 +81,6 @@ public class PPCA_PanaceaWindow
 				
 		//Initialising the main Panel
 		mainPanel = new PPCA_MainPanel(frame, this);
-		mainPanel.setToolTipText("Test");
 		centerPanel=mainPanel;
 
 		toolbarPanel = new PPCA_ToolbarPanel(frame, this);

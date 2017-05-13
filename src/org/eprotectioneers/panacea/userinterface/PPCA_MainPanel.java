@@ -4,12 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.text.AbstractDocument.Content;
 
 import org.eprotectioneers.panacea.cs4235.PGPClient.email.PPCA_PGPMail;
 
@@ -45,7 +47,6 @@ public class PPCA_MainPanel extends JPanel
 	 */
 	public PPCA_MainPanel(JFrame frame, PPCA_PanaceaWindow window)
 	{
-		this.setPreferredSize(this.getSize());
 		this.setBackground (Color.WHITE);
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 		initializeComponent();
@@ -168,11 +169,10 @@ public class PPCA_MainPanel extends JPanel
 				BorderPane borderPane = new BorderPane();
 				borderPane.setPrefSize(width-20, height-20);
 				webComponent = new WebView();
-				webComponent.getEngine().load("file:///C:/eProtectioneers/Github/ProjectPanacea/content/PPCA_Workspace/index.html");
+				webComponent.getEngine().load("file:///"+new File("content/PPCA_Workspace/index.html").getAbsolutePath());
 				webComponent.setPrefSize(width-20, height-20);
 				borderPane.setCenter(webComponent);
 				Scene scene = new Scene(borderPane,width-20,height-20);
-				
 				jfxPanel.setScene(scene);
 				jfxPanel.setBackground(new Color(191, 168, 140));
 			}
