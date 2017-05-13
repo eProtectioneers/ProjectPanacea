@@ -96,8 +96,9 @@ public class PPCA_NavigationPanel extends JPanel
 		return result;
 	}
 
-	private void populateTable()
+	public void populateTable()
 	{
+		tblEmail.removeAll();
 		/* Retrieve emails */
 		PPCA_PGPMail[] emails = es.getEmails();
 

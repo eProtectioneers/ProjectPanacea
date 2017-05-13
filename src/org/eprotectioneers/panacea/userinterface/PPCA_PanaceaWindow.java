@@ -126,13 +126,9 @@ public class PPCA_PanaceaWindow
 	/**
 	 * Set the mainPanel with another panel
 	 */
-	public void setMailPanel(){
-		container.remove(centerPanel);
-		centerPanel = mainPanel;
-		container.add(centerPanel,BorderLayout.CENTER);
+	public void setMailPanel(PPCA_MainPanel xmain){
+		mainPanel = xmain;
 	}
-	
-	
 	
 	/**
 	 * @return the toolbarPanel

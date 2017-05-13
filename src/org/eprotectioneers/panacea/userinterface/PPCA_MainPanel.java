@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.io.File;
 
 import javax.swing.BorderFactory;
@@ -177,6 +178,12 @@ public class PPCA_MainPanel extends JPanel
 				jfxPanel.setBackground(new Color(191, 168, 140));
 			}
 		});
+	}
+	
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		jfxPanel.setSize(this.getSize());
 	}
 	
 }

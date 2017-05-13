@@ -125,7 +125,7 @@ public class PPCA_ToolbarPanel extends JPanel
 			public void actionPerformed(ActionEvent arg0) {
 				window.setCenterPanel(window.getMainPanel());
 				window.getMainPanel().resetWorkspace();
-				window.getMainPanel().setToolTipText("Test1");
+				window.getNavigationPanel().populateTable();
 			}
 		});
 		btnWorkspace.setIcon(new ImageIcon("images/workspace.png"));
