@@ -172,7 +172,7 @@ public class PPCA_MainPanel extends JPanel
 				BorderPane borderPane = new BorderPane();
 				borderPane.setPrefSize(width-20, height-20);
 				webComponent = new WebView();
-				webComponent.getEngine().load("file:///"+new File("content/PPCA_Workspace/index.html").getAbsolutePath());
+				webComponent.getEngine().load("file:///"+new File("content/PPCA_Workspace/welcome_offline.html").getAbsolutePath());
 				webComponent.setPrefSize(width-20, height-20);
 				borderPane.setCenter(webComponent);
 				Scene scene = new Scene(borderPane,width-20,height-20);
