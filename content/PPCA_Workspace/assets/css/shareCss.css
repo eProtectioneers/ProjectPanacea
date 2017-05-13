@@ -1,0 +1,51 @@
+.hero {
+  position: relative;
+  height: 100vh;
+  color: #fff;
+  font-family: Lato;
+  text-align: center;
+  background-image: url(../../images/repeatingTechPattern.jpg);
+  animation: animatedBackground 20s linear infinite;
+  
+  &__inner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width: 50%;
+    height: 50%;
+  }
+  
+  &__heading {
+    font-size: 3rem;
+    line-height: 1.5;
+  }
+  
+  &__summary {
+    margin-top: 20px;
+    font-size: 1.6rem;
+  }
+  
+  &__link {
+    display: inline-block;
+    margin-top: 40px;
+    padding: 15px 20px;
+    width: auto;
+    color: #fff;
+    text-decoration: none;
+    border: 2px solid #fff;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: #fff;
+      color: #000;
+    }
+  }
+}
+
+@keyframes animatedBackground {
+	from { background-position: 0 0; }
+	to { background-position: 600px 0; }
+}

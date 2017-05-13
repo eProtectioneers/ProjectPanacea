@@ -3,9 +3,14 @@ package org.eprotectioneers.panacea.userinterface;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -62,11 +67,23 @@ public class PPCA_PanaceaWindow
 	 */
 	private void initializeWindow()
 	{
+		Image image;
+		
+		
 		/* Set window's basic properties */
 		frame = new JFrame(TITLE);
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setMinimumSize(new Dimension(width, height));
 		frame.setPreferredSize(new Dimension(width,height));
+		
+		try {
+		    File pathToFile = new File("images/eprotlogo_main.png");
+		    image = ImageIO.read(pathToFile);
+		    frame.setIconImage(image);
+		} catch (IOException ex) {
+		    ex.printStackTrace();
+		}
 		
 		/* Set window's layout */
 		container = frame.getContentPane();
