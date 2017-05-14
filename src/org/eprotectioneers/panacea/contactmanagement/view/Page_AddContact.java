@@ -52,7 +52,9 @@ public class Page_AddContact extends JFrame {
 				(int)(componentLocation.y + component.getHeight()/2-this.getHeight()/2));
 		inizialize();
 	}
-	public Page_AddContact(String emailaddress) {
+	
+	public Page_AddContact(Component component,String shownname,String emailaddress) {
+		this(component);
 		Object options[]={"yes","no"};
 		int i=0;
 		for(Contact c:DatabaseC.getContacts()){
@@ -63,10 +65,12 @@ public class Page_AddContact extends JFrame {
 		}
 		switch(i){
 			case JOptionPane.YES_OPTION:
-				inizialize();
+				pi_shownname.setText(shownname);
 				pi_emailaddress.setText(emailaddress);
-			  default:
-				  break;
+				break;
+			default:
+				this.dispose();
+				break;
 		}
 		
 	}
