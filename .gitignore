@@ -2,3 +2,4 @@ bin/
 PPCA_Storage
 PPCA_Storage
 PPCA_Storage
+*.db

@@ -27,7 +27,7 @@ public class PPCA_PanaceaWindow
 	private int height;
 	
 	/* Swing Components */
-	private JFrame frame;
+	private static JFrame frame;
 	private static Container container;
 	private PPCA_ToolbarPanel toolbarPanel;
 	private PPCA_NavigationPanel navigationPanel;
@@ -121,6 +121,12 @@ public class PPCA_PanaceaWindow
 		
 	}
 
+	/**
+	 * @return the Frame
+	 */
+	public static JFrame getFrame(){
+		return frame;
+	}
 	/**
 	 * Set the mainPanel of the ProjectPanacea window to MailDisplay
 	 */

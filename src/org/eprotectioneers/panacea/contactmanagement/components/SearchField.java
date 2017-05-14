@@ -7,17 +7,8 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.event.*;
 
-import org.eprotectioneers.*;
-import org.eprotectioneers.panacea.contactmanagement.*;
-import org.eprotectioneers.panacea.contactmanagement.control.*;
-import org.eprotectioneers.panacea.contactmanagement.design.*;
-import org.eprotectioneers.panacea.contactmanagement.design.templates.*;
-import org.eprotectioneers.panacea.contactmanagement.models.*;
-import org.eprotectioneers.panacea.contactmanagement.models.Database.*;
 import org.eprotectioneers.panacea.contactmanagement.view.*;
-import org.eprotectioneers.panacea.contactmanagement.view.PPNCA_Images.*;
 
 public class SearchField extends JPanel{
 	private Contactbar _cbar;

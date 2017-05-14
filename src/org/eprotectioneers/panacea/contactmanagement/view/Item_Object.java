@@ -246,6 +246,7 @@ public abstract class Item_Object extends RoundRectangleButton {
 			if(e.isPopupTrigger()){
 				if(pug==null)pug=new PopUpGenerator(e);
 				if(!selected&&!hidepopup){
+					pug.setMouseEvent(e);
 					new Thread(pug).start();
 				}else if(selected&&selectedPopup!=null){
 					showMenu(selectedPopup,e);
@@ -287,6 +288,11 @@ public abstract class Item_Object extends RoundRectangleButton {
 	private class PopUpGenerator implements Runnable{
 		private boolean generated=false;
 		MouseEvent _me;
+		
+		public void setMouseEvent(MouseEvent me){
+			this._me=me;
+		}
+		
 		public PopUpGenerator(MouseEvent me){
 			this._me=me;
 		}
