@@ -1,3 +1,5 @@
+![](http://img5.fotos-hochladen.net/uploads/ppcalg6q9htkwd.png)
+
 # Project Panacea![](https://avatars1.githubusercontent.com/u/23667401?v=3&s=30)
 A secure and futuristic email client coded in java! Enhance your security with eProtectioneers software solutions!
 
