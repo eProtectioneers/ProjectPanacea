@@ -9,6 +9,7 @@ import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -37,6 +38,8 @@ public class PPCA_MainPanel extends JPanel
 	private JTextArea txtEmail;
 	private PPCA_PanaceaWindow window;
 	private PPCA_PGPMail email;
+	
+	private JLabel topBar = new JLabel("");
 	
 	private double height;
 	private double width;
@@ -89,6 +92,13 @@ public class PPCA_MainPanel extends JPanel
 	}
 	
 	public void resetWorkspace(){
+		//Remove topBar
+		if(topBar.getParent() != null){
+			//remove
+			topBar.getParent().remove(topBar);
+		}
+		
+		
 		this.height = this.getHeight();
 		this.width = this.getWidth();
 		//Could create problems
@@ -97,6 +107,12 @@ public class PPCA_MainPanel extends JPanel
 	}
 	
 	public void resetHelp(){
+		//Remove topBar
+		if(topBar.getParent() != null){
+			//remove
+			topBar.getParent().remove(topBar);
+		}
+		
 		this.height = this.getHeight();
 		this.width = this.getWidth();
 		//Could create problems
@@ -105,6 +121,13 @@ public class PPCA_MainPanel extends JPanel
 	}
 	
 	public void resetShare(){
+		//Remove topBar
+		if(topBar.getParent() != null){
+			//remove
+			topBar.getParent().remove(topBar);
+		}
+		
+		
 		this.height = this.getHeight();
 		this.width = this.getWidth();
 		//Could create problems
@@ -118,6 +141,13 @@ public class PPCA_MainPanel extends JPanel
 	 */
 	public void show(PPCA_PGPMail email)
 	{
+		//Add Top Bar
+		this.add(topBar,BorderLayout.NORTH);
+		
+		String infoText = "<HTML><p style='color:red'>This is a special Test!</p></HTML>";
+				
+		topBar.setText(infoText);
+		
 		this.email = email;
 		
 		String display = "Sender:\t" + email.from + "\n";
