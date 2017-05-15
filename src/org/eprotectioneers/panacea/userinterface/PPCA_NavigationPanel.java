@@ -22,11 +22,8 @@ import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
-<<<<<<< HEAD
 import javax.swing.border.MatteBorder;
-=======
 import javax.swing.table.DefaultTableCellRenderer;
->>>>>>> b162aa59bf7bab349a00ddfcfe6b53c6c4fa0d2f
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
@@ -46,10 +43,10 @@ import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_EmailStore;
  */
 public class PPCA_NavigationPanel extends JPanel 
 {
-	private JTable tblEmail;
+	private static JTable tblEmail;
 
 	private PPCA_PanaceaWindow window;
-	private PPCA_EmailStore es;
+	private static PPCA_EmailStore es;
 	
 	private JPopupMenu pum;
 	private JMenuItem mni_reply;
@@ -82,7 +79,7 @@ public class PPCA_NavigationPanel extends JPanel
 		tblEmail = new JTable();
 		tblEmail.setFillsViewportHeight(true);
 		tblEmail.setRowHeight(tblEmail.getRowHeight() * 3);
-		tblEmail.setDefaultRenderer(Object.class, new DefaultTableCellRenderer());
+		tblEmail.setDefaultRenderer(Object.class, new TooltipCellRenderer());
 		tblEmail.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollEmail = new JScrollPane(tblEmail);	
 
@@ -120,7 +117,7 @@ public class PPCA_NavigationPanel extends JPanel
 		return result;
 	}
 
-	public void populateTable()
+	public static void populateTable()
 	{
 		tblEmail.removeAll();
 		/* Retrieve emails */
@@ -134,12 +131,21 @@ public class PPCA_NavigationPanel extends JPanel
 		{
 			/* Construct Email Preview */
 			//String preview = getPreview(emails[i]);
+			Contact c=DatabaseC.checkContact(emails[i].from);
+			boolean b=c!=null;
 			String html = "<html><div>"
-					+ "<a style='color:#FF4F00'><strong><em>Sender: </em></strong></a><a style='color:#191919'><strong>"+emails[i].from+"</strong></a>"
-					+ "<p align='justify' style='color:#191919word-wrap:break-word'>"+getPreview(emails[i])+"</p>"
+					+ "<a style='color:#FF4F00'><strong><em>Sender: </em></strong></a><a style='color:#191919'><strong>";
+			if(b)html+=c.getShownname()+" </strong>";
+			else html+=emails[i].from+"</strong>";
+			if(b){
+				html+="<img src='file:///" +
+						c.getPicturepath() +
+						"' width=15 height=15 />";
+			}
+			html+= "</a><p align='justify' style='color:#191919word-wrap:break-word'>"+getPreview(emails[i])+"</p>"
 					+ "</div></html>"
 					+ ""
-					+ "";
+					+ "t0oLTPt€xT:"+removeName(emails[i].from);
 
 			emailStore[i][0] = html;
 		}
@@ -179,19 +185,19 @@ public class PPCA_NavigationPanel extends JPanel
 	 * @param email the email
 	 * @return the preview of an email
 	 */
-	private String getPreview(PPCA_PGPMail email)
+	private static String getPreview(PPCA_PGPMail email)
 	{
-		String preview = removeMail(email.from) + "\n";
-		preview += email.subject + "\n";
+		String preview = email.subject + "\n" +email.payload;
 		//preview += snippet(email.payload);
 		if(preview.length()>42){
 			preview = preview.substring(0,41);
+			preview+="...";
 		}
 		
 		return preview;
 	}
 	
-	private String removeMail(String removeFrom){
+	private static String removeMail(String removeFrom){
 		try{
 			int startInd = removeFrom.indexOf("<");
 			int endInd = removeFrom.indexOf(">");
@@ -205,7 +211,7 @@ public class PPCA_NavigationPanel extends JPanel
 		}
 	}
 	
-	private String removeName(String removeFrom){
+	private static String removeName(String removeFrom){
 		try{
 			int startInd = removeFrom.indexOf("<");
 			int endInd = removeFrom.indexOf(">");
@@ -278,7 +284,6 @@ public class PPCA_NavigationPanel extends JPanel
 		}
 	}
 
-<<<<<<< HEAD
 	private class PopupGenerator implements Runnable{
 
 		private Contact _c;
@@ -386,6 +391,19 @@ public class PPCA_NavigationPanel extends JPanel
 		}
 	}
 	
+	private class TooltipCellRenderer extends DefaultTableCellRenderer {
+	    public Component getTableCellRendererComponent(
+	                        JTable table, Object value,
+	                        boolean isSelected, boolean hasFocus,
+	                        int row, int column) {
+	        JLabel c = (JLabel)super.getTableCellRendererComponent(table, value, hasFocus, hasFocus, column, column );
+	        String[] s=c.getText().split("t0oLTPt€xT:");
+	        c.setText(s[0]);
+	        c.setToolTipText(s[1]);
+	        return c;
+	    }
+	}
+	
 	private class MultiLineCellRenderer extends JTextArea implements TableCellRenderer
 	{
 		public MultiLineCellRenderer()
@@ -431,6 +449,4 @@ public class PPCA_NavigationPanel extends JPanel
 			return this;
 		}
 	}
-=======
->>>>>>> b162aa59bf7bab349a00ddfcfe6b53c6c4fa0d2f
 }

@@ -220,6 +220,7 @@ public class PPCA_ToolbarPanel extends JPanel
 					PPCA_NavigationPanel np = window.getNavigationPanel();
 					np.show(emails);
 				}
+				PPCA_NavigationPanel.populateTable();
 			}
 			else if (source == btnEmailCompose)
 			{
