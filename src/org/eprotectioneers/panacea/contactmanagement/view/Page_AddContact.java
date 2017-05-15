@@ -56,26 +56,12 @@ public class Page_AddContact extends JFrame {
 	public Page_AddContact(Component component,String shownname,String emailaddress) {
 		this(component);
 		Object options[]={"yes","no"};
-		int i=0;
-		for(Contact c:DatabaseC.getContacts()){
-			if(c.getEmailaddress().toLowerCase().equals(emailaddress.toLowerCase())){
-				i=JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "There's already a Contact with this Email-Address. Do you want to continue?", "Contact already exists",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[1]);
-				break;
-			}
-		}
-		switch(i){
-			case JOptionPane.YES_OPTION:
-				pi_shownname.setText(shownname);
-				pi_emailaddress.setText(emailaddress);
-				break;
-			default:
-				this.dispose();
-				break;
-		}
-		
+
+		pi_shownname.setText(shownname);
+		pi_emailaddress.setText(emailaddress);
+
 	}
 
-	
 	public void inizialize(){
 		contentPane = new JPanel();
 
@@ -188,6 +174,21 @@ public class Page_AddContact extends JFrame {
 		JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contact added", "", JOptionPane.INFORMATION_MESSAGE, null);
 	}
 	
+	private boolean checkSave(){
+		boolean b=true;
+		if(DatabaseC.checkContact(pi_emailaddress.getText())!=null){
+			Object[] options={"yes","no"};
+			switch(JOptionPane.showOptionDialog(pac, "There's already a Contact with this Email-Address. Do you want to continue?", "Contact already exists",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[0])){
+			case JOptionPane.YES_OPTION:
+				break;
+			default:
+				b=false;
+				break;
+			}
+		}
+		return b;
+	}
+	
 	private class BtnSaveActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -199,8 +200,10 @@ public class Page_AddContact extends JFrame {
 				Object options[]={"yes","no"};
 				switch(JOptionPane.showOptionDialog(pac, "Do you really want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 					case JOptionPane.YES_OPTION:
-						save();
-						dispose();
+						if(checkSave()){
+							save();
+							dispose();
+						}
 						break;
 					default:
 						break;
@@ -214,6 +217,7 @@ public class Page_AddContact extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			Object options[]={"yes","no","cancel"};
 			if(lookForChanges()){
+				boolean b=checkSave();
 				switch(JOptionPane.showOptionDialog(pac, "Do you want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 					case JOptionPane.YES_OPTION:
 						if(!new EmailValidator().validate(pi_emailaddress.getText())){
@@ -221,9 +225,9 @@ public class Page_AddContact extends JFrame {
 							pi_emailaddress.requestFocus();
 							break;
 						}
-						save();
+						if(b)save();
 					case JOptionPane.NO_OPTION:
-						dispose();
+						if(b)dispose();
 					default:
 						break;
 				}
