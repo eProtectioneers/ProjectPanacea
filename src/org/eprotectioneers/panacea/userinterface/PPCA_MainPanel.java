@@ -128,7 +128,7 @@ public class PPCA_MainPanel extends JPanel
 		
 		display += email.payload;
 		
-		//txtEmail.setText(display);
+		txtEmail.setText(display);
 		paneMail.setText(email.payload);
 		
 		this.height = this.getHeight();

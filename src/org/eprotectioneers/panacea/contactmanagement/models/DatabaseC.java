@@ -196,13 +196,4 @@ public class DatabaseC {
 		}
 		return (Integer)null;
 	}
-	
-	public static Contact checkContact(String containsemail){
-		for(Contact c:DatabaseC.getContacts()){
-			if(containsemail.toLowerCase().contains(c.getEmailaddress().toLowerCase())){
-				return c;
-			}
-		}
-		return null;
-	}
 }

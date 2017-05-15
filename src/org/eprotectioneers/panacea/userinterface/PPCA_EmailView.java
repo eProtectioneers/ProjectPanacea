@@ -50,6 +50,14 @@ public class PPCA_EmailView extends JPanel{
 	private JLabel lblSubject_content;
 	private JScrollPane scrollPane;
 	private JTextArea taContent;
+	private JPopupMenu pum;
+	private JMenuItem mni_reply;
+	private JMenuItem mni_forward;
+	private JMenuItem mni_delete;
+	private JMenuItem mni_addtoc;
+	private JMenuItem mni_openc;
+	private JMenuItem mni_changespam;
+	private boolean contactexists=false;
 	private Contact _c;
 	
 	/**
@@ -61,16 +69,13 @@ public class PPCA_EmailView extends JPanel{
 			this._subject=email.subject;
 			this._payload=email.payload;
 			
-			this._c=DatabaseC.checkContact(_from);
-			
 			initialize();
 	}
-	
 	private void initialize() {
 		Dimension d=new Dimension(200, 100);
 		setMaximumSize(d);
 		setMinimumSize(d);
-		setPreferredSize(new Dimension(473, 316));
+		setPreferredSize(new Dimension(297, 213));
 		setBackground(Color.WHITE);
 		setBorder(new EmptyBorder(0, 5, 0, 5));
 		setLayout(new BorderLayout());
@@ -129,15 +134,13 @@ public class PPCA_EmailView extends JPanel{
 		lblSubject_content.setBorder(null);
 		pnl_text.add(lblSubject_content);
 		
-		if(_c!=null){
-			imagePanel = new ImagePanel(_c.getPicturepath());
-			imagePanel.setOpaque(false);
-			imagePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-			imagePanel.setBorder(null);
-			pnl_header.add(imagePanel);
-			imagePanel.setRadius(5);
-			imagePanel.setDisabled();
-		}
+		imagePanel = new ImagePanel(getPicture());
+		imagePanel.setOpaque(false);
+		imagePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		imagePanel.setBorder(null);
+		pnl_header.add(imagePanel);
+		imagePanel.setRadius(5);
+		imagePanel.setDisabled();
 		
 		pnlMain = new JPanel();
 		pnlMain.setOpaque(false);
@@ -167,6 +170,18 @@ public class PPCA_EmailView extends JPanel{
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		setToolTipText(_from);
+		this.addMouseListener(new PPCA_EmailPreviewMouseListener());
+	}
+	
+	private String getPicture(){
+		for(Contact c:DatabaseC.getContacts()){
+			if(_from.toLowerCase().contains(c.getEmailaddress().toLowerCase())){
+				contactexists=true;
+				_c=c;
+				return c.getPicturepath();
+			}
+		}
+		return Contact.getDefaultpicpath();
 	}
 	
 	@Override
@@ -177,5 +192,115 @@ public class PPCA_EmailView extends JPanel{
 		}
 		imagePanel.addMouseListener(ml);
 		taContent.addMouseListener(ml);
+	}
+	
+	private class PPCA_EmailPreviewMouseListener extends MouseAdapter{
+		@Override
+		public void mousePressed(MouseEvent e) {
+			if(e.isPopupTrigger())showPopup(e);
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			if(e.isPopupTrigger())showPopup(e);
+		}	
+		
+		private void showPopup(MouseEvent e){
+			Thread t1=null;
+			if(pum==null){
+				t1=new Thread(new PopupGenerator());
+				t1.start();
+			}
+			if(t1!=null){
+				while(t1.isAlive()){
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+			pum.show(null, e.getX(), e.getY());
+		}
+	}
+	
+	private class PopupGenerator implements Runnable{
+
+		@Override
+		public void run() {
+			pum=new JPopupMenu();
+			
+			String s=_subject;
+			if(s.length()>15){
+				s=s.substring(0, 12);
+				s+="...";
+			}
+			pum.add(new JLabel(s));
+			
+			mni_reply=new JMenuItem("Reply to Message");
+			mni_reply.addActionListener(new ReplyActionListener());
+			mni_forward=new JMenuItem("Forward Message");
+			mni_forward.addActionListener(new ForwardActionListener());
+			mni_delete=new JMenuItem("Delete Message");
+			mni_delete.addActionListener(new AddToContactsActionListener());
+			mni_addtoc=new JMenuItem("Add Sender to Contacts");
+			mni_addtoc.addActionListener(new DeleteMessageActionListener());
+			if(contactexists){
+				mni_openc=new JMenuItem("Open Contact");
+				mni_openc.addActionListener(new OpenContactActionListener());
+				if(_c.isSpam()){
+					mni_changespam=new JMenuItem("Remove sender from Spam");
+					mni_changespam.addActionListener(new ChangeSpamStateActionListener());
+				}else{
+					mni_changespam=new JMenuItem("Add sender to Spam");
+					mni_changespam.addActionListener(new ChangeSpamStateActionListener());
+				}
+			}
+		}
+	}
+	
+	private class ReplyActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	}
+	
+	private class ForwardActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	}
+	
+	private class DeleteMessageActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	}
+	
+	private class AddToContactsActionListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {	
+			String[] s=_from.split("<");
+			System.out.println(s.length);
+			new Page_AddContact(PPCA_PanaceaWindow.getFrame()).setVisible(true);;
+		}
+	}
+	
+	private class OpenContactActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			PPCA_PanaceaWindow.setCenterPanel(new Page_Contact(_c));
+		}
+	}
+	
+	private class ChangeSpamStateActionListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			_c.setSpam(!_c.isSpam(), true);
+			setToolTipText(_c.toString());
+		}
 	}
 }
