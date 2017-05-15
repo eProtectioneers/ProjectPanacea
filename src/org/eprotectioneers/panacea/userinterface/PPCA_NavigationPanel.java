@@ -186,18 +186,19 @@ public class PPCA_NavigationPanel extends JPanel
 	private class MouseListener extends MouseAdapter
 	{
 		@Override
-		public void mouseClicked(MouseEvent e) 
+		public void mousePressed(MouseEvent e) 
 		{
-			Object source = e.getSource();
-
-			if (source == tblEmail)
-			{
-				int row = tblEmail.getSelectedRow();
-				PPCA_PGPMail email = es.getEmail(row);
-
-				window.setCenterPanel(window.getMainPanel());
-				PPCA_MainPanel mp = window.getMainPanel();
-				mp.show(email);
+			if(e.getButton()==MouseEvent.BUTTON1){
+				Object source = e.getSource();
+				if (source == tblEmail)
+				{
+					int row = tblEmail.getSelectedRow();
+					PPCA_PGPMail email = es.getEmail(row);
+	
+					window.setCenterPanel(window.getMainPanel());
+					PPCA_MainPanel mp = window.getMainPanel();
+					mp.show(email);
+				}
 			}
 		}
 	}
