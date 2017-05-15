@@ -6,10 +6,18 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.security.SecureRandom;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -21,7 +29,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import org.eprotectioneers.panacea.cs4235.Main.PanaceaExecutable;
 import org.eprotectioneers.panacea.cs4235.PGPClient.email.PPCA_MailClient;
+import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_FileInfo;
+import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_DBEraser;
 import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_DataRepo;
 import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_Preferences;
 
@@ -29,6 +40,7 @@ import javax.swing.JTabbedPane;
 
 import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 
 /**
@@ -61,13 +73,21 @@ public class PPCA_SettingDialog extends JDialog
 	private JLabel lblLastEdited;
 	private JLabel lblPanaceaVersion;
 	private JLabel lblFileSize;
-	private JLabel lblCreation;
 	private JLabel lblOwner;
 	private JButton btnDeleteDatabase;
 	private JButton btnScanForDatabase;
 	private JLabel lblCreated;
 	private JLabel lblAccessed;
 	private JLabel lblWritten;
+	private JLabel lbl_name;
+	private JLabel lbl_path;
+	private JLabel lbl_PanaceaVersion;
+	private JLabel lblSize;
+	private JLabel lbl_owner;
+	private JLabel lbl_created;
+	private JLabel lbl_acessed;
+	private JLabel lbl_written;
+	private JButton btnOpenFileIn;
 	
 	/**
 	 * Create the dialog.
@@ -120,7 +140,7 @@ public class PPCA_SettingDialog extends JDialog
 			{
 				databasepanel = new JPanel();
 				tabbedPane.addTab("Data Management", null, databasepanel, null);
-				databasepanel.setLayout(new MigLayout("", "[190px][350px][50px]", "[30px][30px][][][][][][][][][][][][][][][600px]"));
+				databasepanel.setLayout(new MigLayout("", "[190px][350px][50px]", "[30px][30px][][][][][][][][][][][][][][][][][][600px]"));
 				{
 					JLabel lblDBFile = new JLabel("Database File:");
 					lblDBFile.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -144,51 +164,106 @@ public class PPCA_SettingDialog extends JDialog
 					databasepanel.add(lblFilename, "cell 0 2,alignx right");
 				}
 				{
+					lbl_name = new JLabel("Name:");
+					databasepanel.add(lbl_name, "cell 1 2");
+				}
+				{
 					lblLastEdited = new JLabel("Absolute Path:");
 					databasepanel.add(lblLastEdited, "cell 0 3,alignx right");
+				}
+				{
+					lbl_path = new JLabel("Name:");
+					databasepanel.add(lbl_path, "cell 1 3");
 				}
 				{
 					lblPanaceaVersion = new JLabel("Panacea Version:");
 					databasepanel.add(lblPanaceaVersion, "cell 0 4,alignx right");
 				}
 				{
+					lbl_PanaceaVersion = new JLabel("Name:");
+					databasepanel.add(lbl_PanaceaVersion, "cell 1 4");
+				}
+				{
 					lblFileSize = new JLabel("File Size:");
 					databasepanel.add(lblFileSize, "cell 0 6,alignx right");
 				}
 				{
-					lblCreation = new JLabel("Last modified:");
-					databasepanel.add(lblCreation, "cell 0 7,alignx right");
+					lblSize = new JLabel("Name:");
+					databasepanel.add(lblSize, "cell 1 6");
 				}
 				{
-					btnScanForDatabase = new JButton("Scan for Database (Unsupported)");
-					btnScanForDatabase.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent arg0) {
-							//Currently not working
-						}
-					});
 					{
 						lblOwner = new JLabel("Owner:\r\n");
 						databasepanel.add(lblOwner, "cell 0 8,alignx right");
+					}
+					{
+						lbl_owner = new JLabel("Name:");
+						databasepanel.add(lbl_owner, "cell 1 8");
 					}
 					{
 						lblCreated = new JLabel("Created:");
 						databasepanel.add(lblCreated, "cell 0 9,alignx right");
 					}
 					{
+						lbl_created = new JLabel("//Usupported");
+						lbl_created.setForeground(Color.LIGHT_GRAY);
+						databasepanel.add(lbl_created, "cell 1 9");
+					}
+					{
 						lblAccessed = new JLabel("Accessed:");
 						databasepanel.add(lblAccessed, "cell 0 10,alignx right");
+					}
+					{
+						lbl_acessed = new JLabel("//Usupported");
+						lbl_acessed.setForeground(Color.LIGHT_GRAY);
+						databasepanel.add(lbl_acessed, "cell 1 10");
 					}
 					{
 						lblWritten = new JLabel("Written:");
 						databasepanel.add(lblWritten, "cell 0 11,alignx right");
 					}
-					databasepanel.add(btnScanForDatabase, "cell 2 14,growx");
+				}
+				btnScanForDatabase = new JButton("Scan for Database (Unsupported)");
+				btnScanForDatabase.setEnabled(false);
+				btnScanForDatabase.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						//Currently not working
+					}
+				});
+				{
+					lbl_written = new JLabel("//Usupported");
+					lbl_written.setForeground(Color.LIGHT_GRAY);
+					databasepanel.add(lbl_written, "cell 1 11");
 				}
 				{
+					btnOpenFileIn = new JButton("Open File in Explorer");
+					btnOpenFileIn.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							File f = new File("PPCA_Storage");
+							File folder = new File(f.getAbsolutePath());
+							try {
+								Desktop.getDesktop().open(folder);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					});
+					databasepanel.add(btnOpenFileIn, "cell 1 16,growx");
+				}
+				databasepanel.add(btnScanForDatabase, "cell 1 17,growx");
+				{
 					btnDeleteDatabase = new JButton("Delete Database safely\r\n");
+					btnDeleteDatabase.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+								PPCA_DBEraser xDeb = new PPCA_DBEraser(new File("PPCA_Storage"));
+								xDeb.setDaemon(true);
+								xDeb.run();
+						}
+					});
 					btnDeleteDatabase.setForeground(Color.WHITE);
 					btnDeleteDatabase.setBackground(Color.RED);
-					databasepanel.add(btnDeleteDatabase, "cell 2 15,growx");
+					databasepanel.add(btnDeleteDatabase, "cell 1 18,growx");
 				}
 			}
 			{
@@ -254,26 +329,34 @@ public class PPCA_SettingDialog extends JDialog
 		/* Set visibility */
 		pack();
 		setVisible(true);
+		try {
+			databaseInformation();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	public static void secureDelete(File file) throws IOException {
-	    if (file.exists()) {
-	        long length = file.length();
-	        SecureRandom random = new SecureRandom();
-	        RandomAccessFile raf = new RandomAccessFile(file, "rws");
-	        raf.seek(0);
-	        raf.getFilePointer();
-	        byte[] data = new byte[64];
-	        int pos = 0;
-	        while (pos < length) {
-	            random.nextBytes(data);
-	            raf.write(data);
-	            pos += data.length;
-	        }
-	        raf.close();
-	        file.delete();
-	    }
+	public void databaseInformation() throws IOException, ParseException	{
+		
+		File f = new File("PPCA_Storage");
+		PPCA_FileInfo file = new PPCA_FileInfo(f);
+		
+		txtDatabaseFileLocation.setText(file.getAbsolutePath());
+		lbl_name.setText(file.getName());
+		lbl_path.setText(file.getAbsolutePath());
+		lblSize.setText(String.valueOf(file.getSize()));
+		lbl_owner.setText(file.getOwner());
+		lbl_PanaceaVersion.setText(PanaceaExecutable.version);
+		//lbl_modified.setText(file.getLastModified().toString());
+		//System.out.println("Created: " + file.getCreated());
+		//System.out.println("Accessed: " + file.getAccessed());
+		//System.out.println("Written: " + file.getWritten());
 	}
+	
 
 	private class ButtonListener implements ActionListener
 	{
@@ -320,4 +403,9 @@ public class PPCA_SettingDialog extends JDialog
 			}
 		}
 	}
+	
+	
+	
+	
+	
 }
