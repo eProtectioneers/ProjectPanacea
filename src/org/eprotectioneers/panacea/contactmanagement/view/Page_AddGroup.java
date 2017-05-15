@@ -35,6 +35,7 @@ public class Page_AddGroup extends JFrame{
 	private JPanel pnl_contactsUp;
 	private JPanel pnl_contacts;	
 	private ArrayList<Item_Contact> _ics=new ArrayList<Item_Contact>();
+	private Page_AddGroup pag=this;
 	
 	/**
 	 * Create the panel.
@@ -238,13 +239,13 @@ public class Page_AddGroup extends JFrame{
 		Group g=new Group(DatabaseG.getNewIndex(), pi_groupname.getText(), pi_description.getText(), pnl_image.getPicturePath());
 		DatabaseG.addGroup(g);
 		addSelectedCsToGroup(g);
-		JOptionPane.showMessageDialog(null, "Group added", "", JOptionPane.INFORMATION_MESSAGE, null);
+		JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Group added", "", JOptionPane.INFORMATION_MESSAGE, null);
 	}
 	
 	private class BtnSaveActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			Object options[]={"yes","no"};
-			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to save this Group?", "Save new Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+			switch(JOptionPane.showOptionDialog(pag, "Do you really want to save this Group?", "Save new Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 				case JOptionPane.YES_OPTION:
 					save();
 					dispose();
@@ -258,7 +259,7 @@ public class Page_AddGroup extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			if(lookForChanges()){
 				Object options[]={"yes","no","cancel"};
-				switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you want to save this Group?", "Save new Group", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+				switch(JOptionPane.showOptionDialog(pag, "Do you want to save this Group?", "Save new Group", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 					case JOptionPane.YES_OPTION:
 							save();
 					  case JOptionPane.NO_OPTION:
