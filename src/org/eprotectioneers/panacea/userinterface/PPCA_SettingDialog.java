@@ -6,6 +6,10 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.security.SecureRandom;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -24,6 +28,8 @@ import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_Preferences;
 import javax.swing.JTabbedPane;
 
 import net.miginfocom.swing.MigLayout;
+import java.awt.Color;
+import java.awt.Font;
 
 /**
  * This class represents a Dialog for Settings
@@ -36,6 +42,7 @@ public class PPCA_SettingDialog extends JDialog
 
 	private JTextField txtUsername;
 	private JTextField txtOutboundServer;
+	private JTextField txtDatabaseFileLocation;
 	private JTextField txtInboundServer;
 	private JPasswordField txtPassword;
 	private JButton btnLogin;
@@ -43,12 +50,24 @@ public class PPCA_SettingDialog extends JDialog
 	private JButton okButton;
 	private JButton cancelButton;
 	private JPanel exchangePanel;
+	private JPanel databasepanel;
 	
 	private PPCA_DataRepo or;
 	private PPCA_Preferences pref;
 
 	private final String outbound = "smtp.gmail.com";
 	private final String inbound = "pop.gmail.com";
+	private JLabel lblFilename;
+	private JLabel lblLastEdited;
+	private JLabel lblPanaceaVersion;
+	private JLabel lblFileSize;
+	private JLabel lblCreation;
+	private JLabel lblOwner;
+	private JButton btnDeleteDatabase;
+	private JButton btnScanForDatabase;
+	private JLabel lblCreated;
+	private JLabel lblAccessed;
+	private JLabel lblWritten;
 	
 	/**
 	 * Create the dialog.
@@ -99,6 +118,80 @@ public class PPCA_SettingDialog extends JDialog
 				}
 			}
 			{
+				databasepanel = new JPanel();
+				tabbedPane.addTab("Data Management", null, databasepanel, null);
+				databasepanel.setLayout(new MigLayout("", "[190px][350px][50px]", "[30px][30px][][][][][][][][][][][][][][][600px]"));
+				{
+					JLabel lblDBFile = new JLabel("Database File:");
+					lblDBFile.setHorizontalAlignment(SwingConstants.RIGHT);
+					databasepanel.add(lblDBFile, "flowy,cell 0 0,grow");
+				}
+				{
+					txtDatabaseFileLocation = new JTextField();
+					txtDatabaseFileLocation.setEditable(false);
+					txtDatabaseFileLocation.setText(outbound);
+					databasepanel.add(txtDatabaseFileLocation, "flowx,cell 1 0,grow");
+					txtDatabaseFileLocation.setColumns(10);
+				}
+				{
+					JLabel lblFileInfo = new JLabel("File Information:\r\n");
+					lblFileInfo.setFont(new Font("Dialog", Font.BOLD, 13));
+					lblFileInfo.setHorizontalAlignment(SwingConstants.RIGHT);
+					databasepanel.add(lblFileInfo, "flowy,cell 0 1 2 1,alignx leading,growy");
+				}
+				{
+					lblFilename = new JLabel("Name:");
+					databasepanel.add(lblFilename, "cell 0 2,alignx right");
+				}
+				{
+					lblLastEdited = new JLabel("Absolute Path:");
+					databasepanel.add(lblLastEdited, "cell 0 3,alignx right");
+				}
+				{
+					lblPanaceaVersion = new JLabel("Panacea Version:");
+					databasepanel.add(lblPanaceaVersion, "cell 0 4,alignx right");
+				}
+				{
+					lblFileSize = new JLabel("File Size:");
+					databasepanel.add(lblFileSize, "cell 0 6,alignx right");
+				}
+				{
+					lblCreation = new JLabel("Last modified:");
+					databasepanel.add(lblCreation, "cell 0 7,alignx right");
+				}
+				{
+					btnScanForDatabase = new JButton("Scan for Database (Unsupported)");
+					btnScanForDatabase.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							//Currently not working
+						}
+					});
+					{
+						lblOwner = new JLabel("Owner:\r\n");
+						databasepanel.add(lblOwner, "cell 0 8,alignx right");
+					}
+					{
+						lblCreated = new JLabel("Created:");
+						databasepanel.add(lblCreated, "cell 0 9,alignx right");
+					}
+					{
+						lblAccessed = new JLabel("Accessed:");
+						databasepanel.add(lblAccessed, "cell 0 10,alignx right");
+					}
+					{
+						lblWritten = new JLabel("Written:");
+						databasepanel.add(lblWritten, "cell 0 11,alignx right");
+					}
+					databasepanel.add(btnScanForDatabase, "cell 2 14,growx");
+				}
+				{
+					btnDeleteDatabase = new JButton("Delete Database safely\r\n");
+					btnDeleteDatabase.setForeground(Color.WHITE);
+					btnDeleteDatabase.setBackground(Color.RED);
+					databasepanel.add(btnDeleteDatabase, "cell 2 15,growx");
+				}
+			}
+			{
 				exchangePanel = new JPanel();
 				tabbedPane.addTab("Exchange Settings", null, exchangePanel, null);
 				exchangePanel.setLayout(new MigLayout("", "[190px][350px][50px]", "[30px][30px][600px]"));
@@ -128,6 +221,7 @@ public class PPCA_SettingDialog extends JDialog
 				}
 			}
 		}
+		
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -160,6 +254,25 @@ public class PPCA_SettingDialog extends JDialog
 		/* Set visibility */
 		pack();
 		setVisible(true);
+	}
+	
+	public static void secureDelete(File file) throws IOException {
+	    if (file.exists()) {
+	        long length = file.length();
+	        SecureRandom random = new SecureRandom();
+	        RandomAccessFile raf = new RandomAccessFile(file, "rws");
+	        raf.seek(0);
+	        raf.getFilePointer();
+	        byte[] data = new byte[64];
+	        int pos = 0;
+	        while (pos < length) {
+	            random.nextBytes(data);
+	            raf.write(data);
+	            pos += data.length;
+	        }
+	        raf.close();
+	        file.delete();
+	    }
 	}
 
 	private class ButtonListener implements ActionListener

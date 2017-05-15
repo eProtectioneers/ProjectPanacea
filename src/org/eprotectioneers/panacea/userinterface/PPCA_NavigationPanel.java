@@ -16,8 +16,10 @@ import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 
 import org.eprotectioneers.panacea.cs4235.PGPClient.email.PPCA_PGPMail;
 import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_DataRepo;
@@ -57,8 +59,8 @@ public class PPCA_NavigationPanel extends JPanel
 		/* Initialize components */
 		tblEmail = new JTable();
 		tblEmail.setFillsViewportHeight(true);
-		tblEmail.setRowHeight(tblEmail.getRowHeight() * 5);
-		tblEmail.setDefaultRenderer(Object.class, new MultiLineCellRenderer());
+		tblEmail.setRowHeight(tblEmail.getRowHeight() * 3);
+		tblEmail.setDefaultRenderer(Object.class, new DefaultTableCellRenderer());
 		tblEmail.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollEmail = new JScrollPane(tblEmail);	
 
@@ -105,14 +107,21 @@ public class PPCA_NavigationPanel extends JPanel
 		/* Populate data for the table */
 		String[] columnName = {"INBOX"};
 		String[][] emailStore = new String[emails.length][columnName.length];
-
+		
 		for (int i = 0; i < emails.length; i++)
 		{
 			/* Construct Email Preview */
-			String preview = getPreview(emails[i]);
-			emailStore[i][0] = preview;
-		}
+			//String preview = getPreview(emails[i]);
+			String html = "<html><div>"
+					+ "<a style='color:#FF4F00'><strong><em>Sender: </em></strong></a><a style='color:#191919'><strong>"+emails[i].from+"</strong></a>"
+					+ "<p align='justify' style='color:#191919word-wrap:break-word'>"+getPreview(emails[i])+"</p>"
+					+ "</div></html>"
+					+ ""
+					+ "";
 
+			emailStore[i][0] = html;
+		}
+		
 		/* Set table model */
 		DefaultTableModel model = new DefaultTableModel()
 		{
@@ -153,6 +162,10 @@ public class PPCA_NavigationPanel extends JPanel
 		String preview = removeMail(email.from) + "\n";
 		preview += email.subject + "\n";
 		//preview += snippet(email.payload);
+		if(preview.length()>42){
+			preview = preview.substring(0,41);
+		}
+		
 		return preview;
 	}
 	
@@ -202,49 +215,4 @@ public class PPCA_NavigationPanel extends JPanel
 		}
 	}
 
-	private class MultiLineCellRenderer extends JTextArea implements TableCellRenderer
-	{
-		public MultiLineCellRenderer()
-		{
-			setLineWrap(true);
-			setWrapStyleWord(true);
-			setOpaque(true);
-		}
-
-		@Override
-		public Component getTableCellRendererComponent(JTable table,
-				Object value, boolean isSelected, boolean hasFocus, int row, int column) 
-		{
-			if (isSelected) 
-			{
-				setForeground(table.getSelectionForeground());
-				setBackground(table.getSelectionBackground());
-			} 
-			else 
-			{
-				setForeground(table.getForeground());
-				setBackground(table.getBackground());
-			}
-			setFont(table.getFont());
-
-			if (hasFocus) 
-			{
-				setBorder(UIManager.getBorder("Table.focusCellHighlightBorder"));
-				if (table.isCellEditable(row, column)) 
-				{
-					setForeground(UIManager.getColor("Table.focusCellForeground"));
-					setBackground(UIManager.getColor("Table.focusCellBackground"));
-				}
-			} 
-			else 
-			{
-				Border paddingBorder = BorderFactory.createEmptyBorder(1, 2, 1, 2);
-				Border border = BorderFactory.createRaisedBevelBorder();
-				setBorder(BorderFactory.createCompoundBorder(border, paddingBorder));
-			}
-
-			setText((value == null) ? "" : value.toString());
-			return this;
-		}
-	}
 }
