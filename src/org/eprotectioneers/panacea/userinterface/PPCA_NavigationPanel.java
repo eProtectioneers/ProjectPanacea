@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -35,6 +36,8 @@ import org.eprotectioneers.panacea.contactmanagement.view.Page_Contact;
 import org.eprotectioneers.panacea.cs4235.PGPClient.email.PPCA_PGPMail;
 import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_DataRepo;
 import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_EmailStore;
+
+import com.sun.javafx.webkit.prism.PrismGraphicsManager;
 
 /**
  * This class represents a navigation panel where list of available
@@ -187,7 +190,7 @@ public class PPCA_NavigationPanel extends JPanel
 	 */
 	private static String getPreview(PPCA_PGPMail email)
 	{
-		String preview = email.subject + "\n" +email.payload;
+		String preview = email.subject + " - " +email.payload;
 		//preview += snippet(email.payload);
 		if(preview.length()>42){
 			preview = preview.substring(0,41);
@@ -235,8 +238,7 @@ public class PPCA_NavigationPanel extends JPanel
 	private class MouseListener extends MouseAdapter
 	{
 		private Thread t1;
-		private String _sender;
-		private String _subject;
+		private PPCA_PGPMail _email;
 		
 		@Override
 		public void mousePressed(MouseEvent e) 
@@ -246,8 +248,7 @@ public class PPCA_NavigationPanel extends JPanel
 			{
 				int row = tblEmail.rowAtPoint(new Point(e.getX(),e.getY()));
 				PPCA_PGPMail email = es.getEmail(row);
-				_sender=email.from;
-				_subject=email.subject;
+				_email=email;
 				
 				if(e.getButton()==MouseEvent.BUTTON1){	
 					window.setCenterPanel(window.getMainPanel());
@@ -270,7 +271,7 @@ public class PPCA_NavigationPanel extends JPanel
 		
 		private void showPopup(MouseEvent e){
 			if(t1!=null&&t1.isAlive())t1.stop();
-			t1=new Thread(new PopupGenerator(_sender,_subject));
+			t1=new Thread(new PopupGenerator(_email));
 			t1.start();
 
 			while(t1.isAlive()){
@@ -287,17 +288,17 @@ public class PPCA_NavigationPanel extends JPanel
 	private class PopupGenerator implements Runnable{
 
 		private Contact _c;
-		private String _sender;
+		private PPCA_PGPMail _email;
 		private String _subject;
 		
-		public PopupGenerator(String sender, String subject){
-			_sender=sender;
-			_subject=subject;
+		public PopupGenerator(PPCA_PGPMail email){
+			_email=email;
+			_subject=email.subject;
 		}
 		@Override
 		public void run() {
 			
-			_c=DatabaseC.checkContact(_sender);
+			_c=DatabaseC.checkContact(_email.from);
 			
 			pum=new JPopupMenu();
 			if(_subject.length()>18){
@@ -306,17 +307,17 @@ public class PPCA_NavigationPanel extends JPanel
 			}
 			pum.add(new JLabel(_subject));
 			mni_reply=new JMenuItem("Reply to Message");
-			mni_reply.addActionListener(new ReplyActionListener());
+			mni_reply.addActionListener(new ReplyActionListener(_email));
 			pum.add(mni_reply);
 			mni_forward=new JMenuItem("Forward Message");
-			mni_forward.addActionListener(new ForwardActionListener());
+			mni_forward.addActionListener(new ForwardActionListener(_email));
 			pum.add(mni_forward);
 			mni_delete=new JMenuItem("Delete Message");
 			mni_delete.addActionListener(new DeleteMessageActionListener());
 			pum.add(mni_delete);
 			if(_c==null){
 				mni_addtoc=new JMenuItem("Add Sender to Contacts");
-				mni_addtoc.addActionListener(new AddToContactsActionListener(_sender));
+				mni_addtoc.addActionListener(new AddToContactsActionListener(_email.from));
 				pum.add(mni_addtoc);
 			}
 			if(_c!=null){
@@ -337,16 +338,26 @@ public class PPCA_NavigationPanel extends JPanel
 	}
 	
 	private class ReplyActionListener implements ActionListener {
+		private PPCA_PGPMail _email;
+		public ReplyActionListener(PPCA_PGPMail email){
+			_email=email;
+		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//MZ
+			PPCA_ComposeWindow cd = new PPCA_ComposeWindow(PPCA_PanaceaWindow.getFrame());
+			cd.setEmail(_email, PPCA_PGPMail.Type.REPLY);
 		}
 	}
 	
 	private class ForwardActionListener implements ActionListener {
+		private PPCA_PGPMail _email;
+		public ForwardActionListener(PPCA_PGPMail email){
+			_email=email;
+		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//MZ
+			PPCA_ComposeWindow cd = new PPCA_ComposeWindow(PPCA_PanaceaWindow.getFrame());
+			cd.setEmail(_email, PPCA_PGPMail.Type.FORWARD);
 		}
 	}
 	

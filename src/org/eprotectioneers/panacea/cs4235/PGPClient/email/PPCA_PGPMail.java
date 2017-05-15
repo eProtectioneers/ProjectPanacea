@@ -46,6 +46,8 @@ public class PPCA_PGPMail
 	private final static String BEGIN_SIGNATURE = "\n-----BEGIN PGP SIGNATURE-----\n";
 	private final static String END_SIGNATURE = "\n-----END PGP SIGNATURE-----\n";
 
+	private boolean encrypted=false;
+	
 	public String to;
 	public String subject;
 	public String from;
@@ -58,6 +60,10 @@ public class PPCA_PGPMail
 		NEW,
 		REPLY,
 		FORWARD
+	}
+	
+	public void setEncrypted(boolean encrypted){
+		this.encrypted=encrypted;
 	}
 
 	/**
@@ -92,8 +98,9 @@ public class PPCA_PGPMail
 	 */
 	public Message prepare() throws PPCA_PGPMailException
 	{
-		String body = encryptContent(this.payload);
-
+		String body=this.payload;
+		if(encrypted)body = encryptContent(body);
+		
 		/* Create Java message */
 		Session session = PPCA_MailClient.getSMTPSession();
 		try 
