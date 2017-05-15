@@ -58,7 +58,7 @@ public class Page_AddContact extends JFrame {
 		Object options[]={"yes","no"};
 		int i=0;
 		for(Contact c:DatabaseC.getContacts()){
-			if(c.getEmailaddress().toLowerCase().equals(emailaddress.toLowerCase())){
+			if(c.getEmailaddress().equals(emailaddress)){
 				i=JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "There's already a Contact with this Email-Address. Do you want to continue?", "Contact already exists",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[1]);
 				break;
 			}
