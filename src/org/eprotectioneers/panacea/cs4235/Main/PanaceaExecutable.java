@@ -10,6 +10,7 @@ import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 public class PanaceaExecutable 
 {
 	//DevelopmentLifeFeed -> Sojournercntl
+	public static final String version = "Alpha Dev Branch | 0.1";
 	
 	public static void main(String[] args) 
 	{

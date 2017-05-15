@@ -15,7 +15,7 @@ import com.db4o.ObjectSet;
 public class PPCA_DataRepo {
 
 	public static String DB_NAME = "PPCA_Storage";
-	private static PPCA_DataRepo instance;
+	public static PPCA_DataRepo instance;
 
 	private EmbeddedObjectContainer db;
 	private Map<String, PPCA_RemoteClientKey> publicKeys;
@@ -86,6 +86,10 @@ public class PPCA_DataRepo {
 			db.commit();
 			refreshModels();
 		}
+	}
+	
+	public static void closeConnection(){
+		instance.db.close();
 	}
 
 	public List<PPCA_RemoteClientKey> getKeyStore() {
