@@ -19,6 +19,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Random;
 
+//Imports Crypto
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -27,19 +28,24 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-//Using the bouncy Castle Library
+//Imports Bouncy Castle
 import org.bouncycastle.util.encoders.Base64;
 
 /**
  * This class represents a key factory that will produce RSA and AES
- * key for cryptography purposes.
+ * keys for cryptography purposes.
  * @author eProtectioneers
  */
 public class EncryptionServiceEngine 
 {
-	
+	/**
+	 * singleton keyfactory
+	 */
 	private static EncryptionServiceEngine keyFactory;
 
+	/**	
+	 * contstructor
+	 */
 	private EncryptionServiceEngine()
 	{
 
@@ -57,7 +63,7 @@ public class EncryptionServiceEngine
 	}
 
 	/**
-	 * Convert byte array to Base64 encoded string.
+	 * Convert byte array to a Base64 encoded string.
 	 * @param raw the byte array to be converted
 	 * @return Base64 encoded string
 	 */
@@ -67,7 +73,7 @@ public class EncryptionServiceEngine
 	}
 
 	/**
-	 * Convert Base64 encoded string to byte array.
+	 * Convert Base64 encoded string to a byte array.
 	 * @param raw the Base64 encoded string to be converted
 	 * @return the byte array
 	 */
@@ -78,7 +84,7 @@ public class EncryptionServiceEngine
 
 	/**
 	 * Generate a pair of 1024-bit RSA keys. The public key and private key 
-	 * can be obtained by calling getRSAPublicKey() and getRSAPublicKey()
+	 * can be obtained by calling getRSAPublicKey() and getRSAPrivateKey()
 	 * respectively. Every time this function is called, a new pair of
 	 * keys will be generated.
 	 * @return an array of RSAKey:
@@ -501,20 +507,18 @@ public class EncryptionServiceEngine
 	 */
 	public boolean authenticate(RSAPublicKey publicKey, String signature, String payload)
 	{
-		/* http://upload.wikimedia.org/wikipedia/commons/2/2b/Digital_Signature_diagram.svg */
 		try 
 		{
-			/* Hash the payload */
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			byte[] hash = md.digest(payload.getBytes());
 
-			/* Decrypt the signature using the signer's public key */
+			// Decrypt the signature using the signer's public key
 			byte[] signatureRaw = Base64Decode(signature);
 			Cipher cipher = Cipher.getInstance("RSA");
 			cipher.init(Cipher.DECRYPT_MODE, publicKey);
 			byte[] sign = cipher.doFinal(signatureRaw);
 
-			/* Compare the hash with the signature */
+			// Compare the hash with the signature
 			return Arrays.equals(hash, sign);
 		} 
 		catch (NoSuchAlgorithmException e) 
