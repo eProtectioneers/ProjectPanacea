@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.cs4235.PGPClient.junit;
 
 import java.security.interfaces.RSAKey;
@@ -53,7 +57,7 @@ public class KeyFactoryTest extends TestCase
 		publicKey = (RSAPublicKey) keys[1];
 		passphrase = "eprotectioneers";
 		
-		message1 = "Normaly simon would insert some strange " + 
+		message1 = "Normaly we would insert some strange " + 
 				   "meaningless sentences ;) But this time " + 
 				   "were trying keep the code meaningfull";
 		message2 = "Project panacea is the only software " + 
