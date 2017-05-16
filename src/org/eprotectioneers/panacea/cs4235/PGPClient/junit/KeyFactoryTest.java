@@ -8,17 +8,41 @@ import org.eprotectioneers.panacea.cs4235.PGPClient.cryptex.EncryptionServiceEng
 
 import junit.framework.TestCase;
 
-
+/**
+ * JUnit Test for the KeyFactory
+ * @author eProtectioneers
+ */
 public class KeyFactoryTest extends TestCase
 {
+	/**
+	 * Encryption Service Engine
+	 */
 	EncryptionServiceEngine ce;
+	/**
+	 * Private Key
+	 */
 	RSAPrivateKey privateKey;
+	/**
+	 * Public Key
+	 */
 	RSAPublicKey publicKey;
+	/**
+	 * Passphrase
+	 */
 	String passphrase;
 	
+	/**
+	 * Message 1
+	 */
 	String message1;
+	/**
+	 * Message 2
+	 */
 	String message2;
 	
+	/**
+	 * Setting up the Test Routine
+	 */
 	protected void setUp() throws Exception 
 	{
 		super.setUp();
@@ -36,6 +60,9 @@ public class KeyFactoryTest extends TestCase
 				   "which has its own brain (not true :D)";
 	}
 	
+	/**
+	 * Test the Encoding functions
+	 */
 	public void testBase64Encoding()
 	{
 		String encoding1 = ce.Base64Encode(message1.getBytes());
@@ -48,6 +75,9 @@ public class KeyFactoryTest extends TestCase
 		assertEquals (message2, decoding2);
 	}
 	
+	/**
+	 * Testing the RSA Encryption
+	 */
 	public void testRSAEncryption () 
 	{
 		String cipher1 = ce.encrypt(publicKey, message1);
@@ -60,6 +90,9 @@ public class KeyFactoryTest extends TestCase
 		assertEquals (message2, plain2);
 	}
 	
+	/**
+	 * Exporting the keys
+	 */
 	public void testExportKeys ()
 	{
 		String privateKeyEncoded = ce.getEncoded(privateKey);
@@ -96,6 +129,9 @@ public class KeyFactoryTest extends TestCase
 		assertEquals (message2, plain2);
 	}
 	
+	/**
+	 * Testing the AESEncryption
+	 */
 	public void testAESEncryption () 
 	{
 		String[] cipher1 = ce.encrypt(passphrase, message1);
@@ -108,6 +144,9 @@ public class KeyFactoryTest extends TestCase
 		assertEquals (message2, plain2);
 	}
 	
+	/**
+	 * Testing DigitalSignature
+	 */
 	public void testDigitalSignature () 
 	{
 		String signature1 = ce.sign(privateKey, message1);
