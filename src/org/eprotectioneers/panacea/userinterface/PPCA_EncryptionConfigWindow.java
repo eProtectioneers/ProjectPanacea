@@ -29,6 +29,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import org.eprotectioneers.panacea.contactmanagement.models.ChooseFile;
+import org.eprotectioneers.panacea.contactmanagement.models.ChooseFile.FileChoosePathDatabase;
 import org.eprotectioneers.panacea.cs4235.PGPClient.cryptex.EncryptionServiceEngine;
 import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_DataRepo;
 import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_FileEngine;
@@ -378,7 +380,7 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 
 			if (source == btnKeyDirectoryBrowse)
 			{
-				JFileChooser browser = new JFileChooser();
+				JFileChooser browser = ChooseFile.getKeyFileChooser();
 				browser.setDialogTitle("Key Directory");
 				browser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				if (PPCA_FileEngine.isFileOrDirectoryExist(txtKeydirectory.getText()))
@@ -390,11 +392,12 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 				if (returnVal == JFileChooser.APPROVE_OPTION) 
 				{
 					txtKeydirectory.setText(browser.getSelectedFile().getPath());
+					FileChoosePathDatabase.saveFileChooser();
 				} 
 			}
 			else if (source == btnPrivateKeyBrowse)
 			{
-				JFileChooser browser = new JFileChooser();
+				JFileChooser browser = ChooseFile.getKeyFileChooser();
 				browser.setDialogTitle("Private Key");
 				browser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				if (PPCA_FileEngine.isFileOrDirectoryExist(txtKeydirectory.getText()))
@@ -406,6 +409,7 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 				if (returnVal == JFileChooser.APPROVE_OPTION) 
 				{
 					txtPrivateKey.setText(browser.getSelectedFile().getName());
+					FileChoosePathDatabase.saveFileChooser();
 				} 
 			}
 			else if (source == btnGenerateRsaKey)

@@ -1,6 +1,8 @@
 package org.eprotectioneers.panacea.cs4235.Main;
 
 import javax.swing.UIManager;
+
+import org.eprotectioneers.panacea.contactmanagement.models.ChooseFile.FileChoosePathDatabase;
 import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 /**
@@ -30,6 +32,7 @@ public class PanaceaExecutable
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
            
         }
+		FileChoosePathDatabase.loadFileChooser();
 		
 		
 		PPCA_PanaceaWindow window = new PPCA_PanaceaWindow();
