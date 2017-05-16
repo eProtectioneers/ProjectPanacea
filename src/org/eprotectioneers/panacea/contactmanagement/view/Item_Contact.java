@@ -12,6 +12,8 @@ import org.eprotectioneers.panacea.contactmanagement.models.DatabaseCG;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseG;
 import org.eprotectioneers.panacea.contactmanagement.models.Group;
 import org.eprotectioneers.panacea.contactmanagement.models.RemoveContactFromGroupActionListener;
+import org.eprotectioneers.panacea.cs4235.PGPClient.email.PPCA_PGPMail;
+import org.eprotectioneers.panacea.userinterface.PPCA_ComposeWindow;
 import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 import java.awt.event.*;
@@ -281,7 +283,8 @@ public class Item_Contact extends Item_Object {
 	private class MntmNewEmailActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//MZ_Sojourner_cntl
+			PPCA_ComposeWindow cd = new PPCA_ComposeWindow(PPCA_PanaceaWindow.getFrame());
+			cd.setEmail(_c.getEmailaddress());
 		}
 	}
 	private class MntmConversationsActionListener implements ActionListener {

@@ -24,6 +24,7 @@ import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_DataRepo;
 import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_Preferences;
 
 import net.miginfocom.swing.MigLayout;
+import javax.swing.JCheckBox;
 
 /**
  * This class represent a dialog menu for Compose Email
@@ -38,6 +39,7 @@ public class PPCA_ComposeWindow extends JFrame
 	
 	private JButton sendButton;
 	private JButton cancelButton;
+	private JCheckBox chckbxEncryptIt;
 
 	private PPCA_MailClient ec;
 	private PPCA_DataRepo or;
@@ -112,6 +114,10 @@ public class PPCA_ComposeWindow extends JFrame
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
+				chckbxEncryptIt = new JCheckBox("Encrypt it");
+				buttonPane.add(chckbxEncryptIt);
+			}
+			{
 				sendButton = new JButton("Send");
 				sendButton.setActionCommand("OK");
 				buttonPane.add(sendButton);
@@ -157,6 +163,15 @@ public class PPCA_ComposeWindow extends JFrame
 			this.txtBody.setText(email.payload);
 		}
 	}
+	
+	/**
+	 * Set a email to send to the given
+	 * @param emailaddress
+	 */
+	public void setEmail(String emailaddress)
+	{
+		this.txtTo.setText(emailaddress);
+	}
 
 	private class ButtonListener implements ActionListener
 	{
@@ -182,6 +197,7 @@ public class PPCA_ComposeWindow extends JFrame
 				else
 				{
 					PPCA_PGPMail email = new PPCA_PGPMail(to, subject, from, body);
+					email.setEncrypted(chckbxEncryptIt.isSelected());
 					successful = ec.send(email);
 					if (successful)
 					{
