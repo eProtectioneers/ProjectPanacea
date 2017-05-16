@@ -7,16 +7,32 @@ import java.security.SecureRandom;
 
 import javax.swing.JOptionPane;
 
+/**
+ * Database Eraser Thread
+ * Deletes the local databasefile safely
+ * @author eProtectioneers
+ * Currently in Development!
+ */
 public class PPCA_DBEraser extends Thread{
 
+		/**
+		 * Database file
+		 */
 	    private File file;
 
+	    /**
+	     * Constructor
+	     * @param f Database File to delete
+	     */
 	    public PPCA_DBEraser(File f) {
 	    	
 	    	this.file = f;
 			
 		}
 
+	    /**
+	     * Run the thread (Set thread as deamon before!)
+	     */
 	    public void run() {
 	    	try{
 	    			PPCA_DataRepo.closeConnection();
@@ -29,6 +45,11 @@ public class PPCA_DBEraser extends Thread{
 	    	}
 	    }
 	    
+	    /**
+	     * SecureDelete the file located on the harddrive
+	     * @param file File to delete
+	     * @throws IOException Throws if something doesnt work
+	     */
 	    public static void secureDelete(File file) throws IOException {
 		    if (file.exists()) {
 		        long length = file.length();

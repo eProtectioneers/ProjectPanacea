@@ -18,11 +18,22 @@ public class PPCA_LocalDBConnector extends PPCA_DBConnector
 	 * to prevent SQL injection.
 	 */
 
-	/* Singleton object */
+	/**
+	 * Singleton PPCA_LocalDBConnector
+	 */
 	private static PPCA_LocalDBConnector dbConnector;
 
+	/**
+	 * Server connection string
+	 */
 	private final String SERVER = "jdbc:mysql://<<ipaddress>>/<<dbName>>";
+	/**
+	 * Username
+	 */
 	private final String USERNAME = "<<username>>";
+	/**
+	 * Password
+	 */
 	private final String PASSWORD = "<<password>>";
 	
 	/**
@@ -33,6 +44,10 @@ public class PPCA_LocalDBConnector extends PPCA_DBConnector
 		
 	}
 	
+	/**
+	 * Get the Singleton instance
+	 * @return PPCA_DBConnector instance
+	 */
 	public static PPCA_DBConnector getInstance() 
 	{
 		if (dbConnector == null)
@@ -40,6 +55,9 @@ public class PPCA_LocalDBConnector extends PPCA_DBConnector
 		return dbConnector;
 	}
 
+	/**
+	 * Connect the database
+	 */
 	@Override
 	public void connect() throws SQLException 
 	{

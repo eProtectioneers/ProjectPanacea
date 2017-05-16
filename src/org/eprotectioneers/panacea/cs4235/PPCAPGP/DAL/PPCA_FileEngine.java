@@ -73,7 +73,7 @@ public class PPCA_FileEngine
 	}
 	
 	/**
-	 * Check if the specified file or directory exists in the filesystem.
+	 * Check if the file or directory exists in the filesystem.
 	 * @param filepath the filepath
 	 * @return true if the file or directory exists or false otherwise
 	 */
