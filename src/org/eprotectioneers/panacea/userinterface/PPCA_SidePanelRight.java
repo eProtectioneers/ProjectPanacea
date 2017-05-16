@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.userinterface;
 
 import javax.swing.JPanel;
@@ -21,7 +25,11 @@ import java.awt.FlowLayout;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Component;
 
-
+/**
+ * Old right Sidebar to show Twitter feeds (Jpanel)(Relic)
+ * @author eProtectioneers
+ */
+@Deprecated
 public class PPCA_SidePanelRight extends JPanel {
 
 	PPCA_PanaceaWindow window;

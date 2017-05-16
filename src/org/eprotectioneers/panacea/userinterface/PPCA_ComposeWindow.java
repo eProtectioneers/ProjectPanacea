@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.userinterface;
 
 import java.awt.BorderLayout;
@@ -13,8 +17,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import org.eprotectioneers.panacea.cs4235.PGPClient.email.PPCA_MailClient;
 import org.eprotectioneers.panacea.cs4235.PGPClient.email.PPCA_PGPMail;
@@ -22,32 +28,64 @@ import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_DataRepo;
 import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_Preferences;
 
 import net.miginfocom.swing.MigLayout;
+import javax.swing.JCheckBox;
 
 /**
- * This class represent a dialog menu for Compose Email
+ * Compose mail Userinterface (JFrame)
  * @author eProtectioneers
  */
 public class PPCA_ComposeWindow extends JFrame 
 {
+	/**
+	 * Receipient text
+	 */
 	private JTextField txtTo;
+	/**
+	 * Subject Text
+	 */
 	private JTextField txtSubject;
+	/**
+	 * From text
+	 */
 	private JTextField txtFrom;
+	/**
+	 * Body of the mail
+	 */
 	private JTextArea txtBody;
-
+	
+	/**
+	 * Send Button
+	 */
 	private JButton sendButton;
+	/**
+	 * Cancel Button
+	 */
 	private JButton cancelButton;
+	/**
+	 * Checkbox Encryption
+	 */
+	private JCheckBox chckbxEncryptIt;
 
+	/**
+	 * EmailClient instance
+	 */
 	private PPCA_MailClient ec;
+	/**
+	 * Datarepository instance
+	 */
 	private PPCA_DataRepo or;
+	/**
+	 * Preferences instance
+	 */
 	private PPCA_Preferences pref;
 
 	/**
-	 * Create the dialog.
+	 * Constructor
+	 * Creates the dialog
 	 */
 	public PPCA_ComposeWindow(JFrame frame) 
 	{
 		/* Set Properties */
-		setResizable(false);
 		setAlwaysOnTop(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Project Panacea - Compose / [ACCOUNT]");
@@ -61,50 +99,59 @@ public class PPCA_ComposeWindow extends JFrame
 		{
 			JPanel panelHeader = new JPanel();
 			getContentPane().add(panelHeader, BorderLayout.NORTH);
-			panelHeader.setLayout(new MigLayout("", "[80px][850px]", "[30px][30px]"));
+			panelHeader.setLayout(new MigLayout("", "[10%][][grow][10%]", "[30px][30px][]"));
 			{
 				JLabel lblTo = new JLabel("To:");
-				panelHeader.add(lblTo, "cell 0 0,alignx right,growy");
+				panelHeader.add(lblTo, "cell 1 0,alignx right,growy");
 			}
 			{
 				txtTo = new JTextField();
-				panelHeader.add(txtTo, "cell 1 0,grow");
+				txtTo.setMaximumSize(new Dimension(2147483647, 25));
+				panelHeader.add(txtTo, "cell 2 0,grow");
 				txtTo.setColumns(10);
 			}
 			{
 				JLabel lblSubject = new JLabel("Subject:");
-				panelHeader.add(lblSubject, "cell 0 1,alignx right,growy");
+				panelHeader.add(lblSubject, "cell 1 1,alignx right,growy");
 			}
 			{
 				txtSubject = new JTextField();
-				panelHeader.add(txtSubject, "cell 1 1,grow");
+				txtSubject.setMaximumSize(new Dimension(2147483647, 25));
+				panelHeader.add(txtSubject, "cell 2 1,grow");
 				txtSubject.setColumns(10);
 			}
 			{
 				JLabel lblFrom = new JLabel("From:");
-				panelHeader.add(lblFrom, "cell 0 2,alignx right,growy");
+				panelHeader.add(lblFrom, "cell 1 2,alignx right,growy");
 			}
 			{
 				txtFrom = new JTextField();
+				txtFrom.setMaximumSize(new Dimension(2147483647, 25));
 				txtFrom.setEditable(false);
-				panelHeader.add(txtFrom, "cell 1 2,grow");
+				panelHeader.add(txtFrom, "cell 2 2,grow");
 				txtFrom.setColumns(10);
 			}
 		}
 		{
 			JPanel panelCompose = new JPanel();
+			panelCompose.setBorder(null);
 			getContentPane().add(panelCompose, BorderLayout.CENTER);
+			panelCompose.setLayout(new MigLayout("", "[7.5%][grow][7.5%]", "[grow]"));
 			{
 				txtBody = new JTextArea();
-				txtBody.setRows(30);
-				txtBody.setColumns(80);
-				panelCompose.add(txtBody);
+				txtBody.setBorder(new EmptyBorder(7, 7, 7, 7));
+				JScrollPane spnBody=new JScrollPane(txtBody);
+				panelCompose.add(spnBody, "cell 1 0,grow");
 			}
 		}
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			{
+				chckbxEncryptIt = new JCheckBox("Encrypt it");
+				buttonPane.add(chckbxEncryptIt);
+			}
 			{
 				sendButton = new JButton("Send");
 				sendButton.setActionCommand("OK");
@@ -135,7 +182,7 @@ public class PPCA_ComposeWindow extends JFrame
 	}
 
 	/**
-	 * Set the email for REPLY and FORWARD protocol
+	 * Set the email for REPLY and FORWARD
 	 * @param email the email
 	 */
 	public void setEmail(PPCA_PGPMail email, PPCA_PGPMail.Type type)
@@ -151,7 +198,21 @@ public class PPCA_ComposeWindow extends JFrame
 			this.txtBody.setText(email.payload);
 		}
 	}
+	
+	/**
+	 * Set the email to be sent to the receipient
+	 * @param emailaddress
+	 */
+	public void setEmail(String emailaddress)
+	{
+		this.txtTo.setText(emailaddress);
+	}
 
+	/**
+	 * Button Listener Class
+	 * @author marcu
+	 * A relic of a earlier release
+	 */
 	private class ButtonListener implements ActionListener
 	{
 		@Override
@@ -176,6 +237,7 @@ public class PPCA_ComposeWindow extends JFrame
 				else
 				{
 					PPCA_PGPMail email = new PPCA_PGPMail(to, subject, from, body);
+					email.setEncrypted(chckbxEncryptIt.isSelected());
 					successful = ec.send(email);
 					if (successful)
 					{

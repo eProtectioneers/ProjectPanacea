@@ -27,6 +27,7 @@ public class Page_AddContact extends JFrame {
 	private PageItem_new pi_emailaddress;
 	private PageItem_new pi_phonenumber;
 	private PageItem_new pi_address;
+	private Page_AddContact pac=this;
 
 	/**
 	 * A list, which contains every pageitem 
@@ -51,26 +52,16 @@ public class Page_AddContact extends JFrame {
 				(int)(componentLocation.y + component.getHeight()/2-this.getHeight()/2));
 		inizialize();
 	}
-	public Page_AddContact(String emailaddress) {
+	
+	public Page_AddContact(Component component,String shownname,String emailaddress) {
+		this(component);
 		Object options[]={"yes","no"};
-		int i=0;
-		for(Contact c:DatabaseC.getContacts()){
-			if(c.getEmailaddress().equals(emailaddress)){
-				i=JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "There's already a Contact with this Email-Address. Do you want to continue?", "Contact already exists",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[1]);
-				break;
-			}
-		}
-		switch(i){
-			case JOptionPane.YES_OPTION:
-				inizialize();
-				pi_emailaddress.setText(emailaddress);
-			  default:
-				  break;
-		}
-		
+
+		pi_shownname.setText(shownname);
+		pi_emailaddress.setText(emailaddress);
+
 	}
 
-	
 	public void inizialize(){
 		contentPane = new JPanel();
 
@@ -180,22 +171,39 @@ public class Page_AddContact extends JFrame {
 				pi_lastname.getText(), pi_emailaddress.getText(), pi_phonenumber.getText(), pi_address.getText(), 
 				pnl_image.getPicturePath(), false);
 		DatabaseC.addContact(c);
-		JOptionPane.showMessageDialog(null, "Contact added", "", JOptionPane.INFORMATION_MESSAGE, null);
+		JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contact added", "", JOptionPane.INFORMATION_MESSAGE, null);
+	}
+	
+	private boolean checkSave(){
+		boolean b=true;
+		if(DatabaseC.checkContact(pi_emailaddress.getText())!=null){
+			Object[] options={"yes","no"};
+			switch(JOptionPane.showOptionDialog(pac, "There's already a Contact with this Email-Address. Do you want to continue?", "Contact already exists",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[0])){
+			case JOptionPane.YES_OPTION:
+				break;
+			default:
+				b=false;
+				break;
+			}
+		}
+		return b;
 	}
 	
 	private class BtnSaveActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(!new EmailValidator().validate(pi_emailaddress.getText())){
-				JOptionPane.showMessageDialog(null, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(pac, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);
 				pi_emailaddress.requestFocus();
 			}
 			else{
 				Object options[]={"yes","no"};
-				switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+				switch(JOptionPane.showOptionDialog(pac, "Do you really want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 					case JOptionPane.YES_OPTION:
-						save();
-						dispose();
+						if(checkSave()){
+							save();
+							dispose();
+						}
 						break;
 					default:
 						break;
@@ -209,22 +217,18 @@ public class Page_AddContact extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			Object options[]={"yes","no","cancel"};
 			if(lookForChanges()){
-				switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+				boolean b=checkSave();
+				switch(JOptionPane.showOptionDialog(pac, "Do you want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 					case JOptionPane.YES_OPTION:
 						if(!new EmailValidator().validate(pi_emailaddress.getText())){
-							JOptionPane.showMessageDialog(null, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(pac, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);
 							pi_emailaddress.requestFocus();
 							break;
 						}
-						save();
-					  case JOptionPane.NO_OPTION:
-						  dispose();
-						  break;
+						if(b)save();
+					case JOptionPane.NO_OPTION:
+						if(b)dispose();
 					default:
-						if(!new EmailValidator().validate(pi_emailaddress.getText())){
-							JOptionPane.showMessageDialog(null, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);
-							pi_emailaddress.requestFocus();
-						}
 						break;
 				}
 			}else dispose();
