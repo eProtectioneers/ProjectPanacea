@@ -26,24 +26,45 @@ import javafx.scene.web.WebView;
 import javax.swing.JEditorPane;
 
 /**
- * This class represents a main panel where email will be displayed.
+ * MainPanel which contains the information 
+ * panels and the email viewer (JPanel) 
  * @author eProtectioneers
  */
 public class PPCA_MainPanel extends JPanel 
 {
-	//Bringing HTML5 Rendering
+	/**
+	 * JFXPanel for HTML5 Rendering
+	 */
 	private final JFXPanel jfxPanel = new JFXPanel();
-	
+	/**
+	 * JFXWebview for HTML5 Rendering
+	 */
 	private WebView webComponent;
 	private JTextArea txtEmail;
-	private PPCA_PanaceaWindow window;
-	private PPCA_PGPMail email;
 	
+	/**
+	 * PanaceaWindow instance
+	 */
+	private PPCA_PanaceaWindow window;
+	/**
+	 * email to display
+	 */
+	private PPCA_PGPMail email;
+	/**
+	 * The top bar to display email information
+	 */
 	private JLabel topBar = new JLabel("");
 	
+	/**
+	 * contains the height (RELIC)
+	 */
 	private double height;
+	/**
+	 * contains the width (RELIC)
+	 */
 	private double width;
 	
+	//unused but still implemented!
 	JEditorPane paneMail = new JEditorPane();
 	
 	/**
@@ -65,7 +86,8 @@ public class PPCA_MainPanel extends JPanel
 	{
 		this.setBackground(new Color(243, 241, 239));
 		//this.setBackground(new Color(242, 107, 58));
-		/* Initialize components */
+		
+		//Initialise components
 		txtEmail = new JTextArea();
 		txtEmail.setText("No message.");
 		txtEmail.setPreferredSize(new Dimension (886, 737));
@@ -75,12 +97,12 @@ public class PPCA_MainPanel extends JPanel
 		//JScrollPane scrollEmail = new JScrollPane(txtEmail);
 		this.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 		JScrollPane scrollEmail = new JScrollPane(jfxPanel);
-		/* Register event handlers */
+		// Register event handlers
 		
 		this.height = this.getHeight();
 		this.width = this.getWidth();
 		
-		/* Add components */
+		// Add components
 		this.add(jfxPanel, BorderLayout.CENTER);
 		
 		scrollEmail.setColumnHeaderView(paneMail);
@@ -91,6 +113,9 @@ public class PPCA_MainPanel extends JPanel
 
 	}
 	
+	/**
+	 * reset the view to display the Workspace panel
+	 */
 	public void resetWorkspace(){
 		//Remove topBar
 		if(topBar.getParent() != null){
@@ -105,7 +130,9 @@ public class PPCA_MainPanel extends JPanel
 		this.jfxPanel.setPreferredSize(this.getSize());
 		runWorkspace();
 	}
-	
+	/**
+	 * reset the view to display the Hel panel
+	 */
 	public void resetHelp(){
 		//Remove topBar
 		if(topBar.getParent() != null){
@@ -119,7 +146,9 @@ public class PPCA_MainPanel extends JPanel
 		this.jfxPanel.setPreferredSize(this.getSize());
 		runHelp();
 	}
-	
+	/**
+	 * reset the view to display the Share panel
+	 */
 	public void resetShare(){
 		//Remove topBar
 		if(topBar.getParent() != null){
@@ -164,7 +193,7 @@ public class PPCA_MainPanel extends JPanel
 		this.height = this.getHeight();
 		this.width = this.getWidth();
 		
-		loadJavaFXScene();
+		renderHTMLPayload();
 		
 		this.repaint();
 	}
@@ -178,7 +207,10 @@ public class PPCA_MainPanel extends JPanel
 		return email;
 	}
 	
-	private void loadJavaFXScene(){
+	/**
+	 * load the html emailpayload and render it
+	 */
+	private void renderHTMLPayload(){
 		Platform.setImplicitExit(false);
 		Platform.runLater(new Runnable() {
 			@Override
@@ -194,6 +226,11 @@ public class PPCA_MainPanel extends JPanel
 		});
 	}
 	
+	/**
+	 * Get the html content of the mail
+	 * @param base
+	 * @return
+	 */
 	private static String getHTML(String base){
 		try{
 			int startInd = 0;
@@ -208,6 +245,9 @@ public class PPCA_MainPanel extends JPanel
 		}
 	}
 	
+	/**
+	 * Run and display the Workspace panel
+	 */
 	private void runWorkspace(){
 		Platform.setImplicitExit(false);
 		Platform.runLater(new Runnable() {
@@ -227,6 +267,9 @@ public class PPCA_MainPanel extends JPanel
 		});
 	}
 	
+	/**
+	 * Run and display the Help Page
+	 */
 	private void runHelp(){
 		Platform.setImplicitExit(false);
 		Platform.runLater(new Runnable() {
@@ -246,6 +289,9 @@ public class PPCA_MainPanel extends JPanel
 		});
 	}
 	
+	/**
+	 * Run and display the Share Page 
+	 */
 	private void runShare(){
 		Platform.setImplicitExit(false);
 		Platform.runLater(new Runnable() {
@@ -265,7 +311,9 @@ public class PPCA_MainPanel extends JPanel
 		});
 	}
 	
-	
+	/**
+	 * Overrigind the paintComponent to fix a display bug/issue
+	 */
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);

@@ -26,7 +26,7 @@ import javax.swing.Icon;
  */
 public class PPCA_ToolbarPanel extends JPanel 
 {
-	/* Swing components */
+	//Visual components
 	private JFrame frame;
 	private JButton btnSetting;
 	private JButton btnCryptoConfig;
@@ -35,15 +35,23 @@ public class PPCA_ToolbarPanel extends JPanel
 	private JButton btnEmailReply;
 	private JButton btnEmailDelete;
 	private JButton btnEmailForward;
-
-	private PPCA_PanaceaWindow window;
-	private PPCA_MailClient ec;
 	private JPanel panel;
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JButton btnWorkspace;
 	private JButton btnHelp;
 	private JButton btnShare;
+	
+	/**
+	 * PanaceaWindow
+	 */
+	private PPCA_PanaceaWindow window;
+	/**
+	 * MailClient
+	 */
+	private PPCA_MailClient ec;
+	
+
 
 	/**
 	 * Constructor
@@ -65,7 +73,7 @@ public class PPCA_ToolbarPanel extends JPanel
 	 */
 	private void initializeComponent()
 	{
-		/* Initialize components */
+		//Initialize components
 		ButtonListener bl = new ButtonListener();
 
 		ImageIcon imgSetting = new ImageIcon ("images/setting.png");
@@ -86,9 +94,7 @@ public class PPCA_ToolbarPanel extends JPanel
 		
 		ImageIcon imgShare = new ImageIcon("images/share.png");
 		
-		/* Register event handlers */
 
-		/* Add components */
 		setLayout(new BorderLayout(0, 0));
 		
 		panel_2 = new JPanel();
@@ -131,6 +137,7 @@ public class PPCA_ToolbarPanel extends JPanel
 		btnWorkspace.setToolTipText("Workspace");
 		btnWorkspace.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//Set the Workspace Panel as Center Display
 				window.setCenterPanel(window.getMainPanel());
 				window.getMainPanel().resetWorkspace();
 				window.getNavigationPanel().populateTable();
@@ -151,7 +158,7 @@ public class PPCA_ToolbarPanel extends JPanel
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				//Set the help PanelToTheMiddle
+				//Set the Help Panel as Center Display
 				window.setCenterPanel(window.getMainPanel());
 				window.getMainPanel().resetHelp();
 				window.getNavigationPanel().populateTable();
@@ -168,7 +175,7 @@ public class PPCA_ToolbarPanel extends JPanel
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				//Set the Share Panel as Center Display
 				window.setCenterPanel(window.getMainPanel());
 				window.getMainPanel().resetShare();
 				window.getNavigationPanel().populateTable();
@@ -177,20 +184,19 @@ public class PPCA_ToolbarPanel extends JPanel
 		btnShare.setToolTipText("Social");
 		panel.add(btnShare);
 		
-		
-		
-		
-		/* Preloading Event */
+		//Preloading
 		ec = PPCA_MailClient.getInstance();
 	}
 
 	/**
-	 * Event handler for JButtons
-	 * @author
+	 * ButtonListener (Relic)
+	 * @author eProtectioneers
 	 */
 	private class ButtonListener implements ActionListener
 	{
-
+		/**
+		 * actionPerformed
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{

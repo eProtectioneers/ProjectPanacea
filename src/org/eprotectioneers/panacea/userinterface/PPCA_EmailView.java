@@ -38,12 +38,31 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+/**
+ * PPCA_EmailView (JPanel)
+ * unused and deprecated view class
+ * @author eProtectioneers
+ * (Deletion within next few releases)
+ */
+@Deprecated
 public class PPCA_EmailView extends JPanel{
 	
+	/**
+	 * MainPanel instance
+	 */
 	private PPCA_MainPanel mainpanel;
+	/**
+	 * Email to bind
+	 */
 	private PPCA_PGPMail email;
 	
+	/**
+	 * jfxPanel to show HTML content
+	 */
 	private JFXPanel jfxPanel = new JFXPanel();
+	/**
+	 * JavaFX webComponent
+	 */
 	private WebView webComponent;
 	
 	private String _from;
@@ -65,7 +84,7 @@ public class PPCA_EmailView extends JPanel{
 	private Contact _c;
 	
 	/**
-	 * Create the panel.
+	 * Constructor
 	 */
 	public PPCA_EmailView(PPCA_PGPMail email,PPCA_MainPanel mainpanel) {
 			this._from=email.from;
@@ -79,6 +98,9 @@ public class PPCA_EmailView extends JPanel{
 			initialize();
 	}
 	
+	/**
+	 * initialises the panel
+	 */
 	private void initialize() {
 		Dimension d=new Dimension(200, 100);
 		setMaximumSize(d);
@@ -178,7 +200,9 @@ public class PPCA_EmailView extends JPanel{
 		this.repaint();
 	}
 	
-	
+	/**
+	 * Load the email HTML content in the JavaFX Webview
+	 */
 	private void loadJavaFXScene(){
 		Platform.setImplicitExit(false);
 		Platform.runLater(new Runnable() {
@@ -195,6 +219,11 @@ public class PPCA_EmailView extends JPanel{
 		});
 	}
 	
+	/**
+	 * Return the HTML Content of a mail
+	 * @param base
+	 * @return
+	 */
 	private static String getHTML(String base){
 		try{
 			int startInd = 0;
@@ -217,12 +246,10 @@ public class PPCA_EmailView extends JPanel{
 			c.addMouseListener(ml);
 		}
 		imagePanel.addMouseListener(ml);
-		//taContent.addMouseListener(ml);
 	}
 	
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		//
 	}
 }

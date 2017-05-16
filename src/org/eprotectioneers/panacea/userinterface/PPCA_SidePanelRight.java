@@ -21,7 +21,11 @@ import java.awt.FlowLayout;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Component;
 
-
+/**
+ * Old right Sidebar to show Twitter feeds (Jpanel)(Relic)
+ * @author eProtectioneers
+ */
+@Deprecated
 public class PPCA_SidePanelRight extends JPanel {
 
 	PPCA_PanaceaWindow window;

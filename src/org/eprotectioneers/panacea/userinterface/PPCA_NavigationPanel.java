@@ -40,12 +40,12 @@ import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_EmailStore;
 import com.sun.javafx.webkit.prism.PrismGraphicsManager;
 
 /**
- * This class represents a navigation panel where list of available
- * emails will be displayed.
+ * Navigationpanel with the emails list (JPanel)
  * @author eProtectioneers
  */
 public class PPCA_NavigationPanel extends JPanel 
 {
+	
 	private static JTable tblEmail;
 
 	private PPCA_PanaceaWindow window;
@@ -78,7 +78,7 @@ public class PPCA_NavigationPanel extends JPanel
 	 */
 	private void initializeComponent()
 	{
-		/* Initialize components */
+		// Initialise Components
 		tblEmail = new JTable();
 		tblEmail.setFillsViewportHeight(true);
 		tblEmail.setRowHeight(tblEmail.getRowHeight() * 3);
@@ -86,19 +86,19 @@ public class PPCA_NavigationPanel extends JPanel
 		tblEmail.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollEmail = new JScrollPane(tblEmail);	
 
-		/* Register event handlers */
+		//Register the event handlers
 		MouseListener ml = new MouseListener();
 		tblEmail.addMouseListener(ml);
 
-		/* Add components */
+		//Add the components
 		this.add(scrollEmail, BorderLayout.CENTER);
 
-		/* Preloading events */
+		//preloading
 		populateTable();
 	}
 
 	/**
-	 * Create a snippet of an message.
+	 * Create a snippet of a message.
 	 * @param message the message
 	 */
 	private String snippet(String message)
@@ -120,20 +120,22 @@ public class PPCA_NavigationPanel extends JPanel
 		return result;
 	}
 
+	/**
+	 * Populate the table with the email entrys
+	 */
 	public static void populateTable()
 	{
 		tblEmail.removeAll();
-		/* Retrieve emails */
+		//Get the mails
 		PPCA_PGPMail[] emails = es.getEmails();
 
-		/* Populate data for the table */
+		//populate the table with the data
 		String[] columnName = {"INBOX"};
 		String[][] emailStore = new String[emails.length][columnName.length];
 		
 		for (int i = 0; i < emails.length; i++)
 		{
-			/* Construct Email Preview */
-			//String preview = getPreview(emails[i]);
+			//Create the email preview
 			Contact c=DatabaseC.checkContact(emails[i].from);
 			boolean b=c!=null;
 			String html = "<html><div>"
@@ -153,7 +155,7 @@ public class PPCA_NavigationPanel extends JPanel
 			emailStore[i][0] = html;
 		}
 		
-		/* Set table model */
+		//Set the table model
 		DefaultTableModel model = new DefaultTableModel()
 		{
 			@Override
@@ -200,6 +202,11 @@ public class PPCA_NavigationPanel extends JPanel
 		return preview;
 	}
 	
+	/**
+	 * remove Mail content
+	 * @param removeFrom
+	 * @return String removed
+	 */
 	private static String removeMail(String removeFrom){
 		try{
 			int startInd = removeFrom.indexOf("<");
@@ -214,6 +221,11 @@ public class PPCA_NavigationPanel extends JPanel
 		}
 	}
 	
+	/**
+	 * remove Name
+	 * @param removeFrom
+	 * @return String removed
+	 */
 	private static String removeName(String removeFrom){
 		try{
 			int startInd = removeFrom.indexOf("<");
@@ -235,9 +247,19 @@ public class PPCA_NavigationPanel extends JPanel
 		updateTable(emails);
 	}
 
+	/**
+	 * Mouselistener
+	 * @author eProtectioneers
+	 */
 	private class MouseListener extends MouseAdapter
 	{
+		/**
+		 * Thread
+		 */
 		private Thread t1;
+		/**
+		 * email
+		 */
 		private PPCA_PGPMail _email;
 		
 		@Override
@@ -269,6 +291,10 @@ public class PPCA_NavigationPanel extends JPanel
 			}
 		}	
 		
+		/**
+		 * Show the popup over the email entry
+		 * @param e
+		 */
 		private void showPopup(MouseEvent e){
 			if(t1!=null&&t1.isAlive())t1.stop();
 			t1=new Thread(new PopupGenerator(_email));
@@ -285,16 +311,38 @@ public class PPCA_NavigationPanel extends JPanel
 		}
 	}
 
+	/**
+	 * PopupGenerator class
+	 * @author eProtectioneers
+	 *
+	 */
 	private class PopupGenerator implements Runnable{
 
+		/**
+		 * Contact
+		 */
 		private Contact _c;
+		/**
+		 * email
+		 */
 		private PPCA_PGPMail _email;
+		/**
+		 * subject
+		 */
 		private String _subject;
 		
+		/**
+		 * Constructor
+		 * @param email
+		 */
 		public PopupGenerator(PPCA_PGPMail email){
 			_email=email;
 			_subject=email.subject;
 		}
+		
+		/**
+		 * run the task
+		 */
 		@Override
 		public void run() {
 			
@@ -336,7 +384,11 @@ public class PPCA_NavigationPanel extends JPanel
 			}
 		}
 	}
-	
+
+	/**
+	 * ReplyActionListener
+	 * @author eProtectioneers
+	 */
 	private class ReplyActionListener implements ActionListener {
 		private PPCA_PGPMail _email;
 		public ReplyActionListener(PPCA_PGPMail email){
@@ -349,6 +401,10 @@ public class PPCA_NavigationPanel extends JPanel
 		}
 	}
 	
+	/**
+	 * ForwardActionListener
+	 * @author eProtectioneers
+	 */
 	private class ForwardActionListener implements ActionListener {
 		private PPCA_PGPMail _email;
 		public ForwardActionListener(PPCA_PGPMail email){
@@ -361,6 +417,11 @@ public class PPCA_NavigationPanel extends JPanel
 		}
 	}
 	
+	/**
+	 * DeleteMessageActionListener
+	 * @author eProtectioneers
+	 *
+	 */
 	private class DeleteMessageActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -368,6 +429,10 @@ public class PPCA_NavigationPanel extends JPanel
 		}
 	}
 	
+	/**
+	 * AddToContactsActionListener
+	 * @author eProtectioneers
+	 */
 	private class AddToContactsActionListener implements ActionListener{
 		private String _s;
 		public AddToContactsActionListener(String sender){
@@ -379,6 +444,10 @@ public class PPCA_NavigationPanel extends JPanel
 		}
 	}
 	
+	/**
+	 * OpenContactActionListener
+	 * @author eProtectioneers
+	 */
 	private class OpenContactActionListener implements ActionListener {
 		private Contact _c;
 		public OpenContactActionListener(Contact c){
@@ -390,6 +459,10 @@ public class PPCA_NavigationPanel extends JPanel
 		}
 	}
 	
+	/**
+	 * ChangeSpamStateActionListener
+	 * @author eProtectioneers
+	 */
 	private class ChangeSpamStateActionListener implements ActionListener {
 		private Contact _c;
 		public ChangeSpamStateActionListener(Contact c){
@@ -402,6 +475,10 @@ public class PPCA_NavigationPanel extends JPanel
 		}
 	}
 	
+	/**
+	 * ToolTipCellRenderer
+	 * @author eProtectioneers
+	 */
 	private class TooltipCellRenderer extends DefaultTableCellRenderer {
 	    public Component getTableCellRendererComponent(
 	                        JTable table, Object value,
@@ -415,6 +492,11 @@ public class PPCA_NavigationPanel extends JPanel
 	    }
 	}
 	
+	/**
+	 * MultiCellRenderer (Relic)
+	 * @author eProtectioneers
+	 */
+	@Deprecated
 	private class MultiLineCellRenderer extends JTextArea implements TableCellRenderer
 	{
 		public MultiLineCellRenderer()
