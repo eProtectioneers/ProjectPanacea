@@ -397,7 +397,7 @@ public class PPCA_SettingDialog extends JDialog
 				{
 					if (ec.login(username, password))
 					{
-						/* nop */
+						// Nothing to show
 					}
 					else
 					{

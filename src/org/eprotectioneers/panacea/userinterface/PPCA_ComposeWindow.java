@@ -210,7 +210,7 @@ public class PPCA_ComposeWindow extends JFrame
 
 	/**
 	 * Button Listener Class
-	 * @author marcu
+	 * @author eProtectioneers
 	 * A relic of a earlier release
 	 */
 	private class ButtonListener implements ActionListener

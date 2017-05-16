@@ -85,10 +85,13 @@ public class PPCA_MailClient
 	 */
 	public boolean login (String username, String password)
 	{
-		//TODO: Figure out how to authenticate this	
-		pref.setUsername(username);
-		pref.setPassword(password);
-		return true;
+		try{
+			pref.setUsername(username);
+			pref.setPassword(password);
+			return true;
+		}catch (Exception e) {
+			return false;
+		}
 	}
 
 	/**

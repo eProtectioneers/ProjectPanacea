@@ -10,6 +10,8 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.mail.Flags.Flag;
+import javax.mail.MessagingException;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -268,7 +270,7 @@ public class PPCA_ToolbarPanel extends JPanel
 			}
 			else if (source == btnEmailDelete)
 			{
-				JOptionPane.showMessageDialog(frame, "Unsupported command.");
+				JOptionPane.showMessageDialog(null, "Currently unsupported...!");
 			}
 		}
 	}
