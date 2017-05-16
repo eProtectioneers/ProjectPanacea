@@ -60,10 +60,10 @@ public class ChooseFile {
 		 * save the filechoosers
 		 */
 		public static void saveFileChooser(){
-			ArrayList<String> filechooserPaths = new ArrayList<String>();
+			String[] filechooserPaths = new String[2];
 			
-			if(_picfc.getSelectedFile()!=null)filechooserPaths.add(0,_picfc.getCurrentDirectory().getAbsolutePath());
-			if(_keyfc.getSelectedFile()!=null)filechooserPaths.add(1,_keyfc.getCurrentDirectory().getAbsolutePath());
+			if(_picfc.getSelectedFile()!=null)filechooserPaths[0]=_picfc.getCurrentDirectory().getAbsolutePath();
+			if(_keyfc.getSelectedFile()!=null)filechooserPaths[1]=_keyfc.getCurrentDirectory().getAbsolutePath();
 			
 			try {
 				ObjectOutputStream os =new ObjectOutputStream(new FileOutputStream(fcfile));
@@ -77,15 +77,15 @@ public class ChooseFile {
 		 * load the filechoosers from the file
 		 */
 		public static void loadFileChooser(){
-			ArrayList<String> filechooserPaths = new ArrayList<String>();
+			String[] filechooserPaths = new String[2];
 			try {
 				ObjectInputStream is=new ObjectInputStream(new FileInputStream(fcfile));
-				filechooserPaths=(ArrayList<String>)is.readObject();
+				filechooserPaths=(String[])is.readObject();
 				try{
-					_picfc=new JFileChooser(filechooserPaths.get(0));
+					_picfc=new JFileChooser(filechooserPaths[0]);
 				}catch(Exception ex){}
 				try{
-					_keyfc=new JFileChooser(filechooserPaths.get(1));
+					_keyfc=new JFileChooser(filechooserPaths[1]);
 				}catch(Exception ex){}
 			} catch (Exception e) {
 				e.printStackTrace();

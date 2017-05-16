@@ -388,6 +388,7 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 		{
 			// Private and Publickey to file
 			String filepath = pref.getKeyDirectory() + File.separator + pref.getPrivateKeyFilePath();
+			System.out.println(filepath);
 			boolean successful = PPCA_FileEngine.write(filepath, privateKey);
 			if (!successful)
 			{
@@ -436,7 +437,7 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) 
 				{
-					txtKeydirectory.setText(browser.getSelectedFile().getPath());
+					txtKeydirectory.setText(browser.getSelectedFile().getAbsolutePath());
 					FileChoosePathDatabase.saveFileChooser();
 				} 
 			}
@@ -477,7 +478,7 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) 
 				{
-					txtUserkey.setText(browser.getSelectedFile().getPath());
+					txtUserkey.setText(browser.getSelectedFile().getAbsolutePath());
 				} 
 			}
 			else if (source == btnUserKeyAdd)
