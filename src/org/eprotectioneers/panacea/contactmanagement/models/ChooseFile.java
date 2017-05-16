@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.models;
 
 import java.io.File;
@@ -11,15 +15,22 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import org.eprotectioneers.panacea.contactmanagement.control.ImageFilter;
-import org.eprotectioneers.panacea.contactmanagement.design.ProjectPanaceaTemplates;
 
+/**
+ * A class, to store and use FileChoosers
+ * @author eProtectioneers
+ */
 public class ChooseFile {
 	private static JFileChooser _picfc=new JFileChooser();
 	private static JFileChooser _keyfc=new JFileChooser();
 	
+	/**
+	 * @return The FileChosser for the key-handling
+	 */
 	public static JFileChooser getKeyFileChooser(){
 		return _keyfc;
 	}
+	
 	/**
 	 * @return the file, you chose with the JFileChooser
 	 */
@@ -36,11 +47,18 @@ public class ChooseFile {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * Database application to save and read the previous paths of the filechoosers
+	 * @author eProtectioneers
+	 */
 	public static class FileChoosePathDatabase implements Serializable{
 				
 		private static File fcfile=new File("filechooser/filechooserpaths");
 		
+		/**
+		 * save the filechoosers
+		 */
 		public static void saveFileChooser(){
 			ArrayList<String> filechooserPaths = new ArrayList<String>();
 			
@@ -55,6 +73,9 @@ public class ChooseFile {
 			}
 		}
 		
+		/**
+		 * load the filechoosers from the file
+		 */
 		public static void loadFileChooser(){
 			ArrayList<String> filechooserPaths = new ArrayList<String>();
 			try {

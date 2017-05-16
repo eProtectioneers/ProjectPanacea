@@ -1,13 +1,18 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.view;
 
 import javax.swing.*;
-import net.miginfocom.swing.MigLayout;
 import java.awt.event.*;
-import java.awt.geom.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
 
-
+/**
+ * A Item with a round rectangle shape, to display a text and edit it
+ * @author eProtectioneers
+ */
 public class PageItem extends JPanel {
 	private JPanel _page;
 	private JTextField textField;
@@ -16,8 +21,6 @@ public class PageItem extends JPanel {
 	private JButton btnSave;
 	private JButton btnReject;
 	private static boolean saving=false;
-	private Object[] options={"yes","no","cancel"};
-	private JOptionPane optionpane;
 	private static Color colornormal=Color.BLACK;
 	private static Color colorfocused=SystemColor.controlShadow;
 	private static Color fontcolor1=Color.WHITE;
@@ -34,6 +37,10 @@ public class PageItem extends JPanel {
 		return btnSave;
 	}
 	
+	/**
+	 * Set the
+	 * @param text
+	 */
 	public void setText(String text){
 		if(text==null)text="";
 		setToolTipText(text);
@@ -41,6 +48,9 @@ public class PageItem extends JPanel {
 		textField.setText(text);
 	}
 	
+	/**
+	 * @return the text
+	 */
 	public String getText() {
 		if(text==null)setText("");
 		return text;
@@ -52,19 +62,30 @@ public class PageItem extends JPanel {
 		textField.setToolTipText(text);
 	}
 	
+	/**
+	 * @return the textField
+	 */
 	public JTextField getTextField() {
 		return textField;
 	}
 	
+	/**
+	 * Constructor, assigns
+	 * @param text
+	 * @param itemtype
+	 * @param bgcolor
+	 * @param page
+	 */
 	public PageItem(String text, String itemtype, Color bgcolor,JPanel page){
 		this(text,itemtype,page);
 		setBackground(bgcolor);
 	}
-	
+
 	/**
-	 * Create the panel.
-	 * 	
-	 * @wbp.parser.constructor 
+	 * Constructor, assigns
+	 * @param text
+	 * @param itemtype
+	 * @param page
 	 */
 	public PageItem(String text, String itemtype,JPanel page){
 		this(text,page);
@@ -75,6 +96,11 @@ public class PageItem extends JPanel {
 		add(lbl_itemdescription,0);
 	}
 
+	/**
+	 * Constructor, assigns
+	 * @param text
+	 * @param page
+	 */
 	public PageItem(String text,JPanel page) {
 		setBorder(new EmptyBorder(2, 3, 2, 2));
 		this.text=text;
@@ -133,12 +159,19 @@ public class PageItem extends JPanel {
 		g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 15, 15);
 	}
 	
+	/**
+	 * Set the itemstate
+	 * @param state
+	 */
 	private void setItemstate(boolean state){
 		textField.setEditable(state);
 		if(state)setBackground(colorfocused);
 		else setBackground(colornormal);
 	}
 	
+	/**
+	 * finish the entry
+	 */
 	private void finishEntry(){
 		remove(btnSave);
 		remove(btnReject);
@@ -148,18 +181,27 @@ public class PageItem extends JPanel {
 		this.requestFocus();
 	}
 	
+	/**
+	 * reload the parent, to visualize it correct
+	 */
 	private void reload(){
 		_page.repaint();
 		_page.setVisible(false);
 		_page.setVisible(true);	
 	}
 	
+	/**
+	 * save the text
+	 */
 	public void save(){
 		setItemstate(false);
 		setText(textField.getText());
 		finishEntry();
 	}
 	
+	/**
+	 * reject the changes
+	 */
 	public void reject(){
 		setItemstate(false);
 		textField.setText(text);
@@ -173,6 +215,10 @@ public class PageItem extends JPanel {
 		return saving;
 	}
 
+	/**
+	 * ActionListener to edit the text
+	 * @author eProtectioneers
+	 */
 	private class BtnEditActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			setItemstate(true);
@@ -184,7 +230,11 @@ public class PageItem extends JPanel {
 			reload();
 		}
 	}
-	
+
+	/**
+	 * ActionListener to edit save the changes
+	 * @author eProtectioneers
+	 */
 	private class BtnSaveActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			saving=true;
@@ -192,13 +242,21 @@ public class PageItem extends JPanel {
 			saving=false;
 		}
 	}
-	
+
+	/**
+	 * ActionListener to reject the changes
+	 * @author eProtectioneers
+	 */
 	private class BtnRejectActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			reject();
 		}
 	}
-	
+
+	/**
+	 * KeyListener to replace the Buttons
+	 * @author eProtectioneers
+	 */
 	private class TextFieldKeyListener extends KeyAdapter {
 		@Override
 		public void keyPressed(KeyEvent e) {

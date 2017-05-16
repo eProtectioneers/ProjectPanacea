@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.view;
 
 import javax.swing.*;
@@ -15,6 +19,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
+
+/**
+ * A Page to visualize and edit a Contact
+ * @author eProtectioneers
+ */
 public class Page_Contact extends JPanel {
 
 	private Contact _c;
@@ -34,7 +43,6 @@ public class Page_Contact extends JPanel {
 	private static ImageIcon ic_delete;
 	private static ImageIcon ic_delete_pressed;
 	private static ImageIcon ic_delete_rollover;
-	private PPCA_PanaceaWindow pncaw;
 	
 	/**
 	 * @return the Contact
@@ -138,6 +146,9 @@ public class Page_Contact extends JPanel {
 		add(chckbxInSpamFolder, "cell 3 8");
 	}	
 	
+	/**
+	 * Add the GroupPopup
+	 */
 	public void addGPopup(){
 		popupMenuGroups = new JPopupMenu();
 		popupMenuGroups.setBackground(Color.BLACK);
@@ -146,11 +157,18 @@ public class Page_Contact extends JPanel {
 		new Thread(new GroupPopupGenerator()).start();
 	}
 	
+	/**
+	 * @return the Contact which is currently shown
+	 */
 	public Contact getCurrentlyContact(){
 		return new Contact(_c.getId(), pi_shownname.getText(), pi_firstname.getText(), pi_lastname.getText(), pi_emailaddress.getText(), 
 				pi_phonenumber.getText(), pi_address.getText(), _c.getPicturepath(), chckbxInSpamFolder.isSelected());
 	}
-	
+
+	/**
+	 * Generator, to generate the GroupPopup
+	 * @author eProtectioneers
+	 */
 	private class GroupPopupGenerator implements Runnable{
 		private boolean generating=true;
 		@Override
@@ -166,7 +184,7 @@ public class Page_Contact extends JPanel {
 			popupMenuGroups.setVisible(true);
 			popupMenuGroups.show(pin_groups.getTextField(), 3, pin_groups.getTextField().getHeight()+2);
 		}
-		
+
 		private void startToolTipSet(){
 			new Thread(new Runnable(){
 				@Override
@@ -183,6 +201,11 @@ public class Page_Contact extends JPanel {
 			}).start();
 		}
 	}
+
+	/**
+	 * ActionListener to change the Image
+	 * @author eProtectioneers
+	 */
 	private class ChangeImageListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -201,7 +224,11 @@ public class Page_Contact extends JPanel {
 			else return pnl_image.getPicturePath();
 		}
 	}
-	
+
+	/**
+	 * ActionListener to save the Contact
+	 * @author eProtectioneers
+	 */
 	private class SaveContactActionListener implements ActionListener, Runnable{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -231,7 +258,11 @@ public class Page_Contact extends JPanel {
 			saveContact();
 		}
 	}
-	
+
+	/**
+	 * ActionListener to check the Contact's spam state
+	 * @author eProtectioneers
+	 */
 	private class ChckbxInSpamFolderActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -239,18 +270,26 @@ public class Page_Contact extends JPanel {
 			new SaveContactActionListener().saveContact();		
 		}
 	}
-	
+
+	/**
+	 * MouseListener which shows the GroupPopup
+	 * @author eProtectioneers
+	 */
 	private class Pin_groupsTextFieldMouseListener extends MouseAdapter {
 		public void mouseReleased(MouseEvent e) {
 			addGPopup();
 		}
 	}
-	
+
+	/**
+	 * ActionListener to delete the Contact
+	 * @author eProtectioneers
+	 */
 	private class BtnDeleteContactActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object options[]={"yes", "no"};
-			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to DELETE this Contact?", "DELETE Contact", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Delete this Contact?", "Delete Contact", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
 			case JOptionPane.YES_OPTION:
 				DatabaseC.removeContact(_c);
 				JOptionPane.showMessageDialog(null, "Contact Deleted", "", JOptionPane.INFORMATION_MESSAGE, null);

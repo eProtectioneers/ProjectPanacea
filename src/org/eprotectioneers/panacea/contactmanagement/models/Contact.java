@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.models;
 
 import java.io.*;
@@ -7,7 +11,10 @@ import javax.swing.JOptionPane;
 import org.eprotectioneers.panacea.contactmanagement.view.Page_Contact;
 import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
-
+/**
+ * A Contact
+ * @author eProtectioneers
+ */
 public class Contact implements Serializable {
 	
 	private static final String defaultpicpath=new File("images/EmptyProfile.png").getAbsolutePath();
@@ -217,7 +224,11 @@ public class Contact implements Serializable {
 	    		  "</table>";
 		return html;
 	}
-	
+
+	/**
+	 * Comparator, to compare the Contact's shownname
+	 * @author eProtectioneers
+	 */
 	public static class ContactComparator implements Comparator<Contact>{
 		@Override
 		public int compare(Contact c1, Contact c2) {

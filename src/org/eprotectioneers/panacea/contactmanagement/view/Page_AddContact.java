@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.view;
 
 import java.awt.*;
@@ -5,7 +9,6 @@ import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 
 import org.eprotectioneers.panacea.contactmanagement.components.ImagePanel;
 import org.eprotectioneers.panacea.contactmanagement.components.RoundRectangleButton;
@@ -17,6 +20,10 @@ import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * A Page to add a Contact
+ * @author eProtectioneers
+ */
 public class Page_AddContact extends JFrame {
 
 	private JPanel contentPane;
@@ -53,6 +60,12 @@ public class Page_AddContact extends JFrame {
 		inizialize();
 	}
 	
+	/**
+	 * Constructor, assigns
+	 * @param component
+	 * @param shownname
+	 * @param emailaddress
+	 */
 	public Page_AddContact(Component component,String shownname,String emailaddress) {
 		this(component);
 		Object options[]={"yes","no"};
@@ -62,6 +75,9 @@ public class Page_AddContact extends JFrame {
 
 	}
 
+	/**
+	 * Initializes
+	 */
 	public void inizialize(){
 		contentPane = new JPanel();
 
@@ -122,7 +138,11 @@ public class Page_AddContact extends JFrame {
 		contentPane.add(btnCancel, "cell 3 8");
 		contentPane.add(btnSave, "cell 5 8,alignx right");
 	}
-	
+
+	/**
+	 * ActionListener to change the Contact's Image
+	 * @author eProtectioneers
+	 */
 	private class ChangeImageListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -138,11 +158,8 @@ public class Page_AddContact extends JFrame {
 	}
 	
 	/**
-	 * 
-	 * @author Simon Senoner
-	 * @version 1.0
-	 * The listener of every pageItem
-	 *
+	 * The listener of every PageItem
+	 * @author eProtectioneers
 	 */
 	private class PiActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
@@ -166,6 +183,9 @@ public class Page_AddContact extends JFrame {
 		}
 	}
 	
+	/**
+	 * Saves the Contact
+	 */
 	private void save(){
 		Contact c=new Contact(DatabaseC.getNewIndex(), pi_shownname.getText(), pi_firstname.getText(), 
 				pi_lastname.getText(), pi_emailaddress.getText(), pi_phonenumber.getText(), pi_address.getText(), 
@@ -174,6 +194,9 @@ public class Page_AddContact extends JFrame {
 		JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contact added", "", JOptionPane.INFORMATION_MESSAGE, null);
 	}
 	
+	/**
+	 * @return true, if there's no Contact with this EmailAddress - if there's on it asks, if you really want to add this
+	 */
 	private boolean checkSave(){
 		boolean b=true;
 		if(DatabaseC.checkContact(pi_emailaddress.getText())!=null){
@@ -188,7 +211,11 @@ public class Page_AddContact extends JFrame {
 		}
 		return b;
 	}
-	
+
+	/**
+	 * ActionListener to save the New Contact
+	 * @author eProtectioneers
+	 */
 	private class BtnSaveActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -211,7 +238,11 @@ public class Page_AddContact extends JFrame {
 			}
 		}
 	}
-	
+
+	/**
+	 * ActionListener to cancel
+	 * @author eProtectioneers
+	 */
 	private class BtnCancelActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -233,7 +264,9 @@ public class Page_AddContact extends JFrame {
 				}
 			}else dispose();
 		}
-		
+		/**
+		 * @return false if there are no changes
+		 */
 		private boolean lookForChanges(){
 			if(!pnl_image.getPicturePath().equals(Contact.getDefaultpicpath()))return true;
 			for(PageItem_new pi:entryfields){

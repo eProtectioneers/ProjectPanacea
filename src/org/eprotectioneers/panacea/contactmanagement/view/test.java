@@ -54,7 +54,6 @@ public class test extends JFrame {
 				new Thread(new Runnable(){
 						public void run() {	
 							DesignDatabase.loadDesign();
-							System.out.println(ProjectPanaceaTemplates.getCbg_contacts());
 							/*for(int i=1;i<658;i++){
 								DatabaseC.addContact(new Contact(i, "Contact "+i, "", "", "Email.c"+i+"@Eprotection.com", i+""+i+""+i+""+i, i+" Street", "", false));
 								DatabaseG.addGroup(new Group(i, "Group "+i, "The "+i+" Group", ""));
@@ -109,7 +108,6 @@ public class test extends JFrame {
 		contentPane.add(contactbar_1, BorderLayout.EAST);	
 		
 		panel = new JPanel();
-		panel.setBackground(ProjectPanaceaTemplates.getCbg_contacts());
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		contentPane.add(panel, BorderLayout.CENTER);
 		try {
