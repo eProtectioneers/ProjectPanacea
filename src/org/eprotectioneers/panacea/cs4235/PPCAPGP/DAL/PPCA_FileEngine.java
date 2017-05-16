@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL;
 
 import java.io.BufferedReader;
@@ -73,7 +77,7 @@ public class PPCA_FileEngine
 	}
 	
 	/**
-	 * Check if the specified file or directory exists in the filesystem.
+	 * Check if the file or directory exists in the filesystem.
 	 * @param filepath the filepath
 	 * @return true if the file or directory exists or false otherwise
 	 */

@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.userinterface;
 
 import javax.swing.JPanel;
@@ -15,11 +19,18 @@ import org.eprotectioneers.panacea.contactmanagement.view.Page_AddContact;
 import org.eprotectioneers.panacea.contactmanagement.view.Page_Contact;
 import org.eprotectioneers.panacea.cs4235.PGPClient.email.PPCA_PGPMail;
 
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.web.WebView;
+
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -31,7 +42,33 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+/**
+ * PPCA_EmailView (JPanel)
+ * unused and deprecated view class
+ * @author eProtectioneers
+ * (Deletion within next few releases)
+ */
+@Deprecated
 public class PPCA_EmailView extends JPanel{
+	
+	/**
+	 * MainPanel instance
+	 */
+	private PPCA_MainPanel mainpanel;
+	/**
+	 * Email to bind
+	 */
+	private PPCA_PGPMail email;
+	
+	/**
+	 * jfxPanel to show HTML content
+	 */
+	private JFXPanel jfxPanel = new JFXPanel();
+	/**
+	 * JavaFX webComponent
+	 */
+	private WebView webComponent;
+	
 	private String _from;
 	private String _to;
 	private String _subject;
@@ -48,24 +85,26 @@ public class PPCA_EmailView extends JPanel{
 	private JLabel lblTo;
 	private JLabel lblTo_content;
 	private JLabel lblSubject_content;
-	private JScrollPane scrollPane;
-	private JTextArea taContent;
 	private Contact _c;
 	
 	/**
-	 * Create the panel.
+	 * Constructor
 	 */
-	public PPCA_EmailView(PPCA_PGPMail email) {
+	public PPCA_EmailView(PPCA_PGPMail email,PPCA_MainPanel mainpanel) {
 			this._from=email.from;
 			this._to=email.to;
 			this._subject=email.subject;
 			this._payload=email.payload;
-			
+			this.mainpanel = mainpanel;
+			this.email = email;
 			this._c=DatabaseC.checkContact(_from);
 			
 			initialize();
 	}
 	
+	/**
+	 * initialises the panel
+	 */
 	private void initialize() {
 		Dimension d=new Dimension(200, 100);
 		setMaximumSize(d);
@@ -144,30 +183,65 @@ public class PPCA_EmailView extends JPanel{
 		pnlMain.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pnlMain.setLayout(new BorderLayout());
 		add(pnlMain, BorderLayout.CENTER);
-		
-		taContent = new JTextArea("");
-		taContent.setFont(new Font("Arial", Font.PLAIN, 14));
-		taContent.setEditable(false);
-		taContent.setFocusable(false);
-		taContent.setLineWrap(true);
-		taContent.setWrapStyleWord(true);
 		if(_payload.length()>255){
 			_payload=_payload.substring(0, 252);
 			_payload+="...";
 		}
-		taContent.setText(_payload);
-		taContent.setOpaque(false);
 		
-		scrollPane=new JScrollPane(taContent);
-		pnlMain.add(scrollPane,BorderLayout.CENTER);
-		scrollPane.setOpaque(false);
-		scrollPane.getViewport().setOpaque(false);
-		scrollPane.setBorder(null);
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		
+		this.pnlMain.add(jfxPanel, BorderLayout.CENTER);
 		setToolTipText(_from);
+		show();
 	}
+	
+	/**
+	 * Display email content.
+	 * @param email the email
+	 */
+	public void show()
+	{						
+		loadJavaFXScene();
+		
+		this.repaint();
+	}
+	
+	/**
+	 * Load the email HTML content in the JavaFX Webview
+	 */
+	private void loadJavaFXScene(){
+		Platform.setImplicitExit(false);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				BorderPane borderPane = new BorderPane();
+				webComponent = new WebView();
+				webComponent.getEngine().loadContent(getHTML(email.payload));
+				borderPane.setCenter(webComponent);
+				Scene scene = new Scene(borderPane);
+				jfxPanel.setScene(scene);
+			}
+		});
+	}
+	
+	/**
+	 * Return the HTML Content of a mail
+	 * @param base
+	 * @return
+	 */
+	private static String getHTML(String base){
+		try{
+			int startInd = 0;
+			int endInd = base.indexOf("<");
+			String reString = "";
+			String toBeReplaced = base.substring(startInd, endInd);
+			return base.replace(toBeReplaced,reString);
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			return "Failed to remove mail information!";
+		}
+	}
+	
 	
 	@Override
 	public void addMouseListener(MouseListener ml){
@@ -176,6 +250,10 @@ public class PPCA_EmailView extends JPanel{
 			c.addMouseListener(ml);
 		}
 		imagePanel.addMouseListener(ml);
-		taContent.addMouseListener(ml);
+	}
+	
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
 	}
 }

@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.userinterface;
 
 import java.awt.BorderLayout;
@@ -27,26 +31,57 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JCheckBox;
 
 /**
- * This class represent a dialog menu for Compose Email
+ * Compose mail Userinterface (JFrame)
  * @author eProtectioneers
  */
 public class PPCA_ComposeWindow extends JFrame 
 {
+	/**
+	 * Receipient text
+	 */
 	private JTextField txtTo;
+	/**
+	 * Subject Text
+	 */
 	private JTextField txtSubject;
+	/**
+	 * From text
+	 */
 	private JTextField txtFrom;
+	/**
+	 * Body of the mail
+	 */
 	private JTextArea txtBody;
 	
+	/**
+	 * Send Button
+	 */
 	private JButton sendButton;
+	/**
+	 * Cancel Button
+	 */
 	private JButton cancelButton;
+	/**
+	 * Checkbox Encryption
+	 */
 	private JCheckBox chckbxEncryptIt;
 
+	/**
+	 * EmailClient instance
+	 */
 	private PPCA_MailClient ec;
+	/**
+	 * Datarepository instance
+	 */
 	private PPCA_DataRepo or;
+	/**
+	 * Preferences instance
+	 */
 	private PPCA_Preferences pref;
 
 	/**
-	 * Create the dialog.
+	 * Constructor
+	 * Creates the dialog
 	 */
 	public PPCA_ComposeWindow(JFrame frame) 
 	{
@@ -147,7 +182,7 @@ public class PPCA_ComposeWindow extends JFrame
 	}
 
 	/**
-	 * Set the email for REPLY and FORWARD protocol
+	 * Set the email for REPLY and FORWARD
 	 * @param email the email
 	 */
 	public void setEmail(PPCA_PGPMail email, PPCA_PGPMail.Type type)
@@ -165,7 +200,7 @@ public class PPCA_ComposeWindow extends JFrame
 	}
 	
 	/**
-	 * Set a email to send to the given
+	 * Set the email to be sent to the receipient
 	 * @param emailaddress
 	 */
 	public void setEmail(String emailaddress)
@@ -173,6 +208,11 @@ public class PPCA_ComposeWindow extends JFrame
 		this.txtTo.setText(emailaddress);
 	}
 
+	/**
+	 * Button Listener Class
+	 * @author marcu
+	 * A relic of a earlier release
+	 */
 	private class ButtonListener implements ActionListener
 	{
 		@Override

@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.userinterface;
 
 import java.awt.BorderLayout;
@@ -40,11 +44,12 @@ import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_RemoteClientKey;
 import net.miginfocom.swing.MigLayout;
 
 /**
- * This class represents a Dialog for Crypto Setting
+ * Encryption settings Dialog (JDialog)
  * @author eProtectioneers
  */
 public class PPCA_EncryptionConfigWindow extends JDialog 
 {
+	//Visual elements
 	private JTabbedPane tabbedPane;
 	private JPanel panelGeneral;
 	private JPanel panelKeyManagement;
@@ -71,16 +76,25 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 	private JButton okButton;
 	private JButton cancelButton;
 
+	/**
+	 * Encryption Service instace
+	 */
 	private EncryptionServiceEngine ce;
+	/**
+	 * Datarepository instance
+	 */
 	private PPCA_DataRepo or;
+	/**
+	 * Preferences
+	 */
 	private PPCA_Preferences pref;
 
 	/**
-	 * Create the dialog.
+	 * Constructor
 	 */
 	public PPCA_EncryptionConfigWindow(JFrame frame)
 	{
-		/* Set Properties */
+		//Set the properties
 		setResizable(false);
 		setAlwaysOnTop(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -90,7 +104,7 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 		this.setLocation((int) (frameLocation.x + frame.getWidth()/2-this.getPreferredSize().getWidth()/2),
 				(int)(frameLocation.y + frame.getHeight()/2-this.getPreferredSize().getHeight()/2));
 
-		/* Set Components */
+		//Set the components
 		getContentPane().setLayout(new BorderLayout());
 		{
 			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -261,7 +275,7 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 			}
 		}
 
-		/* Set event handler */
+		// Set the event handlers
 		ButtonListener blistener = new ButtonListener();
 		btnPrivateKeyBrowse.addActionListener(blistener);
 		btnKeyDirectoryBrowse.addActionListener(blistener);
@@ -272,7 +286,7 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 		okButton.addActionListener(blistener);
 		cancelButton.addActionListener(blistener);
 
-		/* Preloading Event */
+		// Preloading
 		ce = EncryptionServiceEngine.getInstance();
 		or = PPCA_DataRepo.getInstance();
 		pref = or.getPreferences();
@@ -282,15 +296,17 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 
 		updateTable();
 
-		/* Set visibility */
+		// Setting the visibility
 		pack();
 		setVisible(true);
 	}
 
-	/* Keep it in sync with updateTable in ButtonListener and ButtonEditor */
+	/**
+	 * Updates the Table and information
+	 */
 	private void updateTable()
 	{
-		/* Populate data for the table */
+		//Populating the table with data
 		ArrayList<PPCA_RemoteClientKey> list = (ArrayList<PPCA_RemoteClientKey>) or.getKeyStore();
 		String[] columnName = {"Username", "Public Key Fingerprint (MD5)"};
 		String[][] keystore = new String[list.size()][columnName.length];
@@ -299,13 +315,13 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 		{
 			keystore[i][0] = list.get(i).getUsername();
 
-			/* Construct Public Key */
+			//Construction of the public key
 			String publickeyraw = list.get(i).getKey();
 			RSAPublicKey publickey = ce.parsePublicKey(publickeyraw);
 			keystore[i][1] = ce.fingerprint(publickey);
 		}
 
-		/* Setup table model */
+		//Tablemodel setup
 		DefaultTableModel model = new DefaultTableModel()
 		{
 			@Override
@@ -320,14 +336,24 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 		tblUserKey.getColumn("Username").setMinWidth(250);
 	}
 
+	/**
+	 * Button Listener
+	 * @author eProtectioneers
+	 * A relic of a earlier release
+	 */
 	private class ButtonListener implements ActionListener
 	{
+		/**
+		 * Update the table with the specified data
+		 * @param username
+		 * @param userPublicKey
+		 */
 		private void updateTable(String username, String userPublicKey)
 		{
 			DefaultTableModel model = (DefaultTableModel) tblUserKey.getModel();
 			String[] rowEntry = new String[2];
 
-			/* Construct Public Key */
+			// Construct publickey
 			RSAPublicKey publickey = ce.parsePublicKey(userPublicKey);
 			if (publickey == null)
 			{
@@ -340,6 +366,11 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 			model.addRow(rowEntry);
 		}
 
+		/**
+		 * Save information
+		 * @param keyDirectory
+		 * @param privateKey
+		 */
 		private void saveGeneral(String keyDirectory, String privateKey)
 		{
 			pref.setKeyDirectory(keyDirectory);
@@ -347,9 +378,15 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 			pref.setPublicKeyFilePath(privateKey + ".pub");
 		}
 
+		/**
+		 * Save the keymanagement information
+		 * @param privateKey
+		 * @param publicKey
+		 * @param passphrase
+		 */
 		private void saveKeyManagement(String privateKey, String publicKey, String passphrase)
 		{
-			/* Write both private key and public key to file */
+			// Private and Publickey to file
 			String filepath = pref.getKeyDirectory() + File.separator + pref.getPrivateKeyFilePath();
 			boolean successful = PPCA_FileEngine.write(filepath, privateKey);
 			if (!successful)
@@ -364,15 +401,23 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 				JOptionPane.showMessageDialog(PPCA_EncryptionConfigWindow.this, "Error: Unable to write Public Key to a file!", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 
-			/* Save the passphrase in user's preferences */
+			// Save the passphrase
 			pref.setPassphrase(passphrase);
 		}
 
+		/**
+		 * Save the keystore
+		 * @param username
+		 * @param publicKey
+		 */
 		private void saveKeyStore(String username, String publicKey)
 		{
 			or.savePublicKey(username, publicKey);
 		}
 
+		/**
+		 * action performed
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
@@ -448,7 +493,7 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 					saveKeyStore(username, userPublicKey);
 					updateTable(username, userPublicKey);
 
-					/* Clear textbox */
+					//Clearing input
 					txtUsername.setText("");
 					txtUserkey.setText("");
 				}
@@ -487,15 +532,15 @@ public class PPCA_EncryptionConfigWindow extends JDialog
 			}
 			else if (source == okButton)
 			{
-				/* Write into database */
+				//Write to database
 				or.savePreferences(pref);
 
-				/* Close the dialog */
+				//CLose the dialog
 				PPCA_EncryptionConfigWindow.this.dispose();
 			}
 			else if (source == cancelButton)
 			{
-				/* Close the dialog */
+				// Close the dialog
 				PPCA_EncryptionConfigWindow.this.dispose();
 			}
 		}	

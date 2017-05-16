@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.userinterface;
 
 import java.awt.BorderLayout;
@@ -44,7 +48,7 @@ import java.awt.Desktop;
 import java.awt.Font;
 
 /**
- * This class represents a Dialog for Settings
+ * Settings Dialog (JDialog)
  * @author eProtectioneers
  */
 public class PPCA_SettingDialog extends JDialog 
@@ -64,11 +68,24 @@ public class PPCA_SettingDialog extends JDialog
 	private JPanel exchangePanel;
 	private JPanel databasepanel;
 	
+	/**
+	 * Datarepository
+	 */
 	private PPCA_DataRepo or;
+	/**
+	 * Preferences
+	 */
 	private PPCA_Preferences pref;
 
+	/**
+	 * outbound connection
+	 */
 	private final String outbound = "smtp.gmail.com";
+	/**
+	 * inbound connection
+	 */
 	private final String inbound = "pop.gmail.com";
+	
 	private JLabel lblFilename;
 	private JLabel lblLastEdited;
 	private JLabel lblPanaceaVersion;
@@ -103,7 +120,6 @@ public class PPCA_SettingDialog extends JDialog
 		this.setLocation((int) (frameLocation.x + frame.getWidth()/2-this.getPreferredSize().getWidth()/2),
 				(int)(frameLocation.y + frame.getHeight()/2-this.getPreferredSize().getHeight()/2));
 
-		/* Set Components */
 		getContentPane().setLayout(new BorderLayout());
 		{
 			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -244,7 +260,6 @@ public class PPCA_SettingDialog extends JDialog
 							try {
 								Desktop.getDesktop().open(folder);
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
@@ -314,32 +329,35 @@ public class PPCA_SettingDialog extends JDialog
 			}
 		}
 
-		/* Preloading event */
+		//Preloading
 		or = PPCA_DataRepo.getInstance();
 		pref = or.getPreferences();
 		txtUsername.setText(pref.getUsername());
 		txtPassword.setText(pref.getPassword());
 
-		/* Set event handler */
+		//Listeners and Events
 		ButtonListener listener = new ButtonListener();
 		btnLogin.addActionListener(listener);
 		okButton.addActionListener(listener);
 		cancelButton.addActionListener(listener);
 
-		/* Set visibility */
+		//Setting the visibility
 		pack();
 		setVisible(true);
 		try {
 			databaseInformation();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * Getting the informations from the database
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public void databaseInformation() throws IOException, ParseException	{
 		
 		File f = new File("PPCA_Storage");
@@ -351,13 +369,12 @@ public class PPCA_SettingDialog extends JDialog
 		lblSize.setText(String.valueOf(file.getSize()));
 		lbl_owner.setText(file.getOwner());
 		lbl_PanaceaVersion.setText(PanaceaExecutable.version);
-		//lbl_modified.setText(file.getLastModified().toString());
-		//System.out.println("Created: " + file.getCreated());
-		//System.out.println("Accessed: " + file.getAccessed());
-		//System.out.println("Written: " + file.getWritten());
 	}
 	
-
+	/**
+	 * ButtonListener (Relic)
+	 * @author eProtectioneers
+	 */
 	private class ButtonListener implements ActionListener
 	{
 		@Override

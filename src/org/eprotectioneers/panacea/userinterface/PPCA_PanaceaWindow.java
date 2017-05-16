@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.userinterface;
 
 import java.awt.BorderLayout;
@@ -17,28 +21,40 @@ import javax.swing.JPanel;
 import org.eprotectioneers.panacea.contactmanagement.view.*;
 
 /**
- * This class represents the UI for PGPClient application.
+ * ProjectPanacea Mail Client
  * @author eProtectioneers
  */
 public class PPCA_PanaceaWindow 
 {
+	/**
+	 * Window title
+	 */
 	public final String TITLE = "Project Panacea - ALPHA - DEV/1.0";
 	private int width;
 	private int height;
 	
-	/* Swing Components */
+	//Visual components
 	private static JFrame frame;
 	private static Container container;
+	
+	/**
+	 * ToolbarPanel
+	 */
 	private PPCA_ToolbarPanel toolbarPanel;
+	/**
+	 * NavigationPanel
+	 */
 	private PPCA_NavigationPanel navigationPanel;
 	
 	private static JPanel centerPanel;
 	private static PPCA_MainPanel mainPanel;
 	private JPanel xpanel;
 	
+	/**
+	 * Contactbar
+	 */
 	private Contactbar cbar;
 	
-	//private PPCA_SidePanelRight sidePanel;
 	private static JPanel rightPanel;
 	
 	/**
@@ -70,7 +86,7 @@ public class PPCA_PanaceaWindow
 		Image image;
 		
 		
-		/* Set window's basic properties */
+		//Set the properties
 		frame = new JFrame(TITLE);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,11 +101,11 @@ public class PPCA_PanaceaWindow
 		    ex.printStackTrace();
 		}
 		
-		/* Set window's layout */
+		// Set layout
 		container = frame.getContentPane();
 		container.setLayout(new BorderLayout());
 		
-		/* Add components to the window */
+		// Add comps
 		frame.setLocationRelativeTo(null);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setUndecorated(true);
@@ -111,7 +127,7 @@ public class PPCA_PanaceaWindow
 		container.add(centerPanel, BorderLayout.CENTER);
 		container.add(rightPanel, BorderLayout.EAST);
 		
-		/* View window */
+		//Show window
 		
 		frame.pack();
 		frame.setVisible(true);
