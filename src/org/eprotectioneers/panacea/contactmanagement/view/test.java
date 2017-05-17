@@ -12,8 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import org.eprotectioneers.panacea.contactmanagement.design.DesignDatabase;
-import org.eprotectioneers.panacea.contactmanagement.design.ProjectPanaceaTemplates;
+import org.eprotectioneers.panacea.contactmanagement.components.*;
+import org.eprotectioneers.panacea.contactmanagement.design.*;
+import org.eprotectioneers.panacea.contactmanagement.design.*;
+import org.eprotectioneers.panacea.contactmanagement.models.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -33,9 +35,11 @@ import java.net.URL;
 
 public class test extends JFrame {
 
+	//DevelopmentLifeFeed Simsen3142
+	
 	private JPanel contentPane;
 	static test frame;
-	private org.eprotectioneers.panacea.contactmanagement.components.RoundTextField rndtxtfldTest;
+	private RoundTextField rndtxtfldTest;
 	private Contactbar contactbar;
 	private Component item_group;
 	private Contactbar contactbar_1;
@@ -69,12 +73,6 @@ public class test extends JFrame {
 		
 	}
 
-	public static void setPanel(JPanel pnl){
-		frame.remove(panel);
-		panel=pnl;
-		frame.add(panel,BorderLayout.CENTER);
-		frame.setVisible(true);
-	}
 	/**
 	 * Create the frame.
 	 */
@@ -91,10 +89,6 @@ public class test extends JFrame {
 		}
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 450);
-		UIManager.put("ToolTip.background",new Color(10,10,10));
-		UIManager.put("ToolTip.foreground",Color.WHITE);
-		Border border = BorderFactory.createLineBorder(Color.LIGHT_GRAY);
-		UIManager.put("ToolTip.border", border);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));

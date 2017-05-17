@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.cs4235.PGPClient.email;
 
 import java.io.File;
@@ -21,22 +25,13 @@ import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_FileEngine;
 import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_Preferences;
 
 /**
- * This class represents a PGP email. Wrapps: javax.mail.Message
+ * This class represents a PGP email
+ * Wrapper for the Message Class
  * @author eProtectioneers
  */
 public class PPCA_PGPMail
 {
-	/* PGP email protocol:
-	 * PGP combines symmetric-key encryption and public-key encryption. 
-	 * The message is encrypted using a symmetric encryption algorithm, 
-	 * which requires a symmetric key. Each symmetric key is used only 
-	 * once and is also called a session key. The session key is 
-	 * protected by encrypting it with the receiver's public key thus 
-	 * ensuring that only the receiver can decrypt the session key. The 
-	 * encrypted message along with the encrypted session key is sent 
-	 * to the receiver. 
-	 */
-
+	/* Identification strings for the PGP Protocoll */
 	private final static String BEGIN_EMAIL = "-----BEGIN PGP EMAIL-----";
 	private final static String END_EMAIL = "-----END PGP EMAIL-----";
 	private final static String BEGIN_KEY = "\n-----BEGIN PGP KEY-----\n";
@@ -46,6 +41,12 @@ public class PPCA_PGPMail
 	private final static String BEGIN_SIGNATURE = "\n-----BEGIN PGP SIGNATURE-----\n";
 	private final static String END_SIGNATURE = "\n-----END PGP SIGNATURE-----\n";
 
+	/**
+	 * Is the mail encrypted?
+	 */
+	private boolean encrypted=false;
+	
+	/* Pretty self explanationary */
 	public String to;
 	public String subject;
 	public String from;
@@ -53,11 +54,23 @@ public class PPCA_PGPMail
 	public Message message;
 	public boolean isAunthentic;
 	
+	/**
+	 * Email Type
+	 * @author eProtectioneers	 *
+	 */
 	public enum Type
 	{
 		NEW,
 		REPLY,
 		FORWARD
+	}
+	
+	/**
+	 * Setter for the encryption
+	 * @param encrypted
+	 */
+	public void setEncrypted(boolean encrypted){
+		this.encrypted=encrypted;
 	}
 
 	/**
@@ -92,9 +105,9 @@ public class PPCA_PGPMail
 	 */
 	public Message prepare() throws PPCA_PGPMailException
 	{
-		String body = encryptContent(this.payload);
-
-		/* Create Java message */
+		String body=this.payload;
+		if(encrypted)body = encryptContent(body);
+		
 		Session session = PPCA_MailClient.getSMTPSession();
 		try 
 		{

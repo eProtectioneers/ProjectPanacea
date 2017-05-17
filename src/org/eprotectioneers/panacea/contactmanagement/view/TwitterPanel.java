@@ -25,7 +25,7 @@ public class TwitterPanel extends JPanel {
 	private JScrollPane scrollPane;
 	private ImageIcon _bg_ic;
 	private URL _url;
-	private static final String defaultpicpath=DatabaseC.getUrlPath(TwitterPanel.class.getResource("/view/PPNCA_Images/default_profile_twitter.png").getPath()).substring(1);
+	private static final String defaultpicpath=new File("images/default_profile_twitter.png").getAbsolutePath();
 	private String tooltipdescr="";
 	
 	public TwitterPanel(URL url,String picpath,String shownname,String name,String tweet,String bgpicpath){

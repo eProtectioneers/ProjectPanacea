@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.cs4235.PGPClient.email;
 
 import java.util.Properties;
@@ -18,22 +22,38 @@ import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_EmailStore;
 import org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL.PPCA_Preferences;
 
 /**
- * This class represent a general implementation of an email client. 
- * POP3 will be used to synchronize with email server. SMTP will be 
- * used to send an email.
+ * This represents a structure for a basic mail client.
+ * Using POP3 Protocol to receive messages and
+ * SMTP to send new emails
  * @author eProtectioneers
  */
 public class PPCA_MailClient 
 {
-	/* Singleton MailClient Object */
+	/**
+	 * Singleton PPCA_MailClient
+	 */
 	private static PPCA_MailClient emailClient;
 	
+	/**
+	 * DataRepository
+	 */
 	private PPCA_DataRepo or;
+	/**
+	 * Preferences
+	 */
 	private PPCA_Preferences pref;
+	/**
+	 * EmailStore
+	 */
 	private PPCA_EmailStore es;
 
-	//connection prefereces
+	/**
+	 * Outbound connection string
+	 */
 	private final String outbound = "smtp.gmail.com";
+	/**
+	 * Inbound connection string
+	 */
 	private final String inbound = "pop.gmail.com";
 
 	/**
@@ -65,10 +85,13 @@ public class PPCA_MailClient
 	 */
 	public boolean login (String username, String password)
 	{
-		//TODO: Figure out how to authenticate this	
-		pref.setUsername(username);
-		pref.setPassword(password);
-		return true;
+		try{
+			pref.setUsername(username);
+			pref.setPassword(password);
+			return true;
+		}catch (Exception e) {
+			return false;
+		}
 	}
 
 	/**
@@ -145,6 +168,7 @@ public class PPCA_MailClient
 	 * @param reply the content of email
 	 * @return true on success or false otherwise
 	 */
+	@Deprecated
 	public boolean reply(PPCA_PGPMail email, String reply)
 	{
 
@@ -171,6 +195,7 @@ public class PPCA_MailClient
 	 * @param email the email to be deleted
 	 * @return true on success or false otherwise
 	 */
+	@Deprecated
 	public boolean delete(PPCA_PGPMail email)
 	{
 		return false;
@@ -181,6 +206,7 @@ public class PPCA_MailClient
 	 * @param email the email to be read
 	 * @return true on success or false otherwise
 	 */
+	@Deprecated
 	public boolean markRead(PPCA_PGPMail email)
 	{
 		return false;

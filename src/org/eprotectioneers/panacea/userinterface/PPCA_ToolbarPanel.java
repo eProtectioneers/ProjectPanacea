@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.userinterface;
 
 import java.awt.Color;
@@ -6,6 +10,8 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.mail.Flags.Flag;
+import javax.mail.MessagingException;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,6 +24,7 @@ import org.eprotectioneers.panacea.cs4235.PGPClient.email.PPCA_PGPMail;
 import java.awt.Component;
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
+import javax.swing.Icon;
 
 /**
  * This class represents a toolbar panel.
@@ -25,7 +32,7 @@ import java.awt.ComponentOrientation;
  */
 public class PPCA_ToolbarPanel extends JPanel 
 {
-	/* Swing components */
+	//Visual components
 	private JFrame frame;
 	private JButton btnSetting;
 	private JButton btnCryptoConfig;
@@ -34,13 +41,23 @@ public class PPCA_ToolbarPanel extends JPanel
 	private JButton btnEmailReply;
 	private JButton btnEmailDelete;
 	private JButton btnEmailForward;
-
-	private PPCA_PanaceaWindow window;
-	private PPCA_MailClient ec;
 	private JPanel panel;
 	private JPanel panel_1;
 	private JPanel panel_2;
-	private JButton btnContacts;
+	private JButton btnWorkspace;
+	private JButton btnHelp;
+	private JButton btnShare;
+	
+	/**
+	 * PanaceaWindow
+	 */
+	private PPCA_PanaceaWindow window;
+	/**
+	 * MailClient
+	 */
+	private PPCA_MailClient ec;
+	
+
 
 	/**
 	 * Constructor
@@ -62,12 +79,12 @@ public class PPCA_ToolbarPanel extends JPanel
 	 */
 	private void initializeComponent()
 	{
-		/* Initialize components */
+		//Initialize components
 		ButtonListener bl = new ButtonListener();
 
 		ImageIcon imgSetting = new ImageIcon ("images/setting.png");
 
-		ImageIcon imgCryptoConfig = new ImageIcon ("images/key.png");
+		ImageIcon imgCryptoConfig = new ImageIcon ("images/lock.png");
 
 		ImageIcon imgEmailSync = new ImageIcon ("images/email_download.png");
 
@@ -79,9 +96,11 @@ public class PPCA_ToolbarPanel extends JPanel
 
 		ImageIcon imgEmailDelete = new ImageIcon ("images/email_delete.png");
 
-		/* Register event handlers */
+		ImageIcon imgHelp = new ImageIcon ("images/help.png");
+		
+		ImageIcon imgShare = new ImageIcon("images/share.png");
+		
 
-		/* Add components */
 		setLayout(new BorderLayout(0, 0));
 		
 		panel_2 = new JPanel();
@@ -120,9 +139,18 @@ public class PPCA_ToolbarPanel extends JPanel
 		panel = new JPanel();
 		add(panel,BorderLayout.EAST);
 		
-		btnContacts = new JButton("Contacts");
-		btnContacts.setIcon(new ImageIcon("C:\\eProtectioneers\\Panacea_Base\\PGPClient-master\\images\\lock.png"));
-		panel.add(btnContacts);
+		btnWorkspace = new JButton("Workspace");
+		btnWorkspace.setToolTipText("Workspace");
+		btnWorkspace.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//Set the Workspace Panel as Center Display
+				window.setCenterPanel(window.getMainPanel());
+				window.getMainPanel().resetWorkspace();
+				window.getNavigationPanel().populateTable();
+			}
+		});
+		btnWorkspace.setIcon(new ImageIcon("images/workspace.png"));
+		panel.add(btnWorkspace);
 		btnSetting = new JButton (imgSetting);
 		btnSetting.setText("Settings");
 		panel.add(btnSetting);
@@ -131,23 +159,50 @@ public class PPCA_ToolbarPanel extends JPanel
 		btnCryptoConfig.setText("Security");
 		panel.add(btnCryptoConfig);
 		btnCryptoConfig.setToolTipText("Crypto Config");
+		
+		btnHelp = new JButton(imgHelp);
+		btnHelp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				//Set the Help Panel as Center Display
+				window.setCenterPanel(window.getMainPanel());
+				window.getMainPanel().resetHelp();
+				window.getNavigationPanel().populateTable();
+				
+			}
+		});
+		btnHelp.setToolTipText("Help Page");
+		panel.add(btnHelp);
 		btnCryptoConfig.addActionListener(bl);
 		btnSetting.addActionListener(bl);
 		
+		btnShare = new JButton(imgShare);
+		btnShare.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Set the Share Panel as Center Display
+				window.setCenterPanel(window.getMainPanel());
+				window.getMainPanel().resetShare();
+				window.getNavigationPanel().populateTable();
+			}
+		});
+		btnShare.setToolTipText("Social");
+		panel.add(btnShare);
 		
-		
-		
-		/* Preloading Event */
+		//Preloading
 		ec = PPCA_MailClient.getInstance();
 	}
 
 	/**
-	 * Event handler for JButtons
-	 * @author
+	 * ButtonListener (Relic)
+	 * @author eProtectioneers
 	 */
 	private class ButtonListener implements ActionListener
 	{
-
+		/**
+		 * actionPerformed
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) 
 		{
@@ -166,17 +221,18 @@ public class PPCA_ToolbarPanel extends JPanel
 				PPCA_PGPMail[] emails  = ec.getMessages();
 				if (emails == null)
 				{
-					JOptionPane.showMessageDialog(PPCA_ToolbarPanel.this, "Error: Unable to retrieve emails!", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "Error: Unable to retrieve emails!", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				else if (emails.length == 0)
 				{
-					JOptionPane.showMessageDialog(PPCA_ToolbarPanel.this, "No new messages in your inbox.");
+					JOptionPane.showMessageDialog(frame, "No new messages in your inbox.");
 				}
 				else
 				{
 					PPCA_NavigationPanel np = window.getNavigationPanel();
 					np.show(emails);
 				}
+				PPCA_NavigationPanel.populateTable();
 			}
 			else if (source == btnEmailCompose)
 			{
@@ -189,7 +245,7 @@ public class PPCA_ToolbarPanel extends JPanel
 
 				if (email == null)
 				{
-					JOptionPane.showMessageDialog(PPCA_ToolbarPanel.this, "Select an email to reply first.");
+					JOptionPane.showMessageDialog(null, "Select an email to reply first.");
 				}
 				else
 				{
@@ -204,7 +260,7 @@ public class PPCA_ToolbarPanel extends JPanel
 
 				if (email == null)
 				{
-					JOptionPane.showMessageDialog(PPCA_ToolbarPanel.this, "Select an email to forward first.");
+					JOptionPane.showMessageDialog(null, "Select an email to forward first.");
 				}
 				else
 				{
@@ -214,7 +270,7 @@ public class PPCA_ToolbarPanel extends JPanel
 			}
 			else if (source == btnEmailDelete)
 			{
-				JOptionPane.showMessageDialog(frame, "Unsupported command.");
+				JOptionPane.showMessageDialog(null, "Currently unsupported...!");
 			}
 		}
 	}

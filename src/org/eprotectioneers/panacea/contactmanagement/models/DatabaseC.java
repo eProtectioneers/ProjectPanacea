@@ -1,25 +1,16 @@
 package org.eprotectioneers.panacea.contactmanagement.models;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.sql.*;
 import java.util.*;
 
 public class DatabaseC {
-	private static final String dbUrl=getUrlPath("jdbc:sqlite:"+DatabaseC.class.getResource("/models/").getPath()+"Database/contact.db");
-	
-	public static String getUrlPath(String s){
-		s=s.replaceAll("[+]", "PlUs9q5w1");
-		try {
-			s=URLDecoder.decode(s, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return s.replaceAll("PlUs9q5w1", "+");
-	}
+	private static final String dbUrl="jdbc:sqlite:"+new File("lib/contact.db");
 	
 	public static String getDbUrl() {
-		return getUrlPath("jdbc:sqlite:"+DatabaseC.class.getResource("/models/Database/contact.db").getPath());
+		return dbUrl;
 	}
 
 	public static boolean addContact(Contact contact){
@@ -204,5 +195,14 @@ public class DatabaseC {
 		    e.printStackTrace();
 		}
 		return (Integer)null;
+	}
+	
+	public static Contact checkContact(String containsemail){
+		for(Contact c:DatabaseC.getContacts()){
+			if(containsemail.toLowerCase().contains(c.getEmailaddress().toLowerCase())){
+				return c;
+			}
+		}
+		return null;
 	}
 }
