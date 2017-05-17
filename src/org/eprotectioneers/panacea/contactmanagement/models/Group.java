@@ -1,12 +1,16 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.models;
 
 import java.io.*;
 import java.util.*;
 
-import org.eprotectioneers.panacea.contactmanagement.view.Page_Group;
-
-
-
+/**
+ * A Group
+ * @author eProtectioneers
+ */
 public class Group implements Serializable{
 	
 	private static final String defaultpicpath=new File("images/EmptyGroup.png").getAbsolutePath();
@@ -116,6 +120,9 @@ public class Group implements Serializable{
 		return html;
 	}
 	
+	/**
+	 * @return the description, formatted with html with LineWrap
+	 */
 	private String getDescrHtml(){
 		String html=_description;
 		int maxlength=40+44*4;
@@ -130,6 +137,10 @@ public class Group implements Serializable{
 		return html;
 	}
 	
+	/**
+	 * Comparator, to compare the Group's name
+	 * @author eProtectioneers
+	 */
 	public static class GroupComparator implements Comparator<Group>{
 		@Override
 		public int compare(Group g1, Group g2) {

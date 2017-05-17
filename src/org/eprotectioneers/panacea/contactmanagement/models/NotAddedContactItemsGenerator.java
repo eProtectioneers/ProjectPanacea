@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.models;
 
 import java.awt.Color;
@@ -10,7 +14,10 @@ import org.eprotectioneers.panacea.contactmanagement.view.Item_Contact;
 import org.eprotectioneers.panacea.contactmanagement.view.Item_Object;
 import org.eprotectioneers.panacea.contactmanagement.view.Page_Group;
 
-
+/**
+ * Generates the ContactItems for a Group, which have not been added to it
+ * @author eProtectioneers
+ */
 public class NotAddedContactItemsGenerator implements Runnable{
 		private ArrayList<Integer> ids_contacts=new ArrayList<Integer>();
 		private ArrayList<Integer> _ids_notadded=new ArrayList<Integer>();
@@ -19,6 +26,10 @@ public class NotAddedContactItemsGenerator implements Runnable{
 		private Page_Group _pg;
 		private JPopupMenu item_selectedPopup;
 		
+		/**
+		 * @param id
+		 * @return a Item_contact, which has not been added to the group
+		 */
 		public Item_Contact getNotAddedItem_contact(int id){
 			for(Item_Contact ic:_ics_notadded){
 				if(ic.getContact().getId()==id)return ic;
@@ -26,10 +37,18 @@ public class NotAddedContactItemsGenerator implements Runnable{
 			return null;
 		}
 		
+		/**
+		 * @return The ICs, which have not been added yet
+		 */
 		public ArrayList<Item_Contact> getICs_NotAdded(){
 			return _ics_notadded;
 		}
 		
+		/**
+		 * Constructor, assigns
+		 * @param g
+		 * @param pg
+		 */
 		public NotAddedContactItemsGenerator(Group g, Page_Group pg){
 			this._g=g;
 			this._pg=pg;
@@ -72,6 +91,9 @@ public class NotAddedContactItemsGenerator implements Runnable{
 			Item_Object.setHidePopup(false);
 		}
 		
+		/**
+		 * @return the popupmenu for the selected Items
+		 */
 		private JPopupMenu generateSelectedPopopMenu(){
 			item_selectedPopup=new JPopupMenu();
 			JMenuItem mntm_add=new JMenuItem("Add selected Contacts to Group");

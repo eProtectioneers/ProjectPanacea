@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.models;
 
 import java.awt.event.ActionEvent;
@@ -8,6 +12,10 @@ import javax.swing.JOptionPane;
 import org.eprotectioneers.panacea.contactmanagement.view.Item_Object;
 import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
+/**
+ * ActionListener to add a Contact to a Group
+ * @author eProtectioneers
+ */
 public class AddContactToGroupActionListener implements ActionListener {
 	
 	private Group _g;
@@ -23,19 +31,40 @@ public class AddContactToGroupActionListener implements ActionListener {
 		return finished;
 	}
 	
+	/**
+	 * Constructor, assigns
+	 * @param c
+	 * @param g
+	 */
 	public AddContactToGroupActionListener(Contact c,Group g){
 		this._g=g;
 		this._c=c;
 	}
+	
+	/**
+	 * Constructor, assigns
+	 * @param c
+	 * @param g
+	 * @param notification
+	 */
 	public AddContactToGroupActionListener(Contact c,Group g,boolean notification){
 		this(c,g);
 		this._notification=notification;
 	}
+	
+	/**
+	 * Constructor, assigns
+	 * @param c
+	 * @param g
+	 * @param notification
+	 * @param itemobject
+	 */
 	public AddContactToGroupActionListener(Contact c,Group g,boolean notification,Item_Object io){
 		this(c,g);
 		this._notification=notification;
 		this._io=io;
 	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		finished=false;

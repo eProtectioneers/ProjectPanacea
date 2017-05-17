@@ -1,8 +1,11 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.view;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
@@ -10,6 +13,10 @@ import javax.swing.event.MenuListener;
 
 import org.eprotectioneers.panacea.contactmanagement.components.RoundRectangleButton;
 
+/**
+ * The super class, to visualize an Object (Contact/Group)
+ * @author eProtectioneers
+ */
 public abstract class Item_Object extends RoundRectangleButton {
 
 	protected JPopupMenu popupMenu;
@@ -20,14 +27,18 @@ public abstract class Item_Object extends RoundRectangleButton {
 	private static Color bg_selected=Color.BLACK;
 	private static Color fg_selected=Color.WHITE;
 	private JPopupMenu selectedPopup;
-	private Container _c;
 	private static SelectionListener sl=new SelectionListener();
 	private static Thread t1;
 	private boolean puoogenerated;
 	
-	public void setPUOOGenerated(boolean b){
-		puoogenerated=b;
+	/**
+	 * Set the
+	 * @param puoogenerated
+	 */
+	public void setPUOOGenerated(boolean puoogenerated){
+		this.puoogenerated=puoogenerated;
 	}
+	
 	/**
 	 * @return the bg_selected
 	 */
@@ -131,6 +142,11 @@ public abstract class Item_Object extends RoundRectangleButton {
 		this.selectedPopup = selectedPopup;
 	}
 	
+	/**
+	 * Constructor, assigns
+	 * @param text
+	 * @param radius
+	 */
 	public Item_Object(String text, int radius) {
 		super(text, radius);
 		super.setHorizontalAlignment(SwingConstants.LEFT);
@@ -144,14 +160,45 @@ public abstract class Item_Object extends RoundRectangleButton {
 		this.addMouseListener(sl);
 	}
 	
+	/**
+	 * @return the IO's shown text
+	 */
 	public abstract String getShownText();
+	
+	/**
+	 * 
+	 */
 	abstract protected void generatePopup();
+	
+	/**
+	 * Generates the PopupMenu of the other Object (Contact-Group/Group-Object)
+	 * @param bg
+	 * @param fg
+	 * @param borderpainted
+	 * @param mnOObject
+	 * @param tooltipset
+	 */
 	abstract public void generatePopupOObject(Color bg, Color fg, boolean borderpainted, JComponent mnOObject,boolean tooltipset);
+	
+	/**
+	 * @param o
+	 * @param bg
+	 * @param fg
+	 * @param borderpainted
+	 * @return a Array of default MenuItems of the other Object (Contact-Group/Group-Object)
+	 */
 	abstract protected JMenuItem[] getDefaultOObjectMI(Object o,Color bg, Color fg, boolean borderpainted);
+	
+	/**
+	 * Is running after clicking twice in a short period of time
+	 */
 	abstract protected void doubleClickServiceRoutine();
 
+	/**
+	 * MenuListener, which generates the Menus of the other Object (Contact-Group/Group-Object)
+	 * @author eProtectioneers
+	 */
 	protected class GenerateOObjectMenuListener implements MenuListener,Runnable{
-
 		private Color _bg,_fg;
 		private boolean _borderpainted;
 		private JComponent _mnOObject;
@@ -185,8 +232,12 @@ public abstract class Item_Object extends RoundRectangleButton {
 				puoogenerated=true;
 			}
 		}
-		
 	}
+
+	/**
+	 * Listener, which is being activated completely, if it has been activated twice in a short period of time
+	 * @author eProtectioneers
+	 */
 	protected class DoubleClickListener implements ActionListener, Runnable{
 		private int doubleclickcounter;
 		private Thread threadwait=new Thread(this);
@@ -204,6 +255,9 @@ public abstract class Item_Object extends RoundRectangleButton {
 				doubleClickServiceRoutine();
 			}
 		}
+		/**
+		 * @return true, if the click was a doubleclick
+		 */
 		public boolean doubleClickHappened(){
 			if(selected){
 				doubleclickcounter=0;
@@ -219,7 +273,11 @@ public abstract class Item_Object extends RoundRectangleButton {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * MouseListener, which sets the io selected and shows the PuMn
+	 * @author eProtectioneers
+	 */
 	protected class Item_ObjectMouseListener extends MouseAdapter {
 		private PopUpGenerator pug;
 		private Color _bg,_fg;
@@ -228,6 +286,7 @@ public abstract class Item_Object extends RoundRectangleButton {
 			this._bg=getBackground();
 			this._fg=getForeground();
 		}
+		@Override
 		public void mousePressed(MouseEvent e) {
 			if((e.isControlDown()||selectable)&&e.getButton()==MouseEvent.BUTTON1){
 				if(selected){
@@ -238,10 +297,14 @@ public abstract class Item_Object extends RoundRectangleButton {
 			}
 			popupTriggered(e);			
 		}
+		@Override
 		public void mouseReleased(MouseEvent e) {
 			popupTriggered(e);
 		}
-		
+		/**
+		 * Triggeres the Popup
+		 * @param e
+		 */
 		public void popupTriggered(MouseEvent e){
 			if(e.isPopupTrigger()){
 				if(pug==null)pug=new PopUpGenerator(e);
@@ -253,7 +316,9 @@ public abstract class Item_Object extends RoundRectangleButton {
 				}
 			}
 		}
-		
+		/**
+		 * selects the Item
+		 */
 		public void selectItem(){
 			selected=true;
 			_bg=getBackground();
@@ -261,6 +326,9 @@ public abstract class Item_Object extends RoundRectangleButton {
 			setBackground(bg_selected);
 			setForeground(fg_selected);
 		}
+		/**
+		 * deselects the Item
+		 */
 		public void deselectItem(){
 			selected=false;
 			setBackground(_bg);
@@ -270,7 +338,11 @@ public abstract class Item_Object extends RoundRectangleButton {
 			popumenu.show(e.getComponent(), e.getX(),e.getY());
 		}		
 	}
-	
+
+	/**
+	 * Sets the Tooltiptext to this
+	 * @author eProtectioneers
+	 */
 	protected class AddToolTipText implements Runnable{
 		JComponent _c;
 		String _s;
@@ -284,7 +356,11 @@ public abstract class Item_Object extends RoundRectangleButton {
 			_c.setToolTipText(_s);
 		}
 	}
-		
+
+	/**
+	 * Generator, which generates the PopupMenu
+	 * @author eProtectioneers
+	 */
 	private class PopUpGenerator implements Runnable{
 		private boolean generated=false;
 		MouseEvent _me;
@@ -308,9 +384,12 @@ public abstract class Item_Object extends RoundRectangleButton {
 			new Item_ObjectMouseListener().showMenu(popupMenu,_me);
 		}
 	}
-	
-	private static class SelectionListener extends MouseAdapter{
 
+	/**
+	 * MouseListener, which sets the Cursor to a HandCursor, if the IO can be selected by clicking
+	 * @author eProtectioneers
+	 */
+	private static class SelectionListener extends MouseAdapter{
 		private static boolean handCursor=false;
 	    private static KeyStroke keyStrokeP = KeyStroke.getKeyStroke(KeyEvent.VK_CONTROL, InputEvent.CTRL_MASK,false);
 	    private static KeyStroke keyStrokeR = KeyStroke.getKeyStroke(KeyEvent.VK_CONTROL, 0,true);

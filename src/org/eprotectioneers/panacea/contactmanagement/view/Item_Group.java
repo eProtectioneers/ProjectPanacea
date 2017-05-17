@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.view;
 
 import javax.swing.*;
@@ -10,8 +14,6 @@ import org.eprotectioneers.panacea.contactmanagement.models.DatabaseCG;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseG;
 import org.eprotectioneers.panacea.contactmanagement.models.Group;
 import org.eprotectioneers.panacea.contactmanagement.models.RemoveContactFromGroupActionListener;
-import org.eprotectioneers.panacea.userinterface.PPCA_ComposeWindow;
-import org.eprotectioneers.panacea.userinterface.PPCA_MainPanel;
 import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 import java.awt.event.*;
@@ -20,6 +22,11 @@ import java.util.Comparator;
 import java.awt.*;
 
 
+
+/**
+ * A Item, to visualize a Group
+ * @author eProtectioneers
+ */
 public class Item_Group extends Item_Object {
 
 	private Group _g;
@@ -29,6 +36,9 @@ public class Item_Group extends Item_Object {
 	private JMenuItem mntmShowGroup;
 	private JMenu mnContacts;
 	
+	/**
+	 * @return the Group
+	 */
 	public Group getGroup(){
 		return _g;
 	}
@@ -170,38 +180,62 @@ public class Item_Group extends Item_Object {
 		PPCA_PanaceaWindow.setCenterPanel(new Page_Group(_g));
 	}
 
+
+	/**
+	 * ActionListener to Open the Group
+	 * @author eProtectioneers
+	 */
 	private class OpenGroupListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			doubleClickServiceRoutine();
 		}
 	}
+
+	/**
+	 * ActionListener to write a new Email to the Group
+	 * @author eProtectioneers
+	 */
 	private class MntmNewEmailActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			//MZ_Sojourner_cntl
 		}
 	}
+
+	/**
+	 * ActionListener to Delete this Group
+	 * @author eProtectioneers
+	 */
 	private class MntmDeleteGroupActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			Object options[]={"yes","no"};
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to Delete '"+_g.getName()+"'?", "Delete Group", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Delete '"+_g.getName()+"'?", "Delete Group", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					setCursor(new Cursor(Cursor.WAIT_CURSOR));
 					DatabaseG.removeGroup(_g);
 					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-					JOptionPane.showMessageDialog(null, "'"+_g.getName()+"' Deleted", "Deleted", JOptionPane.INFORMATION_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "'"+_g.getName()+"' Deleted", "Deleted", JOptionPane.INFORMATION_MESSAGE, null);
 					break;
 				default:
 					break;
 			}
 		}
 	}
+
+	/**
+	 * ActionListener to view the recent Emails, you sent to this Group
+	 * @author eProtectioneers
+	 */
 	private class MntmConversationsActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			//MZ_Sojourner_cntl
 		}
 	}	
-	
+
+	/**
+	 * ActionListener to show the Contact
+	 * @author eProtectioneers
+	 */
 	public class ShowContactActionListener implements ActionListener{
 		private Contact _c;
 		public ShowContactActionListener(Contact c){
@@ -212,16 +246,22 @@ public class Item_Group extends Item_Object {
 			PPCA_PanaceaWindow.setCenterPanel(new Page_Contact(_c));
 		}
 	}
-	
+
+	/**
+	 * Comparator, which compares the GroupNames
+	 * @author eProtectioneers
+	 */
 	public static class ItemGroupComparator implements Comparator<Item_Group>{
 		@Override
 		public int compare(Item_Group ig1, Item_Group ig2) {
 			return ig1.getGroup().getName().toLowerCase().compareTo(ig2.getGroup().getName().toLowerCase());
 		}
 	}
-	
-	
-	
+
+	/**
+	 * Generator, to generate the Picture and the ToolTipText
+	 * @author eProtectioneers
+	 */
 	private class Generator implements Runnable{
 		@Override
 		public void run() {

@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.view;
 
 import javax.swing.*;
@@ -20,11 +24,21 @@ import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 import java.awt.event.*;
 import java.util.*;
 
+/**
+ * A Bar, to show the added Contacts and Groups
+ * @author eProtectioneers
+ */
 public class Contactbar extends JPanel {
+	
+	/**
+	 * A enum, which contains the options, to get shown
+	 * @author eProtectioneers
+	 */
 	public enum Selected{
 		CONTACT_SHOWNNAME, CONTACT_EMAILADDRESS, CONTACT_FIRSTNAME, CONTACT_LASTNAME, CONTACT_ADDRESS, CONTACT_PHONENUMBER,
 		GROUP
 	}
+	
 	private static Selected selected=Selected.CONTACT_SHOWNNAME;
 	private static JPanel pnl_scrollpane;
 	private static JScrollPane scrollPane;
@@ -53,21 +67,37 @@ public class Contactbar extends JPanel {
 	private Object options[]={"yes", "no"};
 	private ScrollBarVisibilityMouseListener sbvml=new ScrollBarVisibilityMouseListener();
 
-	
+	/**
+	 * @return the selected parameter, to show
+	 */
 	public Selected getSelected(){
 		return selected;
 	}
 	
+	/**
+	 * @return the ItemContacts
+	 */
 	public ArrayList<Item_Contact> getICs(){
 		return _ics;
 	}
+	
+	/**
+	 * @return the visible ItemContacts
+	 */
 	public ArrayList<Item_Contact> getICs_visible(){
 		return _ics_visible;
 	}
 	
+	/**
+	 * @return the ItemGroups
+	 */
 	public ArrayList<Item_Group> getIGs(){
 		return _igs;
 	}
+	
+	/**
+	 * @return the visible ItemGroups
+	 */
 	public ArrayList<Item_Group> getIGs_visible(){
 		return _igs_visible;
 	}
@@ -79,6 +109,9 @@ public class Contactbar extends JPanel {
 		initialize();
 	}
 	
+	/**
+	 * Inizializes
+	 */
 	private void initialize() {
 		setPreferredSize(new Dimension(300, 400));
 		setMaximumSize(new Dimension(350, 32767));
@@ -173,6 +206,9 @@ public class Contactbar extends JPanel {
 		new Thread(new ItemGenerator()).start();	
 	}
 	
+	/**
+	 * Adds the Scrollbarvisibility MouseListener to every Component, the bar contains
+	 */
 	private void addScrollBarVisibilityMouseListener(){
 		addMouseListener(sbvml);
 		for(int i=0;i<this.getComponentCount();i++){
@@ -194,6 +230,10 @@ public class Contactbar extends JPanel {
 		}
 	}
 	
+	/**
+	 * Changes, if
+	 * @param scrollbarvisible
+	 */
 	private void changeScrollBarPolicy(boolean scrollbarvisible){
 		if(scrollbarvisible){
 			scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -204,6 +244,9 @@ public class Contactbar extends JPanel {
 		}
 	}
 	
+	/**
+	 * Generate the popup, to add a new Contact/Group
+	 */
 	private void generatePopupAdd(){
 		MntmAddActionListener mntmaal=new MntmAddActionListener();
 
@@ -226,6 +269,9 @@ public class Contactbar extends JPanel {
 		ppmn_add.add(mntm_addGroup);
 	}
 	
+	/**
+	 * Generate the Items
+	 */
 	private void generateItems(){
 		new Thread(new SelectedPopUpGenerator_Contact()).start();
 		new Thread(new SelectedPopUpGenerator_Group()).start();;
@@ -245,6 +291,9 @@ public class Contactbar extends JPanel {
 		addItems();
 	}
 	
+	/**
+	 * Generate the ItemContacts
+	 */
 	private void generateICs(){
 		setCursor(new Cursor(Cursor.WAIT_CURSOR));
 		ArrayList<Contact> cs=DatabaseC.getContacts();
@@ -255,6 +304,9 @@ public class Contactbar extends JPanel {
 		}
 	}
 	
+	/**
+	 * Generate the ItemGroups
+	 */
 	private void generateIGs(){
 		setCursor(new Cursor(Cursor.WAIT_CURSOR));
 		ArrayList<Group> gs=DatabaseG.getGroups();
@@ -265,6 +317,10 @@ public class Contactbar extends JPanel {
 		}
 	}
 
+	/**
+	 * Generate a new Item
+	 * @param io
+	 */
 	private void generateItem(Item_Object io){
 		if(io instanceof Item_Contact){
 			Item_Contact ic=(Item_Contact)io;
@@ -285,6 +341,9 @@ public class Contactbar extends JPanel {
 		io.addMouseListener(sbvml);
 	}
 	
+	/**
+	 * Add the Visible, selected Item to the bar
+	 */
 	public void addItems(){
 		letter=new char[40];
 		letter1_used=false;
@@ -369,6 +428,9 @@ public class Contactbar extends JPanel {
 		}
 	}
 	
+	/**
+	 * @return the selected ShownText of ItemContacts
+	 */
 	private static ShownText getShownText(){
 		ShownText st=ShownText.SHOWNNAME;
 		switch(selected){
@@ -396,6 +458,9 @@ public class Contactbar extends JPanel {
 		return st;
 	}
 	
+	/**
+	 * Generate the PuMn for the selected ICs
+	 */
 	private void generatePopupMenuSelected_Contact(){
 		ppmn_ic_selected=new JPopupMenu();
 		
@@ -464,6 +529,9 @@ public class Contactbar extends JPanel {
 		mn_removefromgroup.setEnabled(true);
 	}
 	
+	/**
+	 * Generate the PuMn for the selected IGs
+	 */
 	private void generatePopupMenuSelected_Group(){
 		ppmn_ig_selected=new JPopupMenu();
 
@@ -524,6 +592,9 @@ public class Contactbar extends JPanel {
 		mn_removecontacts.setEnabled(true);
 	}
 	
+	/**
+	 * @return the selected ics
+	 */
 	private ArrayList<Item_Contact> getSelectedICs(){
 		ArrayList<Item_Contact> ics_selected=new ArrayList<Item_Contact>();
 		for(Item_Contact ic:_ics_visible){
@@ -532,6 +603,9 @@ public class Contactbar extends JPanel {
 		return ics_selected;
 	}
 	
+	/**
+	 * @return the selected igs
+	 */
 	private ArrayList<Item_Group> getSelectedIGs(){
 		ArrayList<Item_Group> igs_selected=new ArrayList<Item_Group>();
 		for(Item_Group ig:_igs_visible){
@@ -541,6 +615,10 @@ public class Contactbar extends JPanel {
 	}
 	
 	private static boolean generatingItems=false;
+	/**
+	 * Generator, to generate the Items
+	 * @author eProtectioneers
+	 */
 	private class ItemGenerator implements Runnable{
 		@Override
 		public void run() {
@@ -559,6 +637,10 @@ public class Contactbar extends JPanel {
 	}
 	
 	private static boolean generatingPopup_c=false;
+	/**
+	 * Generator, to generate the PopupMn for the Contacts
+	 * @author eProtectioneers
+	 */
 	private class SelectedPopUpGenerator_Contact implements Runnable{
 		@Override
 		public void run() {
@@ -570,6 +652,10 @@ public class Contactbar extends JPanel {
 		}
 	}
 	private static boolean generatingPopup_g=false;
+	/**
+	 * Generator, to generate the PopupMn for the Groups
+	 * @author eProtectioneers
+	 */
 	private class SelectedPopUpGenerator_Group implements Runnable{
 		@Override
 		public void run() {
@@ -580,7 +666,11 @@ public class Contactbar extends JPanel {
 			}
 		}
 	}
-	
+
+	/**
+	 * ActionListener to write a new Email so the selected cs
+	 * @author eProtectioneers
+	 */
 	private class NewEmailToSelectedContactsActionlistener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -589,7 +679,11 @@ public class Contactbar extends JPanel {
 			}		
 		}
 	}
-	
+
+	/**
+	 * ActionListener to write a new Email so the selected gs
+	 * @author eProtectioneers
+	 */
 	private class NewEmailToSelectedGroupsActionlistener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -598,7 +692,11 @@ public class Contactbar extends JPanel {
 			}		
 		}
 	}
-	
+
+	/**
+	 * ActionListener to add the selected cs to a Group
+	 * @author eProtectioneers
+	 */
 	private class AddSelectedContactsToGroupActionListener implements ActionListener{
 		Group _g;
 		
@@ -619,6 +717,11 @@ public class Contactbar extends JPanel {
 			}
 		}	
 	}
+
+	/**
+	 * ActionListener to remove the selected cs from a Group
+	 * @author eProtectioneers
+	 */
 	private class RemoveSelectedContactsFromGroupActionListener implements ActionListener{
 		Group _g;
 		
@@ -639,6 +742,11 @@ public class Contactbar extends JPanel {
 			}
 		}	
 	}
+
+	/**
+	 * ActionListener to add the selected cs to spam
+	 * @author eProtectioneers
+	 */
 	private class AddSelectedContactsToSpamActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -654,6 +762,11 @@ public class Contactbar extends JPanel {
 			}
 		}
 	}
+
+	/**
+	 * ActionListener to remove the selected cs from spam
+	 * @author eProtectioneers
+	 */
 	private class RemoveSelectedContactsFromSpamActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -669,10 +782,15 @@ public class Contactbar extends JPanel {
 			}
 		}
 	}
+
+	/**
+	 * ActionListener to delete the selected cs
+	 * @author eProtectioneers
+	 */
 	private class DeleteSelectedContactsActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to DELETE the selected Contacts?", "DELETE Contacts", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Delete the selected Contacts?", "Delete Contacts", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Contact ic:getSelectedICs()){
 						DatabaseC.removeContact(ic.getContact());
@@ -685,6 +803,11 @@ public class Contactbar extends JPanel {
 		}
 	}
 	
+
+	/**
+	 * ActionListener to add a c to the selected gs
+	 * @author eProtectioneers
+	 */
 	private class AddContactToSelectedGroupsActionListener implements ActionListener{
 		Contact _c;
 		
@@ -705,6 +828,11 @@ public class Contactbar extends JPanel {
 			}
 		}	
 	}
+
+	/**
+	 * ActionListener to remove a c from the selected gs
+	 * @author eProtectioneers
+	 */
 	private class RemoveContactFromSelectedGroupsActionListener implements ActionListener{
 		Contact _c;
 		
@@ -725,10 +853,15 @@ public class Contactbar extends JPanel {
 			}
 		}	
 	}
+
+	/**
+	 * ActionListener to delete the selected cs
+	 * @author eProtectioneers
+	 */
 	private class DeleteSelectedGroupsActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to DELETE the selected Groups?", "DELETE Groups", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Delete the selected Groups?", "Delete Groups", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					for(Item_Group ig:getSelectedIGs()){
 						DatabaseG.removeGroup(ig.getGroup());
@@ -740,7 +873,11 @@ public class Contactbar extends JPanel {
 			}
 		}
 	}
-	
+
+	/**
+	 * ActionListener to set the 'selected' of the CBar
+	 * @author eProtectioneers
+	 */
 	private class CBoxTypeActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -748,7 +885,11 @@ public class Contactbar extends JPanel {
 			addItems();
 		}
 	}
-	
+
+	/**
+	 * ActionListener to refresh the ios
+	 * @author eProtectioneers
+	 */
 	private class BtnRefreshActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -756,13 +897,22 @@ public class Contactbar extends JPanel {
 			searchField.setFirst();
 		}
 	}
+
+	/**
+	 * ActionListener to show the addPopup
+	 * @author eProtectioneers
+	 */
 	private class Btn_addActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ppmn_add.show(btn_add, 3, btn_add.getHeight());
 		}
 	}
-	
+
+	/**
+	 * ActionListener to add the selected Object (Contact/Group)
+	 * @author eProtectioneers
+	 */
 	private class MntmAddActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -773,6 +923,11 @@ public class Contactbar extends JPanel {
 			}
 		}
 	}
+
+	/**
+	 * MouseListener, to change the ScrollBars visibility state
+	 * @author eProtectioneers
+	 */
 	private class ScrollBarVisibilityMouseListener extends MouseAdapter {
 		@Override
 		public void mouseEntered(MouseEvent e) {
