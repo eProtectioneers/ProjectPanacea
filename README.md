@@ -56,3 +56,5 @@ SOFTWARE.
 
 
 Created with ![](https://avatars1.githubusercontent.com/u/23667401?v=3&s=15)  by the eProtectioneers Team!
+
+We want you! If you want to create great software with us simply send us a mail for recruiting at sojourner.cntl@gmail.com!
