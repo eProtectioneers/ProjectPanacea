@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.view;
 
 import java.awt.*;
@@ -5,7 +9,6 @@ import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 
 import org.eprotectioneers.panacea.contactmanagement.components.ImagePanel;
 import org.eprotectioneers.panacea.contactmanagement.components.RoundRectangleButton;
@@ -13,9 +16,14 @@ import org.eprotectioneers.panacea.contactmanagement.models.ChooseFile;
 import org.eprotectioneers.panacea.contactmanagement.models.Contact;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseC;
 import org.eprotectioneers.panacea.contactmanagement.models.EmailValidator;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 import net.miginfocom.swing.MigLayout;
 
+/**
+ * A Page to add a Contact
+ * @author eProtectioneers
+ */
 public class Page_AddContact extends JFrame {
 
 	private JPanel contentPane;
@@ -26,6 +34,7 @@ public class Page_AddContact extends JFrame {
 	private PageItem_new pi_emailaddress;
 	private PageItem_new pi_phonenumber;
 	private PageItem_new pi_address;
+	private Page_AddContact pac=this;
 
 	/**
 	 * A list, which contains every pageitem 
@@ -40,36 +49,40 @@ public class Page_AddContact extends JFrame {
 	/**
 	 * Create the panel.
 	 */
-	public Page_AddContact() {
+	public Page_AddContact(Component component) {
+		super("New Contact");
+		Point componentLocation = component.getLocation();
+		Dimension componentDimension=component.getSize();
+		this.setSize((int) (componentDimension.width-componentDimension.width/3),
+				(int) (componentDimension.height-componentDimension.height/3));
+		this.setLocation((int) (componentLocation.x + component.getWidth()/2-this.getWidth()/2),
+				(int)(componentLocation.y + component.getHeight()/2-this.getHeight()/2));
 		inizialize();
 	}
-	public Page_AddContact(String emailaddress) {
+	
+	/**
+	 * Constructor, assigns
+	 * @param component
+	 * @param shownname
+	 * @param emailaddress
+	 */
+	public Page_AddContact(Component component,String shownname,String emailaddress) {
+		this(component);
 		Object options[]={"yes","no"};
-		int i=0;
-		for(Contact c:DatabaseC.getContacts()){
-			if(c.getEmailaddress().equals(emailaddress)){
-				i=JOptionPane.showOptionDialog(null, "There's already a Contact with this Email-Address. Do you want to continue?", "Contact already exists",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[1]);
-				break;
-			}
-		}
-		switch(i){
-			case JOptionPane.YES_OPTION:
-				inizialize();
-				pi_emailaddress.setText(emailaddress);
-			  default:
-				  break;
-		}
-		
+
+		pi_shownname.setText(shownname);
+		pi_emailaddress.setText(emailaddress);
+
 	}
 
-	
+	/**
+	 * Initializes
+	 */
 	public void inizialize(){
 		contentPane = new JPanel();
 
 		setContentPane(contentPane);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(0, 0, 800, 450);
-		setLocationRelativeTo(null);
 		
 		contentPane.setLayout(new MigLayout("", "[5%][100px:25%:300px][40][30%,grow,fill][40.00][30%,grow,fill][5%]", "[15.00][25px:11%:75px][25px:11%:75px][25px:11%:75px][25px:11%:75px][25px:11%:75px][5.50%][11%][11%][15]"));
 		
@@ -125,7 +138,11 @@ public class Page_AddContact extends JFrame {
 		contentPane.add(btnCancel, "cell 3 8");
 		contentPane.add(btnSave, "cell 5 8,alignx right");
 	}
-	
+
+	/**
+	 * ActionListener to change the Contact's Image
+	 * @author eProtectioneers
+	 */
 	private class ChangeImageListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -141,11 +158,8 @@ public class Page_AddContact extends JFrame {
 	}
 	
 	/**
-	 * 
-	 * @author Simon Senoner
-	 * @version 1.0
-	 * The listener of every pageItem
-	 *
+	 * The listener of every PageItem
+	 * @author eProtectioneers
 	 */
 	private class PiActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
@@ -169,27 +183,54 @@ public class Page_AddContact extends JFrame {
 		}
 	}
 	
+	/**
+	 * Saves the Contact
+	 */
 	private void save(){
 		Contact c=new Contact(DatabaseC.getNewIndex(), pi_shownname.getText(), pi_firstname.getText(), 
 				pi_lastname.getText(), pi_emailaddress.getText(), pi_phonenumber.getText(), pi_address.getText(), 
 				pnl_image.getPicturePath(), false);
 		DatabaseC.addContact(c);
-		JOptionPane.showMessageDialog(null, "Contact added", "", JOptionPane.INFORMATION_MESSAGE, null);
+		JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Contact added", "", JOptionPane.INFORMATION_MESSAGE, null);
 	}
 	
+	/**
+	 * @return true, if there's no Contact with this EmailAddress - if there's on it asks, if you really want to add this
+	 */
+	private boolean checkSave(){
+		boolean b=true;
+		if(DatabaseC.checkContact(pi_emailaddress.getText())!=null){
+			Object[] options={"yes","no"};
+			switch(JOptionPane.showOptionDialog(pac, "There's already a Contact with this Email-Address. Do you want to continue?", "Contact already exists",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[0])){
+			case JOptionPane.YES_OPTION:
+				break;
+			default:
+				b=false;
+				break;
+			}
+		}
+		return b;
+	}
+
+	/**
+	 * ActionListener to save the New Contact
+	 * @author eProtectioneers
+	 */
 	private class BtnSaveActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(!new EmailValidator().validate(pi_emailaddress.getText())){
-				JOptionPane.showMessageDialog(null, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(pac, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);
 				pi_emailaddress.requestFocus();
 			}
 			else{
 				Object options[]={"yes","no"};
-				switch(JOptionPane.showOptionDialog(null, "Do you really want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+				switch(JOptionPane.showOptionDialog(pac, "Do you really want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 					case JOptionPane.YES_OPTION:
-						save();
-						dispose();
+						if(checkSave()){
+							save();
+							dispose();
+						}
 						break;
 					default:
 						break;
@@ -197,33 +238,35 @@ public class Page_AddContact extends JFrame {
 			}
 		}
 	}
-	
+
+	/**
+	 * ActionListener to cancel
+	 * @author eProtectioneers
+	 */
 	private class BtnCancelActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object options[]={"yes","no","cancel"};
 			if(lookForChanges()){
-				switch(JOptionPane.showOptionDialog(null, "Do you want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+				boolean b=checkSave();
+				switch(JOptionPane.showOptionDialog(pac, "Do you want to save this Contact?", "Save new Contact", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 					case JOptionPane.YES_OPTION:
 						if(!new EmailValidator().validate(pi_emailaddress.getText())){
-							JOptionPane.showMessageDialog(null, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(pac, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);
 							pi_emailaddress.requestFocus();
 							break;
 						}
-						save();
-					  case JOptionPane.NO_OPTION:
-						  dispose();
-						  break;
+						if(b)save();
+					case JOptionPane.NO_OPTION:
+						if(b)dispose();
 					default:
-						if(!new EmailValidator().validate(pi_emailaddress.getText())){
-							JOptionPane.showMessageDialog(null, "Please enter a valid Email-Address","", JOptionPane.ERROR_MESSAGE);
-							pi_emailaddress.requestFocus();
-						}
 						break;
 				}
 			}else dispose();
 		}
-		
+		/**
+		 * @return false if there are no changes
+		 */
 		private boolean lookForChanges(){
 			if(!pnl_image.getPicturePath().equals(Contact.getDefaultpicpath()))return true;
 			for(PageItem_new pi:entryfields){

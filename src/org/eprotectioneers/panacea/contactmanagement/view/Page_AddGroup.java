@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.view;
 
 import javax.swing.*;
@@ -19,7 +23,12 @@ import org.eprotectioneers.panacea.contactmanagement.models.Contact;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseC;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseG;
 import org.eprotectioneers.panacea.contactmanagement.models.Group;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
+/**
+ * A Page to add a new Group
+ * @author eProtectioneers
+ */
 public class Page_AddGroup extends JFrame{
 	
 	private JPanel contentPane;
@@ -34,21 +43,31 @@ public class Page_AddGroup extends JFrame{
 	private JPanel pnl_contactsUp;
 	private JPanel pnl_contacts;	
 	private ArrayList<Item_Contact> _ics=new ArrayList<Item_Contact>();
+	private Page_AddGroup pag=this;
 	
 	/**
 	 * Create the panel.
 	 */
-	public Page_AddGroup() {
+	public Page_AddGroup(Component component) {
+		super("New Group");
+		Point componentLocation = component.getLocation();
+		Dimension componentDimension=component.getSize();
+		this.setSize((int) (componentDimension.width-componentDimension.width/3),
+				(int) (componentDimension.height-componentDimension.height/3));
+		this.setLocation((int) (componentLocation.x + component.getWidth()/2-this.getWidth()/2),
+				(int)(componentLocation.y + component.getHeight()/2-this.getHeight()/2));
+
 		initialize();
 	}
 	
+	/**
+	 * Initializes
+	 */
 	private void initialize() {
 		contentPane = new JPanel();
 
 		setContentPane(contentPane);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(0, 0, 800, 450);
-		setLocationRelativeTo(null);
 		
 		contentPane.setLayout(new MigLayout("", "[5%][100px:25%:300px,grow][40][30%,grow,fill][40.00][10%,grow,fill][20%,grow,fill][5%]", "[15.00][25px:11%:75px][25px:11%:75px][25px:11%:75px][13px:5.5%:38px,grow][12px:5.5%:37px,grow][27%,grow][12%][15]"));
 		
@@ -91,6 +110,9 @@ public class Page_AddGroup extends JFrame{
 		contentPane.add(btnSave, "cell 6 7,alignx right");
 	}
 	
+	/**
+	 * Generate the Contact view
+	 */
 	private void generateContactView(){
 		pnl_scrollPane = new RoundRectanglePanel(10);
 		pnl_scrollPane.setToolTipText("Select the Contacts, you want to add to your Group");
@@ -119,6 +141,9 @@ public class Page_AddGroup extends JFrame{
 		generateContactItems();
 	}
 
+	/**
+	 * Add the Panel above the ScrollPane
+	 */
 	private void addSrollPanePnl_Up(){
 		pnl_contactsUp = new JPanel();
 		pnl_contactsUp.setOpaque(false);
@@ -134,6 +159,9 @@ public class Page_AddGroup extends JFrame{
 		pnl_contactsUp.setLayout(new BoxLayout(pnl_contactsUp,BoxLayout.X_AXIS));
 	}
 	
+	/**
+	 * Generate the ContactItems
+	 */
 	private void generateContactItems(){
 		ArrayList<Contact> contacts=DatabaseC.getContacts();
 		
@@ -147,6 +175,9 @@ public class Page_AddGroup extends JFrame{
 		addContactItems();
 	}	
 	
+	/**
+	 * Add the ContactItems
+	 */
 	private void addContactItems(){
 		String s="[]";
 		for(int i=0;i<_ics.size();i++)s+="[]";
@@ -169,6 +200,9 @@ public class Page_AddGroup extends JFrame{
 		contentPane.setVisible(true);
 	}
 	
+	/**
+	 * @return the ItemContacts, which are selected
+	 */
 	private ArrayList<Item_Contact> getSelectedICs(){
 		ArrayList<Item_Contact> ret=new ArrayList<Item_Contact>();
 		for(Item_Contact ic:_ics){
@@ -178,12 +212,20 @@ public class Page_AddGroup extends JFrame{
 		return ret;
 	}
 	
+	/**
+	 * Add the selected Contacts to the Group
+	 * @param g
+	 */
 	public void addSelectedCsToGroup(Group g) {
 		for(Item_Contact c:getSelectedICs()){
 			new AddContactToGroupActionListener(c.getContact(), g).actionPerformed(null);
 		}
 	}	
-	
+
+	/**
+	 * ActionListener to change the Image
+	 * @author eProtectioneers
+	 */
 	private class ChangeImageListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -199,11 +241,8 @@ public class Page_AddGroup extends JFrame{
 	}
 	
 	/**
-	 * 
-	 * @author Simon Senoner
-	 * @version 1.0
-	 * The listener of every pageItem
-	 *
+	 * The listener of every PageItem
+	 * @author eProtectioneers
 	 */
 	private class PiActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
@@ -227,17 +266,24 @@ public class Page_AddGroup extends JFrame{
 		}
 	}
 	
+	/**
+	 * save the new Group
+	 */
 	private void save(){
 		Group g=new Group(DatabaseG.getNewIndex(), pi_groupname.getText(), pi_description.getText(), pnl_image.getPicturePath());
 		DatabaseG.addGroup(g);
 		addSelectedCsToGroup(g);
-		JOptionPane.showMessageDialog(null, "Group added", "", JOptionPane.INFORMATION_MESSAGE, null);
+		JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "Group added", "", JOptionPane.INFORMATION_MESSAGE, null);
 	}
-	
+
+	/**
+	 * ActionListener to save the Group
+	 * @author eProtectioneers
+	 */
 	private class BtnSaveActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			Object options[]={"yes","no"};
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to save this Group?", "Save new Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+			switch(JOptionPane.showOptionDialog(pag, "Do you really want to save this Group?", "Save new Group", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 				case JOptionPane.YES_OPTION:
 					save();
 					dispose();
@@ -247,11 +293,16 @@ public class Page_AddGroup extends JFrame{
 			}			
 		}
 	}
+
+	/**
+	 * ActionListener to cancel
+	 * @author eProtectioneers
+	 */
 	private class BtnCancelActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if(lookForChanges()){
 				Object options[]={"yes","no","cancel"};
-				switch(JOptionPane.showOptionDialog(null, "Do you want to save this Group?", "Save new Group", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
+				switch(JOptionPane.showOptionDialog(pag, "Do you want to save this Group?", "Save new Group", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0])){
 					case JOptionPane.YES_OPTION:
 							save();
 					  case JOptionPane.NO_OPTION:
@@ -263,7 +314,9 @@ public class Page_AddGroup extends JFrame{
 			}else dispose();
 		}
 	}
-	
+	/**
+	 * @return false if there are no changes
+	 */
 	private boolean lookForChanges(){
 		if(!pnl_image.getPicturePath().equals(Group.getDefaultpicpath()))return true;
 		for(PageItem_new pi:entryfields){

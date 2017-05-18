@@ -1,27 +1,32 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.models;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.io.File;
 import java.sql.*;
 import java.util.*;
 
+/**
+ * A class, to handle the table Contacts from the SQLite db
+ * @author eProtectioneers
+ */
 public class DatabaseC {
-	private static final String dbUrl=getUrlPath("jdbc:sqlite:"+DatabaseC.class.getResource("/models/").getPath()+"Database/contact.db");
+	private static final String dbUrl="jdbc:sqlite:"+new File("lib/contact.db");
 	
-	public static String getUrlPath(String s){
-		s=s.replaceAll("[+]", "PlUs9q5w1");
-		try {
-			s=URLDecoder.decode(s, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return s.replaceAll("PlUs9q5w1", "+");
-	}
-	
+	/**
+	 * @return the dbUrl
+	 */
 	public static String getDbUrl() {
-		return getUrlPath("jdbc:sqlite:"+DatabaseC.class.getResource("/models/Database/contact.db").getPath());
+		return dbUrl;
 	}
 
+	/**
+	 * Add the
+	 * @param contact
+	 * @return success
+	 */
 	public static boolean addContact(Contact contact){
 		boolean success=true;
 		String INSERT_DATA_SQL = "INSERT INTO Contact (ID, shownname, firstname, lastname, emailaddress, phonenumber, address, picturepath, spam) "
@@ -45,13 +50,18 @@ public class DatabaseC {
         	pstmt.setBytes(8, contact.getPicturepath().getBytes());
         	pstmt.setBoolean(9, contact.isSpam());
         	pstmt.executeUpdate();
-	    } catch (SQLException e){success=false;
-			// TODO Auto-generated catch block
+	    } catch (SQLException e){
+	    	success=false;
 			e.printStackTrace();
 		}	
 		return success;
 	}
 	
+	/**
+	 * Remove the
+	 * @param contact
+	 * @return success
+	 */
 	public static boolean removeContact(Contact contact){
 		boolean success=true;
 		String DELETE_CONTACT_SQL = "DELETE FROM Contact WHERE ID="+contact.getId();
@@ -71,6 +81,9 @@ public class DatabaseC {
 		return success;
 	}
 	
+	/**
+	 * @return all the Contacts
+	 */
 	public static ArrayList<Contact> getContacts(){
 		ArrayList<Contact> ret=new ArrayList<Contact>();
 		String READ_CONTACTS_SQL="SELECT * FROM Contact";
@@ -103,6 +116,10 @@ public class DatabaseC {
 	    return ret;
 	}
 	
+	/**
+	 * @param ids
+	 * @return the Contacts with the given ids
+	 */
 	public static ArrayList<Contact> getContacts(ArrayList<Integer> ids){
 		ArrayList<Contact> ret=new ArrayList<Contact>();
 		if(!ids.equals(new ArrayList<Integer>())){
@@ -141,6 +158,10 @@ public class DatabaseC {
 	    return ret;
 	}
 	
+	/**
+	 * Update a Contact
+	 * @param newcontact
+	 */
 	public static void updateContact(Contact newcontact){
 		String UPDATE_CONTACT_SQL="UPDATE Contact SET "+
 												"shownname=?,"+
@@ -177,6 +198,9 @@ public class DatabaseC {
 		}
 	}
 	
+	/**
+	 * @return the lowest available id
+	 */
 	public static int getNewIndex(){
 		String READ_INDEX_SQL="SELECT ID FROM Contact WHERE ID=";
 		try{
@@ -204,5 +228,18 @@ public class DatabaseC {
 		    e.printStackTrace();
 		}
 		return (Integer)null;
+	}
+	
+	/**
+	 * @param containsemail
+	 * @return the contact, which email in contained by containsemail - can return null
+	 */
+	public static Contact checkContact(String containsemail){
+		for(Contact c:DatabaseC.getContacts()){
+			if(containsemail.toLowerCase().contains(c.getEmailaddress().toLowerCase())){
+				return c;
+			}
+		}
+		return null;
 	}
 }

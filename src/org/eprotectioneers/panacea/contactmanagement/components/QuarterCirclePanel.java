@@ -1,14 +1,27 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.components;
 
 import java.awt.*;
 import javax.swing.JPanel;
 
+/**
+ * a Panel, which shows a colored quarter circle
+ * @author eProtectioneers
+ */
+@Deprecated
 public class QuarterCirclePanel extends JPanel {
 
+	/**
+	 * enum, to decide, which circular sector the QuarterCirclePanel should display
+	 * @author eProtectioneers
+	 */
 	public static enum CircularSector{
 		FIRST,SECOND,THIRD,FOURTH
 	}
-	
+
 	private CircularSector _sector=CircularSector.FIRST;
 	
 	/**

@@ -1,7 +1,10 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.view;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import org.eprotectioneers.panacea.contactmanagement.components.MenuScroller;
@@ -12,14 +15,24 @@ import org.eprotectioneers.panacea.contactmanagement.models.DatabaseCG;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseG;
 import org.eprotectioneers.panacea.contactmanagement.models.Group;
 import org.eprotectioneers.panacea.contactmanagement.models.RemoveContactFromGroupActionListener;
+import org.eprotectioneers.panacea.userinterface.PPCA_ComposeWindow;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.awt.*;
 
+/**
+ * A Item, to visualize a Contact
+ * @author eProtectioneers
+ */
 public class Item_Contact extends Item_Object {
 	
+	/**
+	 * Enum, to decide, what to show
+	 * @author eProtectioneers
+	 */
 	public static enum ShownText{
 		 SHOWNNAME, FIRSTNAME, LASTNAME, EMAILADDRESS, PHONENUMBER, ADDRESS
 	}
@@ -34,14 +47,24 @@ public class Item_Contact extends Item_Object {
 	private JMenuItem mntmShowContact;
 	private JMenu mnGroups;
 
+	/**
+	 * @return the Contact
+	 */
 	public Contact getContact(){
 		return _c;
 	}
 	
+	/**
+	 * Set the
+	 * @param showntext
+	 */
 	public void setShownText(ShownText showntext){
 		_st=showntext;
 	}
 	
+	/**
+	 * @return the showntext, as it is
+	 */
 	public String getShownText(){
 		switch(_st){
 		case SHOWNNAME: 
@@ -119,6 +142,8 @@ public class Item_Contact extends Item_Object {
 		groupsof_c.sort(new Group.GroupComparator());
 		ArrayList<Integer> ids=DatabaseCG.getGroups(_c);
 
+		mnOObject.removeAll();
+
 		String s=mnOObject.getToolTipText();
 		int amount=groups.size();
 		int progress=0;
@@ -146,7 +171,7 @@ public class Item_Contact extends Item_Object {
 				JMenuItem mntmExitGroup=new JMenuItem("Remove Contact from Group");
 				mntmExitGroup.setForeground(fg);
 				mntmExitGroup.setBackground(bg);
-				mntmExitGroup.addActionListener(new RemoveContactFromGroupActionListener(_c,g,true));
+				mntmExitGroup.addActionListener(new RemoveContactFromGroupActionListener(_c,g,true,this));
 				mnGroup.add(mntmExitGroup);
 			}	
 			
@@ -161,7 +186,6 @@ public class Item_Contact extends Item_Object {
 			
 			for(Group g:groups){
 				if(!ids.contains(g.getId())){
-					System.out.println(g.getId());
 					JMenu mnGroup=new JMenu(g.getName());
 					
 					ImageIcon ic=new ImageIcon(g.getPicturepath());
@@ -178,7 +202,7 @@ public class Item_Contact extends Item_Object {
 						JMenuItem mntmAddToGroup=new JMenuItem("Add Contact to Group");
 						mntmAddToGroup.setForeground(fg);
 						mntmAddToGroup.setBackground(bg);					
-						mntmAddToGroup.addActionListener(new AddContactToGroupActionListener(_c,g,true));
+						mntmAddToGroup.addActionListener(new AddContactToGroupActionListener(_c,g,true,this));
 						mnGroup.add(mntmAddToGroup);
 					
 					mnOObject.add(mnGroup);
@@ -241,21 +265,28 @@ public class Item_Contact extends Item_Object {
 	
 	@Override
 	protected void doubleClickServiceRoutine() {
-		test.setPanel(new Page_Contact(_c));
+		PPCA_PanaceaWindow.setCenterPanel(new Page_Contact(_c));
 	}
-	
+
+	/**
+	 * @author eProtectioneers
+	 */
 	private class OpenContactListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			test.setPanel(new Page_Contact(_c));
+			doubleClickServiceRoutine();
 		}
 	}
-	
+
+	/**
+	 * ActionListener to delete this Contact
+	 * @author eProtectioneers
+	 */
 	private class MntmDeleteContactActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object options[]={"yes","no"};
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to Delete '"+_c.getShownname()+"'?", "Delete Contact", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Delete '"+_c.getShownname()+"'?", "Delete Contact", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
 				case JOptionPane.YES_OPTION:
 					setCursor(new Cursor(Cursor.WAIT_CURSOR));
 					//Remove Contact from LIST
@@ -263,31 +294,52 @@ public class Item_Contact extends Item_Object {
 					//Abfrage, ob Panel Kontaktseite entspricht 
 					//ContactItem entfernen
 					setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-					JOptionPane.showMessageDialog(null, "'"+_c.getShownname()+"' Deleted", "Deleted", JOptionPane.INFORMATION_MESSAGE, null);
+					JOptionPane.showMessageDialog(PPCA_PanaceaWindow.getFrame(), "'"+_c.getShownname()+"' Deleted", "Deleted", JOptionPane.INFORMATION_MESSAGE, null);
 					break;
 				default:
 					break;
 			}
 		}
 	}
+
+	/**
+	 * ActionListener to view the chat with this Contact
+	 * @author eProtectioneers
+	 */
 	private class MntmChatActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//MZ_Sojourner_cntl
 		}
 	}
+	
+	/**
+	 * ActionListener to Write a new Email to the Contact
+	 * @author eProtectioneers
+	 */
 	private class MntmNewEmailActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//MZ_Sojourner_cntl
+			PPCA_ComposeWindow cd = new PPCA_ComposeWindow(PPCA_PanaceaWindow.getFrame());
+			cd.setEmail(_c.getEmailaddress());
 		}
 	}
+	
+	/**
+	 * ActionListener to view the recent Emails between you and this Contact
+	 * @author eProtectioneers
+	 */
 	private class MntmConversationsActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//MZ_Sojourner_cntl
 		}
 	}
+
+	/**
+	 * ActionListener to change the spam state of this Contact
+	 * @author eProtectioneers
+	 */
 	private class MntmChangeSpamStateActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -295,6 +347,11 @@ public class Item_Contact extends Item_Object {
 			setToolTipText(_c.toString());
 		}
 	}	
+
+	/**
+	 * ActionListener to show this Contact
+	 * @author eProtectioneers
+	 */
 	public class ShowGroupActionListener implements ActionListener{
 		private Group _g;
 		public ShowGroupActionListener(Group g){
@@ -302,17 +359,26 @@ public class Item_Contact extends Item_Object {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			test.setPanel(new Page_Group(_g));
+			PPCA_PanaceaWindow.setCenterPanel(new Page_Group(_g));
 		}
 	}
-	
+
+	/**
+	 * Comparator, which compares the ShownText of the ICs
+	 * @author eProtectioneers
+	 */
 	public static class ItemContactComparator implements Comparator<Item_Contact>{
 		@Override
 		public int compare(Item_Contact ic1, Item_Contact ic2) {
 			return ic1.getShownText().toLowerCase().compareTo(ic2.getShownText().toLowerCase());
 		}
 	}
-	
+
+
+	/**
+	 * Generator, to generate the Picture and the ToolTipText
+	 * @author eProtectioneers
+	 */
 	private class Generator implements Runnable{
 		@Override
 		public void run() {

@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.design;
 
 import java.awt.*;
@@ -6,11 +10,9 @@ import java.io.Serializable;
 
 
 /**
- * 
- * @version 0.1
- * 
  * Coming soon
- *
+ * A design template, which job is, to be able to change nearly every Color of the program
+ * @author eProtectioneers
  */
 public class ProjectPanaceaTemplates implements Serializable {
 	
@@ -39,157 +41,301 @@ public class ProjectPanaceaTemplates implements Serializable {
 	private Font font_emailPreview_TextPreview;	
 	private Font font_item;
 	
-	public static ProjectPanaceaTemplates getTmplt(){
+	/**
+	 * @return the tmplt
+	 */
+	public static ProjectPanaceaTemplates getTemplate() {
 		return tmplt;
 	}
-	public static void setTemplate(ProjectPanaceaTemplates tmplt){
-		ProjectPanaceaTemplates.tmplt=tmplt;
-	}
-	
-	
-	public static Color getCbg_main() {
-		return tmplt.cbg_main;
-	}
-	public static void setCbg_main(Color cbg_main) {
-		tmplt.cbg_main = cbg_main;
-	}
-	
-	public static Color getCbg_menu() {
-		return tmplt.cbg_menu;
-	}
-	public static void setCbg_menu(Color cbg_menu) {
-		tmplt.cbg_menu = cbg_menu;
-	}
-	
-	public static Color getCbg_email() {
-		return tmplt.cbg_email;
-	}
-	public static void setCbg_email(Color cbg_email) {
-		tmplt.cbg_email = cbg_email;
-	}
-	
-	public static Color getCbg_saveEmail() {
-		return tmplt.cbg_saveEmail;
-	}
-	public static void setCbg_saveEmail(Color cbg_saveEmail) {
-		tmplt.cbg_saveEmail = cbg_saveEmail;
+
+	/**
+	 * @param tmplt the tmplt to set
+	 */
+	public static void setTemplate(ProjectPanaceaTemplates tmplt) {
+		ProjectPanaceaTemplates.tmplt = tmplt;
 	}
 
-	public static Color getCbg_contacts() {
-		return tmplt.cbg_contacts;
-	}
-	public static void setCbg_contacts(Color cbg_contacts) {
-		tmplt.cbg_contacts = cbg_contacts;
-	}
-	
-	public static Color getCbg_textfield() {
-		return tmplt.cbg_textfield;
-	}
-	public static void setCbg_textfield(Color cbg_textfield) {
-		tmplt.cbg_textfield = cbg_textfield;
+	/**
+	 * @return the cbg_main
+	 */
+	public Color getCbg_main() {
+		return cbg_main;
 	}
 
-	public static Color getCbg_item() {
-		return tmplt.cbg_item;
-	}
-	public static void setCbg_item(Color cbg_item) {
-		tmplt.cbg_item = cbg_item;
-	}
-	
-	public static Color getCbg_itemFocused() {
-		return tmplt.cbg_itemFocused;
-	}
-	public static void setCbg_itemFocused(Color cbg_itemFocused) {
-		tmplt.cbg_itemFocused = cbg_itemFocused;
-	}
-	
-	public static Color getCbg_button() {
-		return tmplt.cbg_button;
-	}
-	public static void setCbg_button(Color cbg_button) {
-		tmplt.cbg_button = cbg_button;
-	}
-	
-	public static Color getCbg_buttonClicked() {
-		return tmplt.cbg_buttonClicked;
-	}
-	public static void setCbg_buttonClicked(Color cbg_buttonClicked) {
-		tmplt.cbg_buttonClicked = cbg_buttonClicked;
-	}
-	
-	public static Color getCbg_cbg_emailPreview() {
-		return tmplt.cbg_emailPreview;
-	}
-	public static void setCbg_emailPreview(Color cbg_emailPreview) {
-		tmplt.cbg_emailPreview = cbg_emailPreview;
-	}
-	
-	
-	public static Color getCfnt_menu() {
-		return tmplt.cfnt_menu;
-	}
-	public static void setCfnt_menu(Color cfnt_menu) {
-		tmplt.cfnt_menu = cfnt_menu;
-	}
-	
-	public static Color getCfnt_emailPreview_subject() {
-		return tmplt.cfnt_emailPreview_subject;
-	}
-	public static void setCfnt_emailSubject(Color cfnt_emailPreview_emailSubject) {
-		tmplt.cfnt_emailPreview_subject = cfnt_emailPreview_emailSubject;
-	}
-	
-	public static Color getCfnt_emailTextPreview() {
-		return tmplt.cfnt_emailPreview_textPreview;
-	}
-	public static void setCfnt_emailTextPreview(Color cfnt_emailPreview_textPreview) {
-		tmplt.cfnt_emailPreview_textPreview = cfnt_emailPreview_textPreview;
-	}
-	
-	public static Color getCfnt_item() {
-		return tmplt.cfnt_item;
-	}
-	public static void setCfnt_item(Color cfnt_item) {
-		tmplt.cfnt_item = cfnt_item;
-	}
-	
-	public static Color getCfnt_itemFocused() {
-		return tmplt.cfnt_itemFocused;
-	}
-	public static void setCfnt_itemFocused(Color cfnt_itemFocused) {
-		tmplt.cfnt_itemFocused = cfnt_itemFocused;
-	}
-	
-	public static Font getFont_menu() {
-		return tmplt.font_menu;
-	}
-	public static void setFont_menu(Font font_menu) {
-		tmplt.font_menu = font_menu;
-	}
-	
-	public static Font getFont_emailSubject() {
-		return tmplt.font_emailPreview_Subject;
-	}
-	public static void setFont_emailSubject(Font font_emailSubject) {
-		tmplt.font_emailPreview_Subject = font_emailSubject;
-	}
-	
-	public static Font getFont_emailTextPreview() {
-		return tmplt.font_emailPreview_TextPreview;
-	}
-	public static void setFont_emailTextPreview(Font font_emailTextPreview) {
-		tmplt.font_emailPreview_TextPreview = font_emailTextPreview;
-	}
-	
-	public static Font getFont_item() {
-		return tmplt.font_item;
-	}
-	public static void setFont_item(Font font_item) {
-		tmplt.font_item = font_item;
+	/**
+	 * @param cbg_main the cbg_main to set
+	 */
+	public void setCbg_main(Color cbg_main) {
+		this.cbg_main = cbg_main;
 	}
 
-	
-	public static Color getContrastColor(Color bgColor){
+	/**
+	 * @return the cbg_menu
+	 */
+	public Color getCbg_menu() {
+		return cbg_menu;
+	}
+
+	/**
+	 * @param cbg_menu the cbg_menu to set
+	 */
+	public void setCbg_menu(Color cbg_menu) {
+		this.cbg_menu = cbg_menu;
+	}
+
+	/**
+	 * @return the cbg_email
+	 */
+	public Color getCbg_email() {
+		return cbg_email;
+	}
+
+	/**
+	 * @param cbg_email the cbg_email to set
+	 */
+	public void setCbg_email(Color cbg_email) {
+		this.cbg_email = cbg_email;
+	}
+
+	/**
+	 * @return the cbg_saveEmail
+	 */
+	public Color getCbg_saveEmail() {
+		return cbg_saveEmail;
+	}
+
+	/**
+	 * @param cbg_saveEmail the cbg_saveEmail to set
+	 */
+	public void setCbg_saveEmail(Color cbg_saveEmail) {
+		this.cbg_saveEmail = cbg_saveEmail;
+	}
+
+	/**
+	 * @return the cbg_contacts
+	 */
+	public Color getCbg_contacts() {
+		return cbg_contacts;
+	}
+
+	/**
+	 * @param cbg_contacts the cbg_contacts to set
+	 */
+	public void setCbg_contacts(Color cbg_contacts) {
+		this.cbg_contacts = cbg_contacts;
+	}
+
+	/**
+	 * @return the cbg_textfield
+	 */
+	public Color getCbg_textfield() {
+		return cbg_textfield;
+	}
+
+	/**
+	 * @param cbg_textfield the cbg_textfield to set
+	 */
+	public void setCbg_textfield(Color cbg_textfield) {
+		this.cbg_textfield = cbg_textfield;
+	}
+
+	/**
+	 * @return the cbg_item
+	 */
+	public Color getCbg_item() {
+		return cbg_item;
+	}
+
+	/**
+	 * @param cbg_item the cbg_item to set
+	 */
+	public void setCbg_item(Color cbg_item) {
+		this.cbg_item = cbg_item;
+	}
+
+	/**
+	 * @return the cbg_itemFocused
+	 */
+	public Color getCbg_itemFocused() {
+		return cbg_itemFocused;
+	}
+
+	/**
+	 * @param cbg_itemFocused the cbg_itemFocused to set
+	 */
+	public void setCbg_itemFocused(Color cbg_itemFocused) {
+		this.cbg_itemFocused = cbg_itemFocused;
+	}
+
+	/**
+	 * @return the cbg_button
+	 */
+	public Color getCbg_button() {
+		return cbg_button;
+	}
+
+	/**
+	 * @param cbg_button the cbg_button to set
+	 */
+	public void setCbg_button(Color cbg_button) {
+		this.cbg_button = cbg_button;
+	}
+
+	/**
+	 * @return the cbg_buttonClicked
+	 */
+	public Color getCbg_buttonClicked() {
+		return cbg_buttonClicked;
+	}
+
+	/**
+	 * @param cbg_buttonClicked the cbg_buttonClicked to set
+	 */
+	public void setCbg_buttonClicked(Color cbg_buttonClicked) {
+		this.cbg_buttonClicked = cbg_buttonClicked;
+	}
+
+	/**
+	 * @return the cbg_emailPreview
+	 */
+	public Color getCbg_emailPreview() {
+		return cbg_emailPreview;
+	}
+
+	/**
+	 * @param cbg_emailPreview the cbg_emailPreview to set
+	 */
+	public void setCbg_emailPreview(Color cbg_emailPreview) {
+		this.cbg_emailPreview = cbg_emailPreview;
+	}
+
+	/**
+	 * @return the cfnt_menu
+	 */
+	public Color getCfnt_menu() {
+		return cfnt_menu;
+	}
+
+	/**
+	 * @param cfnt_menu the cfnt_menu to set
+	 */
+	public void setCfnt_menu(Color cfnt_menu) {
+		this.cfnt_menu = cfnt_menu;
+	}
+
+	/**
+	 * @return the cfnt_emailPreview_subject
+	 */
+	public Color getCfnt_emailPreview_subject() {
+		return cfnt_emailPreview_subject;
+	}
+
+	/**
+	 * @param cfnt_emailPreview_subject the cfnt_emailPreview_subject to set
+	 */
+	public void setCfnt_emailPreview_subject(Color cfnt_emailPreview_subject) {
+		this.cfnt_emailPreview_subject = cfnt_emailPreview_subject;
+	}
+
+	/**
+	 * @return the cfnt_emailPreview_textPreview
+	 */
+	public Color getCfnt_emailPreview_textPreview() {
+		return cfnt_emailPreview_textPreview;
+	}
+
+	/**
+	 * @param cfnt_emailPreview_textPreview the cfnt_emailPreview_textPreview to set
+	 */
+	public void setCfnt_emailPreview_textPreview(Color cfnt_emailPreview_textPreview) {
+		this.cfnt_emailPreview_textPreview = cfnt_emailPreview_textPreview;
+	}
+
+	/**
+	 * @return the cfnt_item
+	 */
+	public Color getCfnt_item() {
+		return cfnt_item;
+	}
+
+	/**
+	 * @param cfnt_item the cfnt_item to set
+	 */
+	public void setCfnt_item(Color cfnt_item) {
+		this.cfnt_item = cfnt_item;
+	}
+
+	/**
+	 * @return the cfnt_itemFocused
+	 */
+	public Color getCfnt_itemFocused() {
+		return cfnt_itemFocused;
+	}
+
+	/**
+	 * @param cfnt_itemFocused the cfnt_itemFocused to set
+	 */
+	public void setCfnt_itemFocused(Color cfnt_itemFocused) {
+		this.cfnt_itemFocused = cfnt_itemFocused;
+	}
+
+	/**
+	 * @return the font_menu
+	 */
+	public Font getFont_menu() {
+		return font_menu;
+	}
+
+	/**
+	 * @param font_menu the font_menu to set
+	 */
+	public void setFont_menu(Font font_menu) {
+		this.font_menu = font_menu;
+	}
+
+	/**
+	 * @return the font_emailPreview_Subject
+	 */
+	public Font getFont_emailPreview_Subject() {
+		return font_emailPreview_Subject;
+	}
+
+	/**
+	 * @param font_emailPreview_Subject the font_emailPreview_Subject to set
+	 */
+	public void setFont_emailPreview_Subject(Font font_emailPreview_Subject) {
+		this.font_emailPreview_Subject = font_emailPreview_Subject;
+	}
+
+	/**
+	 * @return the font_emailPreview_TextPreview
+	 */
+	public Font getFont_emailPreview_TextPreview() {
+		return font_emailPreview_TextPreview;
+	}
+
+	/**
+	 * @param font_emailPreview_TextPreview the font_emailPreview_TextPreview to set
+	 */
+	public void setFont_emailPreview_TextPreview(Font font_emailPreview_TextPreview) {
+		this.font_emailPreview_TextPreview = font_emailPreview_TextPreview;
+	}
+
+	/**
+	 * @return the font_item
+	 */
+	public Font getFont_item() {
+		return font_item;
+	}
+
+	/**
+	 * @param font_item the font_item to set
+	 */
+	public void setFont_item(Font font_item) {
+		this.font_item = font_item;
+	}
+
+		public static Color getContrastColor(Color bgColor){
 		Color c;
 		int brightness=(int)((double)bgColor.getRed()*0.299+
 				(double)bgColor.getGreen()*0.587+
@@ -203,6 +349,9 @@ public class ProjectPanaceaTemplates implements Serializable {
 		return c;
 	}
 	
+	/**
+	 * Sets the current layout to the standard one
+	 */
 	public static void setStandardTemplate(){
 		tmplt.cbg_main=Color.WHITE;
 		tmplt.cbg_menu=new Color(250,250,250);

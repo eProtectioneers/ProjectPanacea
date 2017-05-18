@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.view;
 
 import javax.swing.*;
@@ -7,13 +11,8 @@ import java.awt.*;
 import javax.swing.border.EmptyBorder;
 
 /**
- * 
- * @author Simon Senoner
- * @version 1.0
- * 
- * A reworked version of the PageItem of Project Panacea, which shows you a colored panel 
- * with a round rectangle shape, which contains a description-label and a textField
- *
+ * A reworked version of the PageItem, without edit Buttons
+ * @author eProtectioneers
  */
 public class PageItem_new extends JPanel {
 	
@@ -117,7 +116,10 @@ public class PageItem_new extends JPanel {
 		_page.setVisible(false);
 		_page.setVisible(true);	
 	}
-	
+
+	/**
+	 * @author eProtectioneers
+	 */
 	private class TextFieldFocusListener extends FocusAdapter {
 		@Override
 		public void focusGained(FocusEvent arg0) {

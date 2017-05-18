@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.components;
 
 import java.awt.*;
@@ -11,8 +15,12 @@ import org.eprotectioneers.panacea.contactmanagement.models.Contact;
 
 import java.awt.event.*;
 
+/**
+ * A Panel with a Round-Rectangle shape, which shows an Image of your FileSystem
+ * @author eProtectioneers
+ */
 public class ImagePanel extends JPanel{
-	private GroupLayout gl_pnl_image;
+
 	private JButton btn_changepicture;
 	private String _picturepath;
 	private final String _defaultpicturepath;	
@@ -32,6 +40,9 @@ public class ImagePanel extends JPanel{
 		return btn_changepicture;
 	}
 	
+	/**
+	 * Sets the functions of the Panel disabled => it will only show a Image
+	 */
 	public void setDisabled(){
 		disabled=true;
 		btn_changepicture.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -45,29 +56,44 @@ public class ImagePanel extends JPanel{
 		return mntmRemovePicture;
 	}
 	
+	/**
+	 * @return the path of the panel's picture
+	 */
 	public String getPicturePath() {
 		return this._picturepath;
 	}
 
+	/**
+	 * @param sets the path of the picture, which will be shown
+	 */
 	public void setPicturePath(String picturepath) {
 		if(picturepath==null||picturepath.equals(""))this._picturepath=_defaultpicturepath;
 		else this._picturepath = picturepath;
 	}
 
+	/**
+	 * Sets the panel's corner
+	 * @param radius
+	 */
 	public void setRadius(double radius){
 		this._radius=radius;
 	}
 	
 	/**
-	 * @wbp.parser.constructor
+	 * Constructor, assigns
+	 * @param picture
+	 * @param defaultpicturepath
 	 */
 	public ImagePanel(String picture, String defaultpicturepath){
 		this._picturepath=picture;
 		this._defaultpicturepath=defaultpicturepath;
 		initialize();
 	}
-	private void initialize() {
-		
+	
+	/**
+	 * Initializes the Panel
+	 */
+	private void initialize() {	
 		popupMenu = new JPopupMenu();
 		addPopup(this, popupMenu);
 		
@@ -78,13 +104,13 @@ public class ImagePanel extends JPanel{
 		mntmRemovePicture = new JMenuItem("Remove picture");
 		popupMenu.add(mntmRemovePicture);
 		
-		ic_add=new ImageIcon(Contact.class.getResource("/view/PPNCA_Images/icon_plus_white.png"));
+		ic_add=new ImageIcon("images/icon_plus_white.png");
 		ic_add.setImage(ic_add.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 		
-		ic_add_pressed=new ImageIcon(Contact.class.getResource("/view/PPNCA_Images/icon_plus_black.png"));
+		ic_add_pressed=new ImageIcon("images/icon_plus_black.png");
 		ic_add_pressed.setImage(ic_add_pressed.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 		
-		ic_add_rollover=new ImageIcon(Contact.class.getResource("/view/PPNCA_Images/icon_plus_gray.png"));
+		ic_add_rollover=new ImageIcon("images/icon_plus_gray.png");
 		ic_add_rollover.setImage(ic_add_rollover.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 		
 		btn_changepicture = new RoundRectangleButton("",20);
@@ -99,6 +125,10 @@ public class ImagePanel extends JPanel{
 		this.setLayout(null);
 	}
 	
+	/**
+	 * Constructor, with only one 
+	 * @param picturepath
+	 */
 	public ImagePanel(String picturepath){
 		this(picturepath,picturepath);
 	}
@@ -128,6 +158,11 @@ public class ImagePanel extends JPanel{
 		add(btn_changepicture);
 	}
 	
+	/**
+	 * adds the given popup to the component
+	 * @param component
+	 * @param popup
+	 */
 	private void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -147,6 +182,10 @@ public class ImagePanel extends JPanel{
 		});
 	}
 	
+	/**
+	 * The AL of the MnItem, to change the picture
+	 * @author eProtectioneers
+	 */
 	private class MntmChangePictureActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			btn_changepicture.requestFocus();

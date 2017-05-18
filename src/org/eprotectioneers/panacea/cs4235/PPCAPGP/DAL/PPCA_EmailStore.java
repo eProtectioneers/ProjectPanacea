@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL;
 
 import java.util.ArrayList;
@@ -11,9 +15,19 @@ import org.eprotectioneers.panacea.cs4235.PGPClient.email.PPCA_PGPMail;
  * @author eProtectioneers
  */
 public class PPCA_EmailStore {
+	
+	/**
+	 * emailstore
+	 */
 	@SuppressWarnings("unused")
 	private static PPCA_EmailStore emailStore;
+	/**
+	 * List of all emails in the Storage
+	 */
 	private List<PPCA_PGPMail> emails;
+	/**
+	 * Maximum emails (default is 50)
+	 */
 	public static final int MAX_COUNT = 50;
 
 	/**
@@ -23,6 +37,10 @@ public class PPCA_EmailStore {
 		emails = new ArrayList<PPCA_PGPMail>(MAX_COUNT);
 	}
 
+	/**
+	 * add a new email to the storage
+	 * @param email Email to add
+	 */
 	public void add(PPCA_PGPMail email) {
 		this.emails.add(0, email);
 
@@ -32,10 +50,8 @@ public class PPCA_EmailStore {
 	}
 
 	/**
-	 * Add a PGPEmail to the store. The newer
-	 * 
-	 * @param email
-	 *            the PGPEmails in chronological order
+	 * Add emails in chronological order to the storage
+	 * @param email Array of emails to add
 	 */
 	public void add(PPCA_PGPMail[] emails) {
 		List<PPCA_PGPMail> list = Arrays.asList(emails);
@@ -48,11 +64,9 @@ public class PPCA_EmailStore {
 	}
 
 	/**
-	 * Get PGPEmail.
-	 * 
-	 * @param index
-	 *            the email index
-	 * @return the PGPEmail
+	 * Get a email from the storage
+	 * @param index Index of the email
+	 * @return PPCA_PGPMail
 	 */
 	public PPCA_PGPMail getEmail(int index) {
 		if (index > emails.size())
@@ -61,9 +75,8 @@ public class PPCA_EmailStore {
 	}
 
 	/**
-	 * Get all PGPEmail in the store
-	 * 
-	 * @return the PGPEmail
+	 * Get all emails in the storage container
+	 * @return PPCA_PGPMail Array with all emails
 	 */
 	public PPCA_PGPMail[] getEmails() {
 		PPCA_PGPMail[] array = new PPCA_PGPMail[emails.size()];
@@ -73,10 +86,18 @@ public class PPCA_EmailStore {
 		return array;
 	}
 
+	/**
+	 * Get all emails as a List
+	 * @return List<PPCA_PGPMail> emails
+	 */
 	public List<PPCA_PGPMail> getEmailsList() {
 		return emails;
 	}
 
+	/**
+	 * Set the email list as emails
+	 * @param emails List<PPCA_PGPMail>
+	 */
 	public void setEmailList(List<PPCA_PGPMail> emails) {
 		this.emails = emails;
 	}

@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.cs4235.PPCAPGP.DAL;
 
 import java.util.ArrayList;
@@ -12,21 +16,52 @@ import com.db4o.Db4oEmbedded;
 import com.db4o.EmbeddedObjectContainer;
 import com.db4o.ObjectSet;
 
+/**
+ * DataRepository Class
+ * Handles the data stored in the DB4O Database
+ * in a local file "PPCA_Storage"
+ * @author eProtectioneers
+ */
 public class PPCA_DataRepo {
 
+	/**
+	 * Database file name
+	 */
 	public static String DB_NAME = "PPCA_Storage";
-	private static PPCA_DataRepo instance;
+	/**
+	 * Singleton PPCA_DataRepo
+	 */
+	public static PPCA_DataRepo instance;
 
+	/**
+	 * ObjectContainer
+	 */
 	private EmbeddedObjectContainer db;
+	/**
+	 * Map with Strings and RemoteClientKeys
+	 */
 	private Map<String, PPCA_RemoteClientKey> publicKeys;
+	/**
+	 * PPCA_Preferences
+	 */
 	private PPCA_Preferences preferences;
+	/**
+	 * PPCA_EmailStore
+	 */
 	private PPCA_EmailStore emailStore;
 
+	/**
+	 * Constructor
+	 */
 	private PPCA_DataRepo() {
 		db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), DB_NAME);
 		refreshModels();
 	}
 
+	/**
+	 * Get instance of the Repository
+	 * @return PPCA_DataRepo instance
+	 */
 	public static PPCA_DataRepo getInstance() {
 		if (instance == null) {
 			instance = new PPCA_DataRepo();
@@ -35,6 +70,10 @@ public class PPCA_DataRepo {
 		return instance;
 	}
 
+	/**
+	 * Save the EmailRepository
+	 * @param emailStore 
+	 */
 	public void saveEmailStore(PPCA_EmailStore emailStore) {
 		db.store(emailStore.getEmailsList());
 		db.store(emailStore);
@@ -42,20 +81,37 @@ public class PPCA_DataRepo {
 		refreshModels();
 	}
 
+	/**
+	 * Getter for the emailstore
+	 * @return
+	 */
 	public PPCA_EmailStore getEmailStore() {
 		return emailStore;
 	}
 
+	/**
+	 * Save the preferences
+	 * @param preferences
+	 */
 	public void savePreferences(PPCA_Preferences preferences) {
 		db.store(preferences);
 		db.commit();
 		refreshModels();
 	}
 
+	/**
+	 * Getter for the preferences
+	 * @return
+	 */
 	public PPCA_Preferences getPreferences() {
 		return preferences;
 	}
 
+	/**
+	 * Save a new publickey
+	 * @param username
+	 * @param publicKey
+	 */
 	public void savePublicKey(String username, String publicKey) {
 
 		PPCA_RemoteClientKey key = publicKeys.get(username);
@@ -70,6 +126,11 @@ public class PPCA_DataRepo {
 		refreshModels();
 	}
 
+	/**
+	 * Get a public key
+	 * @param username
+	 * @return String publicKey
+	 */
 	public String getPublicKey(String username) {
 		PPCA_RemoteClientKey key = publicKeys.get(username);
 		if (key != null) {
@@ -79,6 +140,10 @@ public class PPCA_DataRepo {
 		return null;
 	}
 
+	/**
+	 * Delete a public key from the repository
+	 * @param username
+	 */
 	public void deletePublicKey(String username) {
 		PPCA_RemoteClientKey key = publicKeys.get(username);
 		if (key != null) {
@@ -87,11 +152,25 @@ public class PPCA_DataRepo {
 			refreshModels();
 		}
 	}
+	
+	/**
+	 * Close the database connection without commit
+	 */
+	public static void closeConnection(){
+		instance.db.close();
+	}
 
+	/**
+	 * Get the Keystore
+	 * @return List<PPCA_RemoteClientKey>
+	 */
 	public List<PPCA_RemoteClientKey> getKeyStore() {
 		return new ArrayList<PPCA_RemoteClientKey>(publicKeys.values());
 	}
 
+	/**
+	 * Refresh the models
+	 */
 	private void refreshModels() {
 
 		// refresh Preferences
@@ -130,12 +209,13 @@ public class PPCA_DataRepo {
 		}
 	}
 
+	/**
+	 * Simple run test
+	 * @param args unused
+	 */
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		PPCA_DataRepo or = PPCA_DataRepo.getInstance();
 		PPCA_EmailStore es = or.getEmailStore();
-		//es.add(new PGPEmail("TestTo", "TestFrom", "Test", "Test"));
-		//or.saveEmailStore(es);
-		//es = or.getEmailStore();
 	}
 }

@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.view;
 
 import javax.swing.*;
@@ -8,12 +12,18 @@ import org.eprotectioneers.panacea.contactmanagement.models.ChooseFile;
 import org.eprotectioneers.panacea.contactmanagement.models.Contact;
 import org.eprotectioneers.panacea.contactmanagement.models.DatabaseC;
 import org.eprotectioneers.panacea.contactmanagement.models.EmailValidator;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
 import net.miginfocom.swing.MigLayout;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
+
+/**
+ * A Page to visualize and edit a Contact
+ * @author eProtectioneers
+ */
 public class Page_Contact extends JPanel {
 
 	private Contact _c;
@@ -46,6 +56,7 @@ public class Page_Contact extends JPanel {
 	 */
 	public Page_Contact(Contact contact) {
 		this._c=contact;
+		this.getParent();
 		
 		this.setBackground(Color.WHITE);
 		setLayout(new MigLayout("", "[5%][100px:25%:300px][40][30%,grow,fill][40.00][30%,grow,fill][5%]", "[15.00][25px:11%:75px][25px:11%:75px][25px:11%:75px][25px:11%:75px][25px:11%:75px][5.50%][11%,grow][11%][15]"));
@@ -82,13 +93,13 @@ public class Page_Contact extends JPanel {
 			pi.getBtnSave().addActionListener(scal);
 		}
 		
-		ic_delete=new ImageIcon(Page_Contact.class.getResource("/view/PPNCA_Images/icon_delete.png"));
+		ic_delete=new ImageIcon("images/icon_delete.png");
 		ic_delete.setImage(ic_delete.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_delete_pressed=new ImageIcon(Page_Contact.class.getResource("/view/PPNCA_Images/icon_delete_pressed.png"));
+		ic_delete_pressed=new ImageIcon("images/icon_delete_pressed.png");
 		ic_delete_pressed.setImage(ic_delete_pressed.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_delete_rollover=new ImageIcon(Page_Contact.class.getResource("/view/PPNCA_Images/icon_delete_rollover.png"));
+		ic_delete_rollover=new ImageIcon("images/icon_delete_rollover.png");
 		ic_delete_rollover.setImage(ic_delete_rollover.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
 		btnDeleteContact = new JButton();
@@ -135,6 +146,9 @@ public class Page_Contact extends JPanel {
 		add(chckbxInSpamFolder, "cell 3 8");
 	}	
 	
+	/**
+	 * Add the GroupPopup
+	 */
 	public void addGPopup(){
 		popupMenuGroups = new JPopupMenu();
 		popupMenuGroups.setBackground(Color.BLACK);
@@ -143,11 +157,18 @@ public class Page_Contact extends JPanel {
 		new Thread(new GroupPopupGenerator()).start();
 	}
 	
+	/**
+	 * @return the Contact which is currently shown
+	 */
 	public Contact getCurrentlyContact(){
 		return new Contact(_c.getId(), pi_shownname.getText(), pi_firstname.getText(), pi_lastname.getText(), pi_emailaddress.getText(), 
 				pi_phonenumber.getText(), pi_address.getText(), _c.getPicturepath(), chckbxInSpamFolder.isSelected());
 	}
-	
+
+	/**
+	 * Generator, to generate the GroupPopup
+	 * @author eProtectioneers
+	 */
 	private class GroupPopupGenerator implements Runnable{
 		private boolean generating=true;
 		@Override
@@ -163,7 +184,7 @@ public class Page_Contact extends JPanel {
 			popupMenuGroups.setVisible(true);
 			popupMenuGroups.show(pin_groups.getTextField(), 3, pin_groups.getTextField().getHeight()+2);
 		}
-		
+
 		private void startToolTipSet(){
 			new Thread(new Runnable(){
 				@Override
@@ -180,6 +201,11 @@ public class Page_Contact extends JPanel {
 			}).start();
 		}
 	}
+
+	/**
+	 * ActionListener to change the Image
+	 * @author eProtectioneers
+	 */
 	private class ChangeImageListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -198,7 +224,11 @@ public class Page_Contact extends JPanel {
 			else return pnl_image.getPicturePath();
 		}
 	}
-	
+
+	/**
+	 * ActionListener to save the Contact
+	 * @author eProtectioneers
+	 */
 	private class SaveContactActionListener implements ActionListener, Runnable{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -228,7 +258,11 @@ public class Page_Contact extends JPanel {
 			saveContact();
 		}
 	}
-	
+
+	/**
+	 * ActionListener to check the Contact's spam state
+	 * @author eProtectioneers
+	 */
 	private class ChckbxInSpamFolderActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -236,22 +270,31 @@ public class Page_Contact extends JPanel {
 			new SaveContactActionListener().saveContact();		
 		}
 	}
-	
+
+	/**
+	 * MouseListener which shows the GroupPopup
+	 * @author eProtectioneers
+	 */
 	private class Pin_groupsTextFieldMouseListener extends MouseAdapter {
 		public void mouseReleased(MouseEvent e) {
 			addGPopup();
 		}
 	}
-	
+
+	/**
+	 * ActionListener to delete the Contact
+	 * @author eProtectioneers
+	 */
 	private class BtnDeleteContactActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object options[]={"yes", "no"};
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to DELETE this Contact?", "DELETE Contact", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to Delete this Contact?", "Delete Contact", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
 			case JOptionPane.YES_OPTION:
 				DatabaseC.removeContact(_c);
 				JOptionPane.showMessageDialog(null, "Contact Deleted", "", JOptionPane.INFORMATION_MESSAGE, null);
 				//EXIT PAGE
+				PPCA_PanaceaWindow.setCenterPanel(PPCA_PanaceaWindow.getMainPanel());
 			default:
 				break;
 			}

@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.view;
 
 import java.awt.BorderLayout;
@@ -11,15 +15,25 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import org.eprotectioneers.panacea.contactmanagement.components.QuarterCirclePanel;
 import org.eprotectioneers.panacea.contactmanagement.components.QuarterCirclePanel.CircularSector;
 
+/**
+ * Panel to visualize a sidepanel with a vertical text
+ * @author eProtectioneers
+ */
+@Deprecated
 public class SidePnl_Description extends JPanel {
 	
-	private static org.eprotectioneers.panacea.contactmanagement.components.QuarterCirclePanel quarterCirclePanel;
-	private static org.eprotectioneers.panacea.contactmanagement.components.QuarterCirclePanel quarterCirclePanel_1;
+	private static QuarterCirclePanel quarterCirclePanel;
+	private static QuarterCirclePanel quarterCirclePanel_1;
 	private static JLabel lbl_text;
 	private String _text;
 	
+	/**
+	 * Set the
+	 * @param text
+	 */
 	public void setText(String text){
 		this._text=text;
 		lbl_text.setText(getHtmlText());
@@ -38,9 +52,12 @@ public class SidePnl_Description extends JPanel {
 		setMinimumSize(new Dimension(30, 34));
 		setMaximumSize(new Dimension(30, 250));
 		setLayout(new BorderLayout(0, 0));
-		inzialize();
+		intialize();
 	}
 	
+	/**
+	 * @return the text, with a vertical look (with HTML)
+	 */
 	private String getHtmlText(){
 		String s="<HTML>";
 		char c[]=_text.toCharArray();
@@ -53,7 +70,10 @@ public class SidePnl_Description extends JPanel {
 		return s;
 	}
 
-	private void inzialize(){
+	/**
+	 * Initialize
+	 */
+	private void intialize(){
 		lbl_text = new JLabel(getHtmlText());
 		lbl_text.setForeground(Color.WHITE);
 		lbl_text.setBorder(new EmptyBorder(0, 11, 20, 0));

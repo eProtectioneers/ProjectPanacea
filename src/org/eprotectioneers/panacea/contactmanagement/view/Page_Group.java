@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.view;
 
 import javax.swing.*;
@@ -10,7 +14,6 @@ import java.util.ArrayList;
 import javax.swing.border.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.event.*;
 
 import org.eprotectioneers.panacea.contactmanagement.components.ImagePanel;
 import org.eprotectioneers.panacea.contactmanagement.components.RoundRectangleButton;
@@ -24,7 +27,12 @@ import org.eprotectioneers.panacea.contactmanagement.models.DatabaseG;
 import org.eprotectioneers.panacea.contactmanagement.models.Group;
 import org.eprotectioneers.panacea.contactmanagement.models.NotAddedContactItemsGenerator;
 import org.eprotectioneers.panacea.contactmanagement.models.RemoveContactFromGroupActionListener;
+import org.eprotectioneers.panacea.userinterface.PPCA_PanaceaWindow;
 
+/**
+ * A Page to visualize and edit a Group
+ * @author eProtectioneers
+ */
 public class Page_Group extends JPanel{
 	
 	private Group _g;
@@ -37,7 +45,6 @@ public class Page_Group extends JPanel{
 	private JPanel pnl_contactsUp;
 	private JLabel lbl_members;
 	private JButton btnEditMembers;
-	private JPopupMenu popupMenuContacts;
 	private static ImageIcon ic_editGroup;
 	private static ImageIcon ic_removeContact;
 	private static ImageIcon ic_removeContact_pressed;
@@ -64,6 +71,9 @@ public class Page_Group extends JPanel{
 		initialize();
 	}
 	
+	/**
+	 * Initialize
+	 */
 	private void initialize() {
 		setLayout(new MigLayout("", "[5%][100px:25%:300px,grow][40][30%,grow,fill][40.00][10%,grow,fill][20%,grow,fill][5%]", "[15.00][25px:11%:75px][25px:11%:75px][25px:11%:75px][13px:5.5%:38px,grow][12px:5.5%:37px,grow][39%,grow][15]"));
 		setBackground(Color.WHITE);
@@ -76,13 +86,13 @@ public class Page_Group extends JPanel{
 		pnl_image.getBtnChangePicture().addActionListener(cil);
 		pnl_image.getMntmRemovePicture().addActionListener(cil);
 		
-		ic_delete=new ImageIcon(Page_Contact.class.getResource("/view/PPNCA_Images/icon_delete.png"));
+		ic_delete=new ImageIcon("images/icon_delete.png");
 		ic_delete.setImage(ic_delete.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_delete_pressed=new ImageIcon(Page_Contact.class.getResource("/view/PPNCA_Images/icon_delete_pressed.png"));
+		ic_delete_pressed=new ImageIcon("images/icon_delete_pressed.png");
 		ic_delete_pressed.setImage(ic_delete_pressed.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
-		ic_delete_rollover=new ImageIcon(Page_Contact.class.getResource("/view/PPNCA_Images/icon_delete_rollover.png"));
+		ic_delete_rollover=new ImageIcon("images/icon_delete_rollover.png");
 		ic_delete_rollover.setImage(ic_delete_rollover.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
 		btnDeleteGroup = new JButton();
@@ -116,6 +126,9 @@ public class Page_Group extends JPanel{
 		generateContactView();
 	}
 	
+	/**
+	 * Generate the Contact view
+	 */
 	private void generateContactView(){
 		pnl_scrollPane = new RoundRectanglePanel(10);
 		pnl_scrollPane.setBackground(new Color(9,29,62));
@@ -137,19 +150,22 @@ public class Page_Group extends JPanel{
 		
 		addSrollPanePnl_Up();
 
-		ic_removeContact=new ImageIcon(Page_Group.class.getResource("/view/PPNCA_Images/icon_remove.png"));
+		ic_removeContact=new ImageIcon("images/icon_remove.png");
 		ic_removeContact.setImage(ic_removeContact.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 		
-		ic_removeContact_pressed=new ImageIcon(Page_Group.class.getResource("/view/PPNCA_Images/icon_remove_pressed.png"));
+		ic_removeContact_pressed=new ImageIcon("images/icon_remove_pressed.png");
 		ic_removeContact_pressed.setImage(ic_removeContact_pressed.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 		
-		ic_removeContact_rollover=new ImageIcon(Page_Group.class.getResource("/view/PPNCA_Images/icon_remove_rollover.png"));
+		ic_removeContact_rollover=new ImageIcon("images/icon_remove_rollover.png");
 		ic_removeContact_rollover.setImage(ic_removeContact_rollover.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 		
 		generateSelectedPopopMenu();
 		generateContactItems();
 	}
 
+	/**
+	 * Add the panel above the ScrollPane
+	 */
 	private void addSrollPanePnl_Up(){
 		pnl_contactsUp = new JPanel();
 		pnl_contactsUp.setOpaque(false);
@@ -160,7 +176,7 @@ public class Page_Group extends JPanel{
 		lbl_members.setBorder(new EmptyBorder(6, 0, 0, 0));
 		lbl_members.setForeground(new Color(255, 255, 255));
 		
-		ic_editGroup=new ImageIcon(Page_Group.class.getResource("/view/PPNCA_Images/icon_edit2.png"));
+		ic_editGroup=new ImageIcon("images/icon_edit2.png");
 		ic_editGroup.setImage(ic_editGroup.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH));
 		
 		btnEditMembers = new RoundRectangleButton("",5);
@@ -194,6 +210,9 @@ public class Page_Group extends JPanel{
 		pnl_contactsUp.setLayout(gl_pnl_contactsUp);
 	}
 	
+	/**
+	 * Generate the ICs
+	 */
 	private void generateContactItems(){
 		ArrayList<Integer> ids_database=DatabaseCG.getContacts(_g);
 		ArrayList<Contact> contacts_database=DatabaseC.getContacts(ids_database);
@@ -229,6 +248,9 @@ public class Page_Group extends JPanel{
 		addContactItems();
 	}	
 	
+	/**
+	 * Add the ICs
+	 */
 	private void addContactItems(){
 		lbl_members.setText("Group Members:");
 		String s="[]";
@@ -280,6 +302,9 @@ public class Page_Group extends JPanel{
 		reloading=false;
 	}
 	
+	/**
+	 * Add the page to edit the Members
+	 */
 	private void addPageEdit(){
 		lbl_members.setText("No Group Members:");
 		ArrayList<Item_Contact> ics_na=naicg.getICs_NotAdded();
@@ -313,11 +338,17 @@ public class Page_Group extends JPanel{
 		reloading=false;
 	}
 	
+	/**
+	 * @return the currently Group
+	 */
 	public Group getCurrentlyGroup(){
 		Group g=new Group(_g.getId(), pi_groupname.getText(), pi_description.getText(), _g.getPicturepath());
 		return g;
 	}
 	
+	/**
+	 * @return the PuMn for the selected Contacts
+	 */
 	private JPopupMenu generateSelectedPopopMenu(){
 		item_selectedPopup=new JPopupMenu();
 		JMenuItem mntm_remove=new JMenuItem("Remove selected Contacts from Group");
@@ -326,6 +357,9 @@ public class Page_Group extends JPanel{
 		return item_selectedPopup;
 	}
 	
+	/**
+	 * @return the selected ICs
+	 */
 	private ArrayList<Item_Contact> getSelectedICs(){
 		ArrayList<Item_Contact> ret=new ArrayList<Item_Contact>();
 		for(Item_Contact ic:_ics){
@@ -336,7 +370,11 @@ public class Page_Group extends JPanel{
 		}
 		return ret;
 	}
-	
+
+	/**
+	 * ActionListener to remove the selected Cs
+	 * @author eProtectioneers
+	 */
 	private class RemoveSelectedContactsActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -347,7 +385,11 @@ public class Page_Group extends JPanel{
 			new UpdateContactViewActionListener().actionPerformed(null);
 		}	
 	}
-	
+
+	/**
+	 * ActionListener to add the selected Cs
+	 * @author eProtectioneers
+	 */
 	public class AddSelectedContactsActionListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -357,7 +399,11 @@ public class Page_Group extends JPanel{
 			new UpdateContactViewActionListener().actionPerformed(null);
 		}	
 	}
-	
+
+	/**
+	 * ActionListener to save the Group
+	 * @author eProtectioneers
+	 */
 	private class SaveGroupActionListener implements ActionListener, Runnable{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -381,7 +427,11 @@ public class Page_Group extends JPanel{
 			saveGroup();
 		}
 	}
-		
+
+	/**
+	 * ActionListener to change the Image
+	 * @author eProtectioneers
+	 */
 	private class ChangeImageListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -400,7 +450,11 @@ public class Page_Group extends JPanel{
 			else return pnl_image.getPicturePath();
 		}
 	}
-	
+
+	/**
+	 * ActionListener to update ContactView
+	 * @author eProtectioneers
+	 */
 	private class UpdateContactViewActionListener implements ActionListener,Runnable{
 		
 		@Override
@@ -434,7 +488,11 @@ public class Page_Group extends JPanel{
 			generateContactItems();
 		}
 	}
-	
+
+	/**
+	 * ActionListener to edit Members
+	 * @author eProtectioneers
+	 */
 	private class BtnEditMembersActionListener implements ActionListener {
 		boolean edit=true;
 		@Override
@@ -444,16 +502,21 @@ public class Page_Group extends JPanel{
 			edit=!edit;
 		}
 	}
-	
+
+	/**
+	 * ActionListener to delete the Group
+	 * @author eProtectioneers
+	 */
 	private class BtnDeleteGroupActionListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object options[]={"yes", "no"};
-			switch(JOptionPane.showOptionDialog(null, "Do you really want to DELETE this Group?", "DELETE Group", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
+			switch(JOptionPane.showOptionDialog(PPCA_PanaceaWindow.getFrame(), "Do you really want to DELETE this Group?", "DELETE Group", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1])){
 			case JOptionPane.YES_OPTION:
 				DatabaseG.removeGroup(_g);
 				JOptionPane.showMessageDialog(null, "Group Deleted", "", JOptionPane.INFORMATION_MESSAGE, null);
 				//EXIT PAGE
+				PPCA_PanaceaWindow.setCenterPanel(PPCA_PanaceaWindow.getMainPanel());
 			default:
 				break;
 			}
