@@ -177,10 +177,22 @@ public class PPCA_MainPanel extends JPanel
 		//Add Top Bar
 		this.add(topBar,BorderLayout.NORTH);
 		
-		String infoText = "<HTML><p style='color:red'>This is a special Test!</p></HTML>";
-				
-		topBar.setText(infoText);
+		String subject;
 		
+		if(email.subject.length()>41){
+			subject = email.subject.substring(0, 40)+"...";
+		}
+		else{
+			subject = email.subject;
+		}
+		try{
+			String infoText = "<HTML><div align='center'><a style='color:#FF4F00'>From: </a><a>"+email.from+"</a> | <a style='color:#FF4F00'>Subject: </a><a>"+subject+"</a> | <a style='color:#747474'>Received:</a><a>"+email.message.getReceivedDate()+"</a></div></HTML>";
+			topBar.setText(infoText);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+				
 		this.email = email;
 		
 		String display = "Sender:\t" + email.from + "\n";

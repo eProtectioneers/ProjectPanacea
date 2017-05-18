@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.view;
 
 
@@ -13,8 +17,12 @@ import java.net.URL;
 import javax.swing.*;
 
 import org.eprotectioneers.panacea.contactmanagement.components.ImagePanel;
-import org.eprotectioneers.panacea.contactmanagement.models.DatabaseC;
 
+/**
+ * A Panel in a Twitter Style, to view TWEETS for the Live-Twitter Feed
+ * (coming soon)
+ * @author eProtectioneers
+ */
 public class TwitterPanel extends JPanel {
 	private Color _bg_color;
 	private JLabel lblTweet;
@@ -28,13 +36,28 @@ public class TwitterPanel extends JPanel {
 	private static final String defaultpicpath=new File("images/default_profile_twitter.png").getAbsolutePath();
 	private String tooltipdescr="";
 	
+	/**
+	 * Constructor, assigns
+	 * @param url
+	 * @param picpath
+	 * @param shownname
+	 * @param name
+	 * @param tweet
+	 * @param bgpicpath
+	 */
 	public TwitterPanel(URL url,String picpath,String shownname,String name,String tweet,String bgpicpath){
 		this(url,picpath,shownname,name,tweet,(Color)null);
 		this._bg_ic=new ImageIcon(bgpicpath);
 	}
 	
 	/**
-	 * @wbp.parser.constructor
+	 * Constructor, assigns
+	 * @param url
+	 * @param picpath
+	 * @param shownname
+	 * @param name
+	 * @param tweet
+	 * @param bgcolor
 	 */
 	public TwitterPanel(URL url,String picpath,String shownname,String name,String tweet,Color bgcolor) {
 		Dimension size=new Dimension(265,185);
@@ -129,7 +152,11 @@ public class TwitterPanel extends JPanel {
 			g.fillRect(0, 0, getWidth(), 93);
 		}	
 	}
-	
+
+	/**
+	 * MouseListener, which changes the Background of the Panel, if you hover above it (like it does in Twitter)
+	 * @author eProtectioneers
+	 */
 	private class TwitterPanelMouseListener extends MouseAdapter{
 
 		@Override

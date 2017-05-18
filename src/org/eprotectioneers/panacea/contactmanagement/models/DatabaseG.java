@@ -1,15 +1,31 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.models;
 
 import java.sql.*;
 import java.util.*;
 
+/**
+ * A class, to handle the table Group from the SQLite db
+ * @author eProtectioneers
+ */
 public class DatabaseG {
 	private static String dbUrl=DatabaseC.getDbUrl();
 
+	/**
+	 * @return the dbUrl
+	 */
 	public String getDbUrl() {
 		return dbUrl;
 	}
 	
+	/**
+	 * Add the
+	 * @param group
+	 * @return success
+	 */
 	public static boolean addGroup(Group group){
 		boolean success=true;
 		String INSERT_DATA_SQL = "INSERT INTO CGroup (ID, groupname, description, picturepath) "
@@ -32,6 +48,11 @@ public class DatabaseG {
 		return success;
 	}
 	
+	/**
+	 * Remove the
+	 * @param group
+	 * @return success
+	 */
 	public static boolean removeGroup(Group group){
 		boolean success=true;
 		String DELETE_GROUP_SQL = "DELETE FROM CGroup WHERE ID="+group.getId();
@@ -51,6 +72,9 @@ public class DatabaseG {
 		return success;
 	}
 	
+	/**
+	 * @return all the Groups
+	 */
 	public static ArrayList<Group> getGroups(){
 		ArrayList<Group> ret=new ArrayList<Group>();
 		String READ_GROUPS_SQL="SELECT * FROM CGroup";
@@ -80,6 +104,10 @@ public class DatabaseG {
 	    return ret;
 	}
 	
+	/**
+	 * @param ids
+	 * @return the Groups with the given ids
+	 */
 	public static ArrayList<Group> getGroups(ArrayList<Integer> ids){
 		ArrayList<Group> ret=new ArrayList<Group>();
 		if(!ids.equals(new ArrayList<Integer>())){
@@ -114,6 +142,10 @@ public class DatabaseG {
 	    return ret;
 	}
 	
+	/**
+	 * Update a Group
+	 * @param newcontact
+	 */
 	public static void updateGroup(Group newgroup){
 		String UDATE_GROUP_SQL="UPDATE CGroup SET "+
 											"groupname=?,"+
@@ -140,6 +172,9 @@ public class DatabaseG {
 		}
 	}
 	
+	/**
+	 * @return the lowest available id
+	 */
 	public static int getNewIndex(){
 		String READ_INDEX_SQL="SELECT ID FROM CGroup WHERE ID=";
 		try{

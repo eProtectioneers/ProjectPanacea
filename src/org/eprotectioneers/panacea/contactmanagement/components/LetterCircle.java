@@ -1,3 +1,7 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.components;
 
 import java.awt.*;
@@ -5,18 +9,15 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * A colored circle, which contains one single letter
+ * @author eProtectioneers
+ */
 public class LetterCircle extends JPanel {
 
 	private JLabel _lbl;
 	int _diameter;
 	boolean _border;
-	
-	/**
-	 * @return the lbl
-	 */
-	public JLabel getLbl() {
-		return _lbl;
-	}
 	
 	/**
 	 * Create the panel.
@@ -42,10 +43,10 @@ public class LetterCircle extends JPanel {
 	}
 	
 	 @Override
-	  protected void paintComponent(Graphics g) {
+	 protected void paintComponent(Graphics g) {
 	    g.setColor(getBackground());
 	    g.fillOval(0, 0,_diameter-1,_diameter-1);
-	  }
+	 }
 	  
 	  @Override
 	  protected void paintBorder(Graphics g) {

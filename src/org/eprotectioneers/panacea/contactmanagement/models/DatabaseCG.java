@@ -1,16 +1,33 @@
+//
+// Copyright (c) eProtectioneers 2016/17. All rights reserved.  
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+//
 package org.eprotectioneers.panacea.contactmanagement.models;
 
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * A class, to handle the table Contact-Group relationship from the SQLite db
+ * @author eProtectioneers
+ */
 public class DatabaseCG {
 	private static String dbUrl=DatabaseC.getDbUrl();
 
+	/**
+	 * @return the dbUrl
+	 */
 	public String getDbUrl() {
 		return dbUrl;
 	}
 	
-	
+	/**
+	 * Add the
+	 * @param c
+	 * to the
+	 * @param g
+	 * @return success
+	 */
 	public static boolean AddContactToGroup(Contact c, Group g){
 		boolean success=true;
 		String INSERT_DATA_SQL="INSERT INTO Contact_Group(CID,GID) VALUES (?,?)";
@@ -30,6 +47,13 @@ public class DatabaseCG {
 		return success;
 	}
 	
+	/**
+	 * Remove the
+	 * @param c
+	 * to the
+	 * @param g
+	 * @return success
+	 */
 	public static boolean RemoveContactFromGroup(Contact c, Group g){
 		boolean success=true;
 		String DELETE_RELATIONSHIP_SQL="DELETE FROM Contact_Group WHERE CID="+c.getId()+" and GID="+g.getId();
@@ -47,6 +71,10 @@ public class DatabaseCG {
 		return success;
 	}
 	
+	/**
+	 * @param g
+	 * @return the Contact's ids, the g contains
+	 */
 	public static ArrayList<Integer> getContacts(Group g){
 		ArrayList<Integer> ret=new ArrayList<Integer>();
 		String GET_CONTACTS_SQL="SELECT CID FROM Contact_Group WHERE GID="+g.getId();
@@ -69,6 +97,10 @@ public class DatabaseCG {
 	    return ret;
 	}
 	
+	/**
+	 * @param id
+	 * @return the Contact's ids, the Group with the id
+	 */
 	public static ArrayList<Integer> getContacts(int id){
 		ArrayList<Integer> ret=new ArrayList<Integer>();
 		String GET_CONTACTS_SQL="SELECT CID FROM Contact_Group WHERE GID="+id;
@@ -91,6 +123,10 @@ public class DatabaseCG {
 	    return ret;
 	}
 	
+	/**
+	 * @param c
+	 * @return the Grupd's ids, the c is in
+	 */
 	public static ArrayList<Integer> getGroups(Contact c){
 		ArrayList<Integer> ret=new ArrayList<Integer>();
 		String GET_CONTACTS_SQL="SELECT GID FROM Contact_Group WHERE CID="+c.getId();
@@ -113,6 +149,10 @@ public class DatabaseCG {
 	    return ret;
 	}
 	
+	/**
+	 * @param id
+	 * @return the Grupd's ids, the Contact with the id is in
+	 */
 	public static ArrayList<Integer> getGroups(int id){
 		ArrayList<Integer> ret=new ArrayList<Integer>();
 		String GET_CONTACTS_SQL="SELECT GID FROM Contact_Group WHERE CID="+id;
